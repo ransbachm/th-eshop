@@ -1,4 +1,4 @@
-package org.example.model;
+package moe.pgnhd.theshop.model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

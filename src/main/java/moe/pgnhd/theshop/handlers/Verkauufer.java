@@ -1,4 +1,4 @@
-package org.example.handlers;
+package moe.pgnhd.theshop.handlers;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

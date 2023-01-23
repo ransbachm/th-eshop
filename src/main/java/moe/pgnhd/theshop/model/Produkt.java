@@ -1,6 +1,6 @@
-package org.example.model;
+package moe.pgnhd.theshop.model;
 
-import org.example.handlers.Verkauufer;
+import moe.pgnhd.theshop.handlers.Verkauufer;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

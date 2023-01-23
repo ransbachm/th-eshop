@@ -1,15 +1,10 @@
-package org.example.handlers;
+package moe.pgnhd.theshop.handlers;
 
-import org.example.Main;
-import org.example.Verwaltung;
-import org.example.model.Bestellung;
-import org.example.model.Produkt;
+import moe.pgnhd.theshop.Main;
 import spark.Request;
 import spark.Response;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
 
 public class OrderHandler {
     public static String handleGetOrders(Request req, Response res) {

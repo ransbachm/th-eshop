@@ -1,19 +1,15 @@
-package org.example;
+package moe.pgnhd.theshop;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import org.example.model.BestellPosition;
-import org.example.model.Bestellung;
-import org.example.model.Produkt;
+import moe.pgnhd.theshop.model.BestellPosition;
+import moe.pgnhd.theshop.model.Bestellung;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 
 public class Verwaltung {
     private static Logger LOG = LoggerFactory.getLogger(Verwaltung.class);

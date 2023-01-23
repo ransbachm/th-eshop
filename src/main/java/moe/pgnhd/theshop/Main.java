@@ -1,4 +1,4 @@
-package org.example;
+package moe.pgnhd.theshop;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -7,13 +7,9 @@ import java.util.Map;
 
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
-import com.github.jknack.handlebars.io.ClassPathTemplateLoader;
 import com.github.jknack.handlebars.io.FileTemplateLoader;
-import com.github.jknack.handlebars.io.TemplateLoader;
-import org.eclipse.jetty.io.RuntimeIOException;
-import org.example.handlers.HelloHandler;
-import org.example.handlers.OrderHandler;
-import org.example.model.Produkt;
+import moe.pgnhd.theshop.handlers.HelloHandler;
+import moe.pgnhd.theshop.handlers.OrderHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spark.*;

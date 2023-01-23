@@ -1,7 +1,6 @@
-package org.example.handlers;
+package moe.pgnhd.theshop.handlers;
 
-import org.example.Main;
-import org.example.Verwaltung;
+import moe.pgnhd.theshop.Main;
 import spark.*;
 
 import java.util.*;
