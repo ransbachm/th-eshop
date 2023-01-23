@@ -1,0 +1,45 @@
+<html>
+<head>
+
+</head>
+
+<body>
+
+    <style>
+        table {
+            border: 0.1rem solid black;
+        }
+
+        th,tc {
+            padding: 0.4rem;
+        }
+
+        .inner_table_cell {
+        //padding: 2rem;
+        }
+
+    </style>
+
+    <h1>HBS</h1>
+    <p>Bestellungen:</p>
+    <table>
+        {{#each bestellungen}}
+            <tr>
+                <td>Bestellung [{{id}}]<br>{{kaufdatum}}</td>
+                <td>
+                    <table>
+                        {{#each bestellPositionen}}
+                            <tr>
+                                <td>{{produkt.bezeichnung}}</td>
+                                <td>{{preis}}€</td>
+                                <td>{{stueckzahl}}</td>
+                            </tr>
+                        {{/each}}
+                    </table>
+                </td>
+            </tr>
+        {{/each}}
+    </table>
+
+</body>
+</html>
