@@ -4,6 +4,7 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import moe.pgnhd.theshop.model.BestellPosition;
 import moe.pgnhd.theshop.model.Bestellung;
+import moe.pgnhd.theshop.model.Models;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,23 +53,14 @@ public class Verwaltung {
                 "FROM Bestellposition\n" +
                 "\n" +
                 "JOIN Bestellung ON Bestellposition.bestellung = Bestellung.id\n" +
-                "JOIN Nutzer ON Bestellung.nutzer = Nutzer.id\n" +
                 "JOIN Produkt ON Bestellposition.produkt = Produkt.id\n" +
-                "JOIN Verkaeufer ON Bestellposition.produkt = Verkaeufer.id\n" +
                 "\n" +
                 "ORDER BY Bestellung.id ASC, Bestellposition.id ASC";
 
         try(PreparedStatement stmt = ds.getConnection().prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
-            List<Bestellung> bestellungen = new ArrayList<>();
-            int i=0;
-            while(rs.next()) {
-                if(i < rs.getInt("Bestellung.id")) {
-                    i++;
-                    bestellungen.add(new Bestellung(rs));
-                }
-                bestellungen.get(i-1).addBestellPosition(new BestellPosition(rs));
-            }
+            List<Bestellung> bestellungen = Models.multiple_one_to_many(rs,
+                    Bestellung.class, BestellPosition.class, "bestellPositionen");
             return bestellungen;
         } catch (SQLException e) {
             LOG.error(e.getMessage());
