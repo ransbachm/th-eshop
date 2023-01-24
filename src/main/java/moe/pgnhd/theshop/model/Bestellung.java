@@ -17,9 +17,13 @@ public class Bestellung {
     }
 
     public Bestellung(ResultSet rs) throws SQLException {
-        this.id = rs.getInt("Bestellung.id");
-        this.kaufdatum = rs.getDate("Bestellung.kaufdatum");
-        this.nutzer = new Nutzer(rs);
+        try {
+            this.id = rs.getInt("Bestellung.id");
+            this.kaufdatum = rs.getDate("Bestellung.kaufdatum");
+            this.nutzer = new Nutzer(rs);
+        } catch (SQLException e) {
+            // object will have null attributes
+        }
     }
 
     public void addBestellPosition(BestellPosition bestellPosition) {

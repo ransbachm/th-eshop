@@ -11,10 +11,14 @@ public class BestellPosition {
 
 
     public BestellPosition(ResultSet rs) throws SQLException {
-        this.id = rs.getInt("Bestellposition.id");
-        this.stueckzahl = rs.getInt("Bestellposition.stueckzahl");
-        this.preis = rs.getDouble("Bestellposition.preis");
-        this.produkt = new Produkt(rs);
+        try {
+            this.id = rs.getInt("Bestellposition.id");
+            this.stueckzahl = rs.getInt("Bestellposition.stueckzahl");
+            this.preis = rs.getDouble("Bestellposition.preis");
+            this.produkt = new Produkt(rs);
+        } catch (SQLException e) {
+            // object will have null attributes
+        }
     }
 
     public BestellPosition(int id, int stueckzahl, double preis, Produkt produkt) {

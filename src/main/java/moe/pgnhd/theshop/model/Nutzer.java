@@ -15,14 +15,18 @@ public class Nutzer {
 
 
     public Nutzer(ResultSet rs) throws SQLException {
-        this.id = rs.getInt("Nutzer.id");
-        this.vorname = rs.getString("Nutzer.vorname");
-        this.nachname = rs.getString("Nutzer.nachname");
-        this.email = rs.getString("Nutzer.email");
-        this.passwort = rs.getString("Nutzer.passwort");
-        this.hausnr = rs.getString("Nutzer.hausnr");
-        this.strasse = rs.getString("Nutzer.strasse");
-        this.plz = rs.getString("Nutzer.plz");
+        try {
+            this.id = rs.getInt("Nutzer.id");
+            this.vorname = rs.getString("Nutzer.vorname");
+            this.nachname = rs.getString("Nutzer.nachname");
+            this.email = rs.getString("Nutzer.email");
+            this.passwort = rs.getString("Nutzer.passwort");
+            this.hausnr = rs.getString("Nutzer.hausnr");
+            this.strasse = rs.getString("Nutzer.strasse");
+            this.plz = rs.getString("Nutzer.plz");
+        } catch (SQLException e) {
+            // object will have null attributes
+        }
     }
 
     public Nutzer(int id, String vorname, String nachname, String email, String passwort, String hausnr, String strasse, String plz) {

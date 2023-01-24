@@ -21,11 +21,15 @@ public class Produkt {
     }
 
     public Produkt(ResultSet rs) throws SQLException {
-        this.id = rs.getInt("Produkt.id");
-        this.preis = rs.getDouble("Produkt.preis");
-        this.bezeichnung = rs.getString("Produkt.bezeichnung");
-        this.verfuegbar = rs.getInt("Produkt.verfuegbar");
-        this.verkauufer = new Verkauufer(rs);
+        try {
+            this.id = rs.getInt("Produkt.id");
+            this.preis = rs.getDouble("Produkt.preis");
+            this.bezeichnung = rs.getString("Produkt.bezeichnung");
+            this.verfuegbar = rs.getInt("Produkt.verfuegbar");
+            this.verkauufer = new Verkauufer(rs);
+        } catch (SQLException e) {
+            // object will have null attributes
+        }
     }
 
 
