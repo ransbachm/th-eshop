@@ -1,11 +1,9 @@
 package moe.pgnhd.theshop.model;
 
-import moe.pgnhd.theshop.handlers.Verkauufer;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Produkt {
+public class Produkt implements ResultSetConstructable {
     private int id;
     private double preis;
     private String bezeichnung;

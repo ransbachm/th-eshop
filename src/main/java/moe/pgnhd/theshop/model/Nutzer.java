@@ -3,7 +3,7 @@ package moe.pgnhd.theshop.model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Nutzer {
+public class Nutzer implements ResultSetConstructable {
     private int id;
     private String vorname;
     private String nachname;

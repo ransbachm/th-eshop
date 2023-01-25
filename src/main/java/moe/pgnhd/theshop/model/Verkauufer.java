@@ -1,9 +1,9 @@
-package moe.pgnhd.theshop.handlers;
+package moe.pgnhd.theshop.model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Verkauufer {
+public class Verkauufer implements ResultSetConstructable {
     private int id;
     private String vorname;
     private String nachname;
@@ -20,6 +20,11 @@ public class Verkauufer {
         this.id = rs.getInt("Verkaeufer.id");
         this.vorname = rs.getString("Verkaeufer.vorname");
         this.nachname = rs.getString("Verkaeufer.nachname");
+    }
+
+    @Override
+    public String toString() {
+        return vorname + " " + nachname;
     }
 
     public int getId() {

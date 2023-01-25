@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-public class Bestellung {
+public class Bestellung implements ResultSetConstructable {
     private int id;
     private List<BestellPosition> bestellPositionen = new ArrayList<>();
     private Date kaufdatum;

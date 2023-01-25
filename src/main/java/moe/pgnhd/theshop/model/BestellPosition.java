@@ -3,7 +3,7 @@ package moe.pgnhd.theshop.model;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class BestellPosition {
+public class BestellPosition implements ResultSetConstructable {
     private int id;
     private int stueckzahl;
     private double preis;
