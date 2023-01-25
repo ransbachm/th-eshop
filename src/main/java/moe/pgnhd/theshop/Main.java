@@ -71,6 +71,7 @@ public class Main {
         get("hello", HelloHandler::handleHelloRequest);
         get("hello2", HelloHandler::handleAnyUserFirstName);
         get("my/orders", OrderHandler::handleGetOrders);
+        get("/product/:id", ProductHandler::handleProducts);
 
         post("search", SearchHandler::handleSearch);
     }

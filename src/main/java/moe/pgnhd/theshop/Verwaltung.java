@@ -87,4 +87,19 @@ public class Verwaltung {
         }
     }
 
+    public Produkt getProduct(String id){
+       String sql =  "Select *\n" +
+                     "FROM Produkt\n" +
+                     "WHERE Produkt.id = ?";
+        try(PreparedStatement stmt = ds.getConnection().prepareStatement(sql)) {
+            stmt.setInt(1,Integer.parseInt(id));
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            return new Produkt(rs);
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+            return null;
+        }
+    }
+
 }
