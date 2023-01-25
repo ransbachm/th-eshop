@@ -63,4 +63,29 @@ public class Models {
         return multiple_one_to_many(rs, one, many, container_name_one, one.getSimpleName(), "id");
     }
 
+    /**
+     * Returns a list of type specified by "what".
+     * @param rs Result set that contains the table.
+     *           It will be consumed.
+     *           It needs to be ordered by at least the tables' pk asc.
+     * @param what Binding class of the table.
+     * @return A list of type specified by "what".
+     */
+    public static <T extends ResultSetConstructable> List<T> list_of(ResultSet rs, Class what) {
+        List<T> res = new ArrayList<>();
+        try {
+            while(rs.next()) {
+                T obj = (T) what.getDeclaredConstructor(ResultSet.class).newInstance(rs);
+                res.add(obj);
+            }
+            return res;
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+            return null;
+        } catch (Exception e) {
+            LOG.error(e.getMessage());
+            return null;
+        }
+    }
+
 }

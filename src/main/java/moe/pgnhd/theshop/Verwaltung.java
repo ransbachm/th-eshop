@@ -5,11 +5,13 @@ import com.zaxxer.hikari.HikariDataSource;
 import moe.pgnhd.theshop.model.BestellPosition;
 import moe.pgnhd.theshop.model.Bestellung;
 import moe.pgnhd.theshop.model.Models;
+import moe.pgnhd.theshop.model.Produkt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.*;
-import java.util.ArrayList;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public class Verwaltung {
@@ -62,6 +64,23 @@ public class Verwaltung {
             List<Bestellung> bestellungen = Models.multiple_one_to_many(rs,
                     Bestellung.class, BestellPosition.class, "bestellPositionen");
             return bestellungen;
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+            return null;
+        }
+    }
+
+    public List<Produkt> searchProducts(String bezeichnung) {
+        String sql = "SELECT *\n" +
+                "FROM Produkt\n" +
+                "JOIN Verkaeufer ON Produkt.verkaeufer = Verkaeufer.id\n" +
+                "WHERE Produkt.bezeichnung LIKE ?\n" +
+                "ORDER BY Produkt.id ASC";
+
+        try(PreparedStatement stmt = ds.getConnection().prepareStatement(sql)) {
+            stmt.setString(1, "%" + bezeichnung + "%");
+            ResultSet rs = stmt.executeQuery();
+            return Models.list_of(rs, Produkt.class);
         } catch (SQLException e) {
             LOG.error(e.getMessage());
             return null;

@@ -1,18 +1,20 @@
 package moe.pgnhd.theshop;
 
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
 import com.github.jknack.handlebars.io.FileTemplateLoader;
 import moe.pgnhd.theshop.handlers.HelloHandler;
 import moe.pgnhd.theshop.handlers.OrderHandler;
+import moe.pgnhd.theshop.handlers.SearchHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import spark.*;
+import spark.Request;
+import spark.Response;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import static spark.Spark.*;
 
@@ -69,6 +71,8 @@ public class Main {
         get("hello", HelloHandler::handleHelloRequest);
         get("hello2", HelloHandler::handleAnyUserFirstName);
         get("my/orders", OrderHandler::handleGetOrders);
+
+        post("search", SearchHandler::handleSearch);
     }
 
 }

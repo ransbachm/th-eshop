@@ -1,0 +1,36 @@
+<html>
+<head>
+
+</head>
+
+<body>
+
+    <style>
+
+    </style>
+
+    <h1>HBS</h1>
+    <p>Suche:</p>
+    <table>
+        {{#if products}}
+            <tr>
+                <th>Bezeichnung</th>
+                <th>Preis</th>
+                <th>Verkäufer</th>
+            </tr>
+            {{#each products}}
+                <tr>
+                    <td>{{bezeichnung}}</td>
+                    <td>{{preis}}</td>
+                    <td>{{verkauufer}}</td>
+                </tr>
+            {{/each}}
+        {{/if}}
+
+        {{#unless products}}
+            Keine Produkte gefunden.
+        {{/unless}}
+    </table>
+
+</body>
+</html>
