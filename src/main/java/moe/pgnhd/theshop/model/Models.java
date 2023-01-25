@@ -13,6 +13,24 @@ public class Models {
     private static Logger LOG = LoggerFactory.getLogger(Models.class);
 
     /**
+     * Classes have to implement the interface ResultSetConstructable
+     * Due to reflection it is not possible to (allways) enforce this at
+     * compile time. The check will therefore be done at runtime.
+     * @param classes Classes that must implement ResultSetConstructable
+     * @throws ClassCastException If at least one class does not implement ResultSetConstructable
+     */
+    private static void checkForInterface(Class ... classes) {
+        for(Class clazz : classes) {
+            boolean success = ResultSetConstructable.class.isAssignableFrom(clazz);
+            if(!success) {
+                throw new ClassCastException("Class " + clazz.getName() +
+                        " must implement ResultSetConstructable.");
+            }
+        }
+    }
+
+
+    /**
      * Returns multiple "one to many" relations
      * @param rs ResultSet that contains the "one" and "many" tables joined. It will be consumed.
      *           It needs to be ordered by at least the "one"-side's pk asc.
@@ -26,6 +44,7 @@ public class Models {
 
     public static <T extends ResultSetConstructable> List<T> multiple_one_to_many(ResultSet rs, Class one, Class many, String container_name_one,
                                                    String table_one, String pk_one) {
+        checkForInterface(one, many);
         List<T> res = new ArrayList<T>();
         int i=0;
         try {
@@ -60,6 +79,7 @@ public class Models {
      * @return A List containing every "one-many" relation found
      */
     public static <T extends ResultSetConstructable> List<T> multiple_one_to_many(ResultSet rs, Class one, Class many, String container_name_one) {
+        // checkForInterface(what); will be checked in delegated method
         return multiple_one_to_many(rs, one, many, container_name_one, one.getSimpleName(), "id");
     }
 
@@ -72,6 +92,7 @@ public class Models {
      * @return A list of type specified by "what".
      */
     public static <T extends ResultSetConstructable> List<T> list_of(ResultSet rs, Class what) {
+        checkForInterface(what);
         List<T> res = new ArrayList<>();
         try {
             while(rs.next()) {
