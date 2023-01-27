@@ -9,7 +9,7 @@ import java.util.HashMap;
 public class OrderHandler {
     public static String handleGetOrders(Request req, Response res) {
         HashMap<String, Object> model = new HashMap<>();
-        model.put("bestellungen", Main.verwaltung.getOrders());
+        model.put("orders", Main.management.getOrders());
 
         return Main.render("orders", model);
     }

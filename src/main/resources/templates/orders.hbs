@@ -21,18 +21,18 @@
     </style>
 
     <header><a href="/"><h1>Th_Eshop</h1></a></header>
-    <p>Bestellungen:</p>
+    <p>Orders:</p>
     <table>
-        {{#each bestellungen}}
+        {{#each orders}}
             <tr>
-                <td>Bestellung [{{id}}]<br>{{kaufdatum}}</td>
+                <td>Orders [{{id}}]<br>{{date}}</td>
                 <td>
                     <table>
-                        {{#each bestellPositionen}}
+                        {{#each orderItems}}
                             <tr>
-                                <td>{{produkt.bezeichnung}}</td>
-                                <td>{{preis}}€</td>
-                                <td>{{stueckzahl}}</td>
+                                <td>{{product.name}}</td>
+                                <td>{{price}}€</td>
+                                <td>{{amount}}</td>
                             </tr>
                         {{/each}}
                     </table>

@@ -12,8 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class Verwaltung {
-    private static Logger LOG = LoggerFactory.getLogger(Verwaltung.class);
+public class Management {
+    private static Logger LOG = LoggerFactory.getLogger(Management.class);
 
 
     // Will create connections
@@ -23,7 +23,7 @@ public class Verwaltung {
     private static final String USER = "th_eshop";
     private static final String PWD = System.getenv("TH_ESHOP_DB_PWD");
 
-    public Verwaltung() throws SQLException {
+    public Management() throws SQLException {
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl(DB_URL);
         config.setUsername(USER);
@@ -35,96 +35,96 @@ public class Verwaltung {
     }
 
     public String getAnyUserFirstName()  {
-        String sql = "SELECT vorname FROM Nutzer LIMIT ?";
+        String sql = "SELECT firstname FROM User LIMIT ?";
 
         try(Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)){
             stmt.setInt(1, 1);
             ResultSet rs = stmt.executeQuery();
             rs.next();
-            return rs.getString("vorname");
+            return rs.getString("User.firstname");
         } catch (SQLException e) {
             return null;
         }
     }
 
-    public List<Bestellung> getOrders() {
+    public List<Order> getOrders() {
 
-        String sql = "SELECT *\n" +
-                "FROM Bestellposition\n" +
+        String sql = "SELECT * \n" +
+                "FROM OrderItem\n" +
                 "\n" +
-                "JOIN Bestellung ON Bestellposition.bestellung = Bestellung.id\n" +
-                "JOIN Produkt ON Bestellposition.produkt = Produkt.id\n" +
+                "JOIN `Order` ON OrderItem.`Order` = `Order`.id\n" +
+                "JOIN Product ON OrderItem.product = Product.id\n" +
                 "\n" +
-                "ORDER BY Bestellung.id ASC, Bestellposition.id ASC";
+                "ORDER BY `Order`.id ASC, OrderItem.id ASC";
 
         try(Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
-            List<Bestellung> bestellungen = Models.multiple_one_to_many(rs,
-                    Bestellung.class, BestellPosition.class, "bestellPositionen");
-            return bestellungen;
+            List<Order> orders = Models.multiple_one_to_many(rs,
+                    Order.class, OrderItem.class, "orderItems");
+            return orders;
         } catch (SQLException e) {
             LOG.error(e.getMessage());
             return null;
         }
     }
 
-    public List<Produkt> searchProducts(String bezeichnung) {
+    public List<Product> searchProducts(String name) {
         String sql = "SELECT *\n" +
-                "FROM Produkt\n" +
-                "JOIN Verkaeufer ON Produkt.verkaeufer = Verkaeufer.id\n" +
-                "WHERE Produkt.bezeichnung LIKE ?\n" +
-                "ORDER BY Produkt.id ASC";
+                "FROM Product\n" +
+                "JOIN Seller ON Product.seller = Seller.id\n" +
+                "WHERE Product.name LIKE ?\n" +
+                "ORDER BY Product.id ASC";
 
         try(Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setString(1, "%" + bezeichnung + "%");
+            stmt.setString(1, "%" + name + "%");
             ResultSet rs = stmt.executeQuery();
-            return Models.list_of(rs, Produkt.class);
+            return Models.list_of(rs, Product.class);
         } catch (SQLException e) {
             LOG.error(e.getMessage());
             return null;
         }
     }
 
-    public Produkt getProduct(String id){
+    public Product getProduct(String id){
        String sql =  "Select *\n" +
-                     "FROM Produkt\n" +
-                     "JOIN Verkaeufer on Produkt.verkaeufer = Verkaeufer.id\n" +
-                     "WHERE Produkt.id = ?";
+                     "FROM Product\n" +
+                     "JOIN Seller on Product.seller = Seller.id\n" +
+                     "WHERE Product.id = ?";
         try(Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1,Integer.parseInt(id));
             ResultSet rs = stmt.executeQuery();
             rs.next();
-            return new Produkt(rs);
+            return new Product(rs);
         } catch (SQLException e) {
             LOG.error(e.getMessage());
             return null;
         }
     }
 
-    public List<Produkt> getProductsOfSeller(String id){
+    public List<Product> getProductsOfSeller(String id){
         String sql =  "Select *\n" +
-                "FROM Produkt\n" +
-                "WHERE Produkt.verkaeufer = ?";
+                "FROM Product\n" +
+                "WHERE Product.seller = ?";
         try(Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1,Integer.parseInt(id));
             ResultSet rs = stmt.executeQuery();
             rs.next();
-            return Models.list_of(rs, Produkt.class);
+            return Models.list_of(rs, Product.class);
         } catch (SQLException e) {
             LOG.error(e.getMessage());
             return null;
         }
     }
 
-    public Verkauufer getVerkauufer(String id){
+    public Seller getSeller(String id){
         String sql = "SELECT *\n" +
-                     "FROM Verkaeufer\n" +
-                     "WHERE Verkaeufer.id = ?";
+                     "FROM Seller\n" +
+                     "WHERE Seller.id = ?";
         try(Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1,Integer.parseInt(id));
             ResultSet rs = stmt.executeQuery();
             rs.next();
-            return new Verkauufer(rs);
+            return new Seller(rs);
         } catch (SQLException e) {
             LOG.error(e.getMessage());
             return null;

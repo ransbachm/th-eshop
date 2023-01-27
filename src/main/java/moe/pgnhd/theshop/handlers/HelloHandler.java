@@ -11,6 +11,6 @@ public class HelloHandler {
     }
 
     public static String handleAnyUserFirstName(Request req, Response res) {
-        return Objects.requireNonNull(Main.verwaltung.getAnyUserFirstName());
+        return Objects.requireNonNull(Main.management.getAnyUserFirstName());
     }
 }

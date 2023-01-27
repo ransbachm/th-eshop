@@ -19,7 +19,7 @@ import static spark.Spark.*;
 public class Main {
 
     private static Logger LOG = LoggerFactory.getLogger(Main.class);
-    public static Verwaltung verwaltung;
+    public static Management management;
     static boolean isDev = true;
 
     private static Handlebars hbs;
@@ -38,7 +38,7 @@ public class Main {
         LOG.info("Application is starting");
 
         try {
-            verwaltung = new Verwaltung();
+            management = new Management();
         } catch (SQLException e) {
             LOG.error("DB Connection failed - shutting down");
             LOG.error(e.getMessage());
@@ -65,12 +65,11 @@ public class Main {
         });
 
 
-        // addGetHandler(pfad, methode_die_sich_kümmert);
         get("hello", HelloHandler::handleHelloRequest);
         get("hello2", HelloHandler::handleAnyUserFirstName);
         get("my/orders", OrderHandler::handleGetOrders);
         get("/product/:id", ProductHandler::handleProducts);
-        get("/verkauufer/:id", VerkauuferHandler::handleVerkauufer);
+        get("/seller/:id", SellerHandler::handleSeller);
 
         post("search", SearchHandler::handleSearch);
     }

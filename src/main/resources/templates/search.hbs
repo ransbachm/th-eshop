@@ -10,25 +10,25 @@
     </style>
 
     <header><a href="/"><h1>Th_Eshop</h1></a></header>
-    <p>Suche:</p>
+    <p>Search:</p>
     <table>
         {{#if products}}
             <tr>
-                <th>Bezeichnung</th>
-                <th>Preis</th>
-                <th>Verkäufer</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Seller</th>
             </tr>
             {{#each products}}
                 <tr>
-                    <td><a href="/product/{{id}}">{{bezeichnung}}</a> </td>
-                    <td>{{preis}}</td>
-                    <td>{{verkauufer}}</td>
+                    <td><a href="/product/{{id}}">{{name}}</a> </td>
+                    <td>{{price}}</td>
+                    <td>{{seller}}</td>
                 </tr>
             {{/each}}
         {{/if}}
 
         {{#unless products}}
-            Keine Produkte gefunden.
+            No products found.
         {{/unless}}
     </table>
 

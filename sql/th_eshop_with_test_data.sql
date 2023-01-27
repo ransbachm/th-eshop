@@ -19,98 +19,90 @@
 CREATE DATABASE IF NOT EXISTS `th_eshop` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 USE `th_eshop`;
 
--- Exportiere Struktur von Tabelle th_eshop.Bestellposition
-CREATE TABLE IF NOT EXISTS `Bestellposition` (
-                                                 `id` int(11) NOT NULL AUTO_INCREMENT,
-                                                 `stueckzahl` int(11) NOT NULL,
-                                                 `preis` decimal(15,2) NOT NULL,
-                                                 `produkt` int(11) NOT NULL,
-                                                 `bestellung` int(11) NOT NULL,
-                                                 PRIMARY KEY (`id`),
-                                                 KEY `bestellung` (`bestellung`),
-                                                 KEY `produkt` (`produkt`),
-                                                 CONSTRAINT `Bestellposition_ibfk_1` FOREIGN KEY (`bestellung`) REFERENCES `Bestellung` (`id`),
-                                                 CONSTRAINT `Bestellposition_ibfk_2` FOREIGN KEY (`produkt`) REFERENCES `Produkt` (`id`)
+-- Exportiere Struktur von Tabelle th_eshop.Order
+CREATE TABLE IF NOT EXISTS `Order` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` date NOT NULL,
+  `user` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user` (`user`) USING BTREE,
+  CONSTRAINT `Order_ibfk_1` FOREIGN KEY (`user`) REFERENCES `User` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+
+-- Exportiere Daten aus Tabelle th_eshop.Order: ~2 rows (ungefähr)
+INSERT INTO `Order` (`id`, `date`, `user`) VALUES
+	(1, '2023-01-16', 1),
+	(2, '2023-01-23', 1);
+
+-- Exportiere Struktur von Tabelle th_eshop.OrderItem
+CREATE TABLE IF NOT EXISTS `OrderItem` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `amount` int(11) NOT NULL,
+  `price` decimal(15,2) NOT NULL,
+  `product` int(11) NOT NULL,
+  `order` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `order` (`order`) USING BTREE,
+  KEY `product` (`product`) USING BTREE,
+  CONSTRAINT `OrderItem_ibfk_1` FOREIGN KEY (`order`) REFERENCES `Order` (`id`),
+  CONSTRAINT `OrderItem_ibfk_2` FOREIGN KEY (`product`) REFERENCES `Product` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
--- Exportiere Daten aus Tabelle th_eshop.Bestellposition: ~3 rows (ungefähr)
-INSERT INTO `Bestellposition` (`id`, `stueckzahl`, `preis`, `produkt`, `bestellung`) VALUES
-                                                                                         (1, 1, 6.00, 1, 1),
-                                                                                         (2, 5, 10.00, 2, 2),
-                                                                                         (3, 3, 6.00, 1, 2);
+-- Exportiere Daten aus Tabelle th_eshop.OrderItem: ~3 rows (ungefähr)
+INSERT INTO `OrderItem` (`id`, `amount`, `price`, `product`, `order`) VALUES
+	(1, 1, 6.00, 1, 1),
+	(2, 5, 10.00, 2, 2),
+	(3, 3, 6.00, 1, 2);
 
--- Exportiere Struktur von Tabelle th_eshop.Bestellung
-CREATE TABLE IF NOT EXISTS `Bestellung` (
-                                            `id` int(11) NOT NULL AUTO_INCREMENT,
-                                            `kaufdatum` date NOT NULL,
-                                            `nutzer` int(11) NOT NULL,
-                                            PRIMARY KEY (`id`),
-                                            KEY `nutzer` (`nutzer`),
-                                            CONSTRAINT `Bestellung_ibfk_1` FOREIGN KEY (`nutzer`) REFERENCES `Nutzer` (`id`)
+-- Exportiere Struktur von Tabelle th_eshop.Product
+CREATE TABLE IF NOT EXISTS `Product` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `price` decimal(15,2) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `available` int(11) NOT NULL,
+  `seller` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `seller` (`seller`) USING BTREE,
+  CONSTRAINT `Product_ibfk_1` FOREIGN KEY (`seller`) REFERENCES `Seller` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+
+-- Exportiere Daten aus Tabelle th_eshop.Product: ~4 rows (ungefähr)
+INSERT INTO `Product` (`id`, `price`, `name`, `available`, `seller`) VALUES
+	(1, 6.00, 'CSM VOL 11', 1, 1),
+	(2, 10.00, 'Banana', 40, 2),
+	(3, 5.99, 'CSM VOL 12', 2, 1),
+	(4, 5.99, 'CSM VOL 13', 1, 1);
+
+-- Exportiere Struktur von Tabelle th_eshop.Seller
+CREATE TABLE IF NOT EXISTS `Seller` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `firstname` varchar(255) NOT NULL,
+  `lastname` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
--- Exportiere Daten aus Tabelle th_eshop.Bestellung: ~2 rows (ungefähr)
-INSERT INTO `Bestellung` (`id`, `kaufdatum`, `nutzer`) VALUES
-                                                           (1, '2023-01-16', 1),
-                                                           (2, '2023-01-23', 1);
+-- Exportiere Daten aus Tabelle th_eshop.Seller: ~2 rows (ungefähr)
+INSERT INTO `Seller` (`id`, `firstname`, `lastname`) VALUES
+	(1, 'Hano', 'Takt'),
+	(2, 'Renate', 'Vordorf');
 
--- Exportiere Struktur von Tabelle th_eshop.LoginToken
-CREATE TABLE IF NOT EXISTS `LoginToken` (
-                                            `id` int(11) NOT NULL AUTO_INCREMENT,
-                                            `wert` varchar(255) NOT NULL,
-                                            `gueltig_bis` date NOT NULL DEFAULT (current_timestamp() + interval 1 day),
-                                            PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- Exportiere Daten aus Tabelle th_eshop.LoginToken: ~0 rows (ungefähr)
-
--- Exportiere Struktur von Tabelle th_eshop.Nutzer
-CREATE TABLE IF NOT EXISTS `Nutzer` (
-                                        `id` int(11) NOT NULL AUTO_INCREMENT,
-                                        `vorname` varchar(255) NOT NULL,
-                                        `nachname` varchar(255) NOT NULL,
-                                        `email` varchar(255) NOT NULL,
-                                        `passwort` varchar(255) NOT NULL,
-                                        `hausnr` varchar(255) NOT NULL,
-                                        `strasse` varchar(255) NOT NULL,
-                                        `plz` varchar(255) NOT NULL,
-                                        PRIMARY KEY (`id`)
+-- Exportiere Struktur von Tabelle th_eshop.User
+CREATE TABLE IF NOT EXISTS `User` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `firstname` varchar(255) NOT NULL,
+  `lastname` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `housenumber` varchar(255) NOT NULL,
+  `street` varchar(255) NOT NULL,
+  `zipcode` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
--- Exportiere Daten aus Tabelle th_eshop.Nutzer: ~2 rows (ungefähr)
-INSERT INTO `Nutzer` (`id`, `vorname`, `nachname`, `email`, `passwort`, `hausnr`, `strasse`, `plz`) VALUES
-                                                                                                        (1, 'Max', 'Testdorf', 'max@example.com', 'shrimp', '13', 'Nordpol Str', '12345'),
-                                                                                                        (2, 'Karren', 'Data', 'max@2.example.com', 'ddklol', '1', 'Haus-Alee', '51234');
-
--- Exportiere Struktur von Tabelle th_eshop.Produkt
-CREATE TABLE IF NOT EXISTS `Produkt` (
-                                         `id` int(11) NOT NULL AUTO_INCREMENT,
-                                         `preis` decimal(15,2) NOT NULL,
-                                         `bezeichnung` varchar(255) NOT NULL,
-                                         `verfuegbar` int(11) NOT NULL,
-                                         `verkaeufer` int(11) NOT NULL,
-                                         PRIMARY KEY (`id`),
-                                         KEY `verkaeufer` (`verkaeufer`),
-                                         CONSTRAINT `Produkt_ibfk_1` FOREIGN KEY (`verkaeufer`) REFERENCES `Verkaeufer` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
-
--- Exportiere Daten aus Tabelle th_eshop.Produkt: ~2 rows (ungefähr)
-INSERT INTO `Produkt` (`id`, `preis`, `bezeichnung`, `verfuegbar`, `verkaeufer`) VALUES
-                                                                                     (1, 6.00, 'CSM VOL 11', 1, 1),
-                                                                                     (2, 10.00, 'Bananane', 40, 2);
-
--- Exportiere Struktur von Tabelle th_eshop.Verkaeufer
-CREATE TABLE IF NOT EXISTS `Verkaeufer` (
-                                            `id` int(11) NOT NULL AUTO_INCREMENT,
-                                            `vorname` varchar(255) NOT NULL,
-                                            `nachname` varchar(255) NOT NULL,
-                                            PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
-
--- Exportiere Daten aus Tabelle th_eshop.Verkaeufer: ~2 rows (ungefähr)
-INSERT INTO `Verkaeufer` (`id`, `vorname`, `nachname`) VALUES
-                                                           (1, 'Hano', 'Takt'),
-                                                           (2, 'Renate', 'Vordorf');
+-- Exportiere Daten aus Tabelle th_eshop.User: ~2 rows (ungefähr)
+INSERT INTO `User` (`id`, `firstname`, `lastname`, `email`, `password`, `housenumber`, `street`, `zipcode`) VALUES
+	(1, 'Max', 'Testdorf', 'max@example.com', 'shrimp', '13', 'Nordpol Str', '12345'),
+	(2, 'Karren', 'Data', 'max@2.example.com', 'ddklol', '1', 'Haus-Alee', '51234');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
