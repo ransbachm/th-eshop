@@ -9,6 +9,7 @@ import moe.pgnhd.theshop.model.Produkt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -39,7 +40,7 @@ public class Verwaltung {
     public String getAnyUserFirstName()  {
         String sql = "SELECT vorname FROM Nutzer LIMIT ?";
 
-        try(PreparedStatement stmt = ds.getConnection().prepareStatement(sql)){
+        try(Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)){
             stmt.setInt(1, 1);
             ResultSet rs = stmt.executeQuery();
             rs.next();
@@ -59,7 +60,7 @@ public class Verwaltung {
                 "\n" +
                 "ORDER BY Bestellung.id ASC, Bestellposition.id ASC";
 
-        try(PreparedStatement stmt = ds.getConnection().prepareStatement(sql)) {
+        try(Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             List<Bestellung> bestellungen = Models.multiple_one_to_many(rs,
                     Bestellung.class, BestellPosition.class, "bestellPositionen");
@@ -77,7 +78,7 @@ public class Verwaltung {
                 "WHERE Produkt.bezeichnung LIKE ?\n" +
                 "ORDER BY Produkt.id ASC";
 
-        try(PreparedStatement stmt = ds.getConnection().prepareStatement(sql)) {
+        try(Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, "%" + bezeichnung + "%");
             ResultSet rs = stmt.executeQuery();
             return Models.list_of(rs, Produkt.class);
@@ -91,7 +92,7 @@ public class Verwaltung {
        String sql =  "Select *\n" +
                      "FROM Produkt\n" +
                      "WHERE Produkt.id = ?";
-        try(PreparedStatement stmt = ds.getConnection().prepareStatement(sql)) {
+        try(Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1,Integer.parseInt(id));
             ResultSet rs = stmt.executeQuery();
             rs.next();
