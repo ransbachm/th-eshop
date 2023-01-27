@@ -1,0 +1,23 @@
+<html>
+    <body>
+    <header>
+        <a href="/">
+            <h1>Th_Eshop</h1>
+        </a>
+    </header>
+
+    <h2>Produkte dieses Verkäufers</h2>
+    <p>{{verkauufer}}</p>
+    <table>
+        <th>Produkt</th>
+        <th>Preis</th>
+        {{#each produkte}}
+            <tr>
+                <td>{{bezeichnung}}</td>
+                <td>{{preis}}</td>
+            </tr>
+        {{/each}}
+    </table>
+
+    </body>
+</html>

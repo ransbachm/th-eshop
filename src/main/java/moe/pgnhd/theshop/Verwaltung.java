@@ -2,10 +2,7 @@ package moe.pgnhd.theshop;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import moe.pgnhd.theshop.model.BestellPosition;
-import moe.pgnhd.theshop.model.Bestellung;
-import moe.pgnhd.theshop.model.Models;
-import moe.pgnhd.theshop.model.Produkt;
+import moe.pgnhd.theshop.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -91,6 +88,7 @@ public class Verwaltung {
     public Produkt getProduct(String id){
        String sql =  "Select *\n" +
                      "FROM Produkt\n" +
+                     "JOIN Verkaeufer on Produkt.verkaeufer = Verkaeufer.id\n" +
                      "WHERE Produkt.id = ?";
         try(Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1,Integer.parseInt(id));
@@ -103,4 +101,33 @@ public class Verwaltung {
         }
     }
 
+    public List<Produkt> getProductsOfSeller(String id){
+        String sql =  "Select *\n" +
+                "FROM Produkt\n" +
+                "WHERE Produkt.verkaeufer = ?";
+        try(Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setInt(1,Integer.parseInt(id));
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            return Models.list_of(rs, Produkt.class);
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+            return null;
+        }
+    }
+
+    public Verkauufer getVerkauufer(String id){
+        String sql = "SELECT *\n" +
+                     "FROM Verkaeufer\n" +
+                     "WHERE Verkaeufer.id = ?";
+        try(Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setInt(1,Integer.parseInt(id));
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            return new Verkauufer(rs);
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+            return null;
+        }
+    }
 }

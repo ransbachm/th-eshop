@@ -10,6 +10,12 @@
 
     <h1>{{product.bezeichnung}}</h1>
     <p>{{description}}</p>
-    <img src=("/img/" + {{imgid}})>
+
+    <img src="/img/"{{imgid}}>
+    <p>{{product.preis}}</p>
+
+    <a href="/verkauufer/{{product.verkauufer.id}}">{{product.verkauufer}}</a>
+
+    <button>Kaufen</button>
 </body>
 </html>

@@ -3,9 +3,7 @@ package moe.pgnhd.theshop;
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
 import com.github.jknack.handlebars.io.FileTemplateLoader;
-import moe.pgnhd.theshop.handlers.HelloHandler;
-import moe.pgnhd.theshop.handlers.OrderHandler;
-import moe.pgnhd.theshop.handlers.SearchHandler;
+import moe.pgnhd.theshop.handlers.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spark.Request;
@@ -72,6 +70,7 @@ public class Main {
         get("hello2", HelloHandler::handleAnyUserFirstName);
         get("my/orders", OrderHandler::handleGetOrders);
         get("/product/:id", ProductHandler::handleProducts);
+        get("/verkauufer/:id", VerkauuferHandler::handleVerkauufer);
 
         post("search", SearchHandler::handleSearch);
     }
