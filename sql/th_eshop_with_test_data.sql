@@ -92,17 +92,21 @@ CREATE TABLE IF NOT EXISTS `User` (
   `firstname` varchar(255) NOT NULL,
   `lastname` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
+  `pwdhash` varchar(255) NOT NULL,
   `housenumber` varchar(255) NOT NULL,
   `street` varchar(255) NOT NULL,
   `zipcode` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+  `active` tinyint(1) NOT NULL,
+  `activationcode` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4;
 
--- Exportiere Daten aus Tabelle th_eshop.User: ~2 rows (ungefähr)
-INSERT INTO `User` (`id`, `firstname`, `lastname`, `email`, `password`, `housenumber`, `street`, `zipcode`) VALUES
-	(1, 'Max', 'Testdorf', 'max@example.com', 'shrimp', '13', 'Nordpol Str', '12345'),
-	(2, 'Karren', 'Data', 'max@2.example.com', 'ddklol', '1', 'Haus-Alee', '51234');
+-- Exportiere Daten aus Tabelle th_eshop.User: ~3 rows (ungefähr)
+INSERT INTO `User` (`id`, `firstname`, `lastname`, `email`, `pwdhash`, `housenumber`, `street`, `zipcode`, `active`, `activationcode`) VALUES
+	(1, 'Max', 'Testdorf', 'max@example.com', 'vvV+x/U6bUC+tkCngKY5yDvCmsipgW8fxsXG3Nk8RyE=', '13', 'Nordpol Str', '12345', 1, 'lmBoU5CMSll6aX1E33kaq8Gu7CqT1tLdRF7ry533b84HDSqqiY'),
+	(2, 'Karren', 'Data', 'max@2.example.com', '69c9a06eadcf21373532fa0faf6b06065bfbf8a4d85abac9218acb42c918a118', '1', 'Haus-Alee', '51234', 1, 'ZLH89GPubVzkJFvUiUtwkKzzhtTFcd9AYlvlWvifQzOpund1Eb'),
+	(46, 'A', 'BB', 'ransbachm@gmail.com', 'XohImNooBHFR0OVvjcYpJ3NgPQ1qq73WKhHvch0VQtg=', '4', 'Abc Street', '12345', 1, 'pwjlfMU0ZFSVmncjWgaEgnde5eq3MUh8');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

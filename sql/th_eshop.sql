@@ -77,12 +77,15 @@ CREATE TABLE IF NOT EXISTS `User` (
   `firstname` varchar(255) NOT NULL,
   `lastname` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
+  `pwdhash` varchar(255) NOT NULL,
   `housenumber` varchar(255) NOT NULL,
   `street` varchar(255) NOT NULL,
   `zipcode` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+  `active` tinyint(1) NOT NULL,
+  `activationcode` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4;
 
 -- Daten Export vom Benutzer nicht ausgewählt
 
