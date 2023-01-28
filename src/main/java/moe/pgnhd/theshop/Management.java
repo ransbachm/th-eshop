@@ -6,10 +6,7 @@ import moe.pgnhd.theshop.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 public class Management {
@@ -19,15 +16,11 @@ public class Management {
     // Will create connections
     private HikariDataSource ds;
 
-    private static final String DB_URL = "jdbc:mariadb://localhost/th_eshop";
-    private static final String USER = "th_eshop";
-    private static final String PWD = System.getenv("TH_ESHOP_DB_PWD");
-
     public Management() throws SQLException {
         HikariConfig config = new HikariConfig();
-        config.setJdbcUrl(DB_URL);
-        config.setUsername(USER);
-        config.setPassword(PWD);
+        config.setJdbcUrl(Main.dotenv.get("SQL_DB_URL"));
+        config.setUsername(Main.dotenv.get("SQL_DB_USER"));
+        config.setPassword(Main.dotenv.get("SQL_DB_PWD"));
 
         ds = new HikariDataSource(config);
         // Test connection

@@ -3,6 +3,7 @@ package moe.pgnhd.theshop;
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
 import com.github.jknack.handlebars.io.FileTemplateLoader;
+import io.github.cdimascio.dotenv.Dotenv;
 import moe.pgnhd.theshop.handlers.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,7 @@ public class Main {
 
     private static Logger LOG = LoggerFactory.getLogger(Main.class);
     public static Management management;
+    public static Dotenv dotenv = Dotenv.load();
     static boolean isDev = true;
 
     private static Handlebars hbs;
