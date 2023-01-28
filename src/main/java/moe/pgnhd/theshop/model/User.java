@@ -8,36 +8,33 @@ public class User implements ResultSetConstructable {
     private String firstname;
     private String lastname;
     private String email;
-    private String password;
+    private String pwdhash;
     private String housenumber;
     private String street;
     private String zipcode;
+    private boolean active;
+    private String activationcode;
 
-
-    public User(ResultSet rs) throws SQLException {
+    public static User from(ResultSet rs) {
         try {
-            this.id = rs.getInt("User.id");
-            this.firstname = rs.getString("User.firstname");
-            this.lastname = rs.getString("User.lastname");
-            this.email = rs.getString("User.email");
-            this.password = rs.getString("User.password");
-            this.housenumber = rs.getString("User.housenumber");
-            this.street = rs.getString("User.street");
-            this.zipcode = rs.getString("User.zipcode");
+            return new User(rs);
         } catch (SQLException e) {
-            // object will have null attributes
+            return null;
         }
+
     }
 
-    public User(int id, String firstname, String lastname, String email, String password, String housenumber, String street, String zipcode) {
-        this.id = id;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.email = email;
-        this.password = password;
-        this.housenumber = housenumber;
-        this.street = street;
-        this.zipcode = zipcode;
+    private User(ResultSet rs) throws SQLException {
+        this.id = rs.getInt("User.id");
+        this.firstname = rs.getString("User.firstname");
+        this.lastname = rs.getString("User.lastname");
+        this.email = rs.getString("User.email");
+        this.pwdhash = rs.getString("User.pwdhash");
+        this.housenumber = rs.getString("User.housenumber");
+        this.street = rs.getString("User.street");
+        this.zipcode = rs.getString("User.zipcode");
+        this.active = rs.getBoolean("User.active");
+        this.activationcode = rs.getString("User.activationcode");
     }
 
     public int getId() {
@@ -72,12 +69,12 @@ public class User implements ResultSetConstructable {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPwdhash() {
+        return pwdhash;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPwdhash(String pwdhash) {
+        this.pwdhash = pwdhash;
     }
 
     public String getHousenumber() {
@@ -102,5 +99,21 @@ public class User implements ResultSetConstructable {
 
     public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public String getActivationcode() {
+        return activationcode;
+    }
+
+    public void setActivationcode(String activationcode) {
+        this.activationcode = activationcode;
     }
 }

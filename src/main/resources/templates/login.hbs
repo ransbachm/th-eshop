@@ -1,0 +1,33 @@
+<html>
+
+<head>
+    <title>first test</title>
+</head>
+
+<body>
+
+<h1>Login</h1>
+<p>Or <a href="/register">Register</a></p>
+
+<form method="POST" action="login">
+    <label for="email">Email</label>
+    <input type="text" name="email"><br>
+
+    <label for="password">Password</label>
+    <input type="password" name="password"><br>
+
+    <input type="submit">
+</form>
+
+{{#if user_wrong_pwd}}
+Wrong password.
+{{/if}}
+
+{{#if user_not_confirmed}}
+    Please confirm you account.
+{{/if}}
+
+
+
+</body>
+</html>

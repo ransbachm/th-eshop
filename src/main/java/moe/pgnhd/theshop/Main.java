@@ -5,6 +5,7 @@ import com.github.jknack.handlebars.Template;
 import com.github.jknack.handlebars.io.FileTemplateLoader;
 import io.github.cdimascio.dotenv.Dotenv;
 import moe.pgnhd.theshop.handlers.*;
+import moe.pgnhd.theshop.handlers.Filters.RequireLogin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spark.Request;
@@ -39,6 +40,15 @@ public class Main {
     public static void main(String[] args) throws SQLException {
         LOG.info("Application is starting");
 
+        exception(Exception.class, (e,req,res) -> {
+            LOG.error(e.getMessage());
+            res.status(500);
+            res.body("<h2>500 Internal Server Error</h2>");
+        });
+
+        initExceptionHandler(e -> {LOG.error("ASD");});
+
+
         try {
             management = new Management();
         } catch (SQLException e) {
@@ -59,6 +69,8 @@ public class Main {
         }
 
         port(4567);
+        // require logged-in user for paths below
+        before("*", RequireLogin::filterRequireLogin);
 
         get("/", (Request req, Response res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -69,9 +81,20 @@ public class Main {
 
         get("hello", HelloHandler::handleHelloRequest);
         get("hello2", HelloHandler::handleAnyUserFirstName);
+
+        get("login", RegisterAndLoginHandler::handleLogin);
+        post("login", RegisterAndLoginHandler::handleLoginSubmit);
+        get("register", RegisterAndLoginHandler::handleRegister);
+        post("register", RegisterAndLoginHandler::handleRegisterSubmit);
+        get("register_confirm", RegisterAndLoginHandler::handleRegisterConfirm);
+        post("register_confirm", RegisterAndLoginHandler::handleRegisterConfirmSubmit);
+
         get("my/orders", OrderHandler::handleGetOrders);
-        get("/product/:id", ProductHandler::handleProducts);
+        get("/product/create", ProductHandler::handleCreateProduct);
+        get("/product/:id", ProductHandler::handleShowProduct);
         get("/seller/:id", SellerHandler::handleSeller);
+        get("block/:sec", HelloHandler::handleBlockTest);
+
 
         post("search", SearchHandler::handleSearch);
     }

@@ -1,0 +1,32 @@
+<html>
+
+<head>
+    <title>first test</title>
+</head>
+
+<body>
+
+    <h1>Register confirm</h1>
+    <p>Please check your email for the code</p>
+
+    <form method="POST" action="register_confirm">
+        <label for="activationcode">Activation code</label>
+        <input type="text" name="activationcode"><br>
+
+        <input type="submit">
+    </form>
+
+    {{#if register_confirm_success}}
+        Your account was confirmed! <br>
+        <a href="{{login_redirect_back}}">Continue</a>
+    {{/if}}
+
+    {{#if register_confirm_failure}}
+        Code incorrect.
+    {{/if}}
+
+
+
+
+</body>
+</html>

@@ -9,11 +9,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ProductHandler {
-    public static String handleProducts(Request req, Response res) {
+    public static String handleShowProduct(Request req, Response res) {
         Product product = Main.management.getProduct(req.params(":id"));
         Map<String, Object> model = new HashMap<>();
         model.put("product", product);
 
-        return Main.render("product", model);
+        return Main.render("product/show", model);
+    }
+
+    public static String handleCreateProduct(Request req, Response res) {
+        Map<String, Object> model = new HashMap<>();
+        return Main.render("product/create", model);
     }
 }

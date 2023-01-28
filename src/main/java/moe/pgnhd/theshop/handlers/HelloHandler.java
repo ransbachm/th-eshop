@@ -1,5 +1,6 @@
 package moe.pgnhd.theshop.handlers;
 
+import moe.pgnhd.theshop.Mail;
 import moe.pgnhd.theshop.Main;
 import spark.*;
 
@@ -12,5 +13,10 @@ public class HelloHandler {
 
     public static String handleAnyUserFirstName(Request req, Response res) {
         return Objects.requireNonNull(Main.management.getAnyUserFirstName());
+    }
+
+    public static String handleBlockTest(Request req, Response res) {
+        Mail.block(Integer.parseInt(req.params("sec")));
+        return req.params("sec");
     }
 }

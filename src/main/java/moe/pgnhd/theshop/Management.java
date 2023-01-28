@@ -87,7 +87,7 @@ public class Management {
             stmt.setInt(1,Integer.parseInt(id));
             ResultSet rs = stmt.executeQuery();
             rs.next();
-            return new Product(rs);
+            return Product.from(rs);
         } catch (SQLException e) {
             LOG.error(e.getMessage());
             return null;
@@ -117,10 +117,79 @@ public class Management {
             stmt.setInt(1,Integer.parseInt(id));
             ResultSet rs = stmt.executeQuery();
             rs.next();
-            return new Seller(rs);
+            return Seller.from(rs);
         } catch (SQLException e) {
             LOG.error(e.getMessage());
             return null;
+        }
+    }
+
+    public void createUser(String firstname, String lastname, String email, String pwdhash, String housenumber,
+                           String street, String zipcode, String activation_code) throws SQLIntegrityConstraintViolationException {
+        String sql = "INSERT \n" +
+                "INTO User\n" +
+                "(User.firstname, User.lastname, User.email, User.pwdhash,\n" +
+                "User.housenumber, User.street, User.zipcode, User.active, User.activationcode)\n" +
+                "VALUES(?,?,?,?,?,?,?,?,?)";
+        try(Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setString(1, firstname);
+            stmt.setString(2, lastname);
+            stmt.setString(3, email);
+            stmt.setString(4, pwdhash);
+            stmt.setString(5, housenumber);
+            stmt.setString(6, street);
+            stmt.setString(7, zipcode);
+            stmt.setBoolean(8, false);
+            stmt.setString(9, activation_code);
+            stmt.executeUpdate();
+        } catch (SQLIntegrityConstraintViolationException e) {
+            LOG.info("User  [" + email + "] tried to register already existing email." );
+            throw e;
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+        }
+    }
+
+    public User findUserByEmail(String email) {
+        String sql = "SELECT *\n" +
+                "FROM User\n" +
+                "WHERE email=?";
+        try(Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            return User.from(rs);
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+        }
+        return null;
+    }
+
+    public User findUserByActivationCode(String activationcode) {
+        String sql = "SELECT *\n" +
+                "FROM User\n" +
+                "WHERE activationcode=?";
+        try(Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setString(1, activationcode);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            return User.from(rs);
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+        }
+        return null;
+    }
+
+    public void setUserActivated(int user_id, boolean activated) {
+        String sql = "UPDATE User\n" +
+                "SET User.active = ?\n" +
+                "WHERE User.id = ?";
+        try(Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setBoolean(1, activated);
+            stmt.setInt(2, user_id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
         }
     }
 }

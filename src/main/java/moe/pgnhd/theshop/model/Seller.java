@@ -8,15 +8,15 @@ public class Seller implements ResultSetConstructable {
     private String firstname;
     private String lastname;
 
-
-
-    public Seller(int id, String firstname, String lastname) {
-        this.id = id;
-        this.firstname = firstname;
-        this.lastname = lastname;
+    public static Seller from(ResultSet rs) {
+        try {
+            return new Seller(rs);
+        } catch (SQLException e) {
+            return null;
+        }
     }
 
-    public Seller(ResultSet rs) throws SQLException {
+    private Seller(ResultSet rs) throws SQLException {
         this.id = rs.getInt("Seller.id");
         this.firstname = rs.getString("Seller.firstname");
         this.lastname = rs.getString("Seller.lastname");

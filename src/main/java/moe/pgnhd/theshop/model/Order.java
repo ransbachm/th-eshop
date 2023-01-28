@@ -10,22 +10,20 @@ public class Order implements ResultSetConstructable {
     private Date date;
     private User user;
 
-    public Order(int id, Date date, User user) {
-        this.id = id;
-        this.date = date;
-        this.user = user;
-    }
 
-    public Order(ResultSet rs) throws SQLException {
+    public static Order from(ResultSet rs) {
         try {
-            this.id = rs.getInt("Order.id");
-            this.date = rs.getDate("Order.date");
-            this.user = new User(rs);
+            return new Order(rs);
         } catch (SQLException e) {
-            // object will have null attributes
+            return null;
         }
     }
 
+    private Order(ResultSet rs) throws SQLException {
+        this.id = rs.getInt("Order.id");
+        this.date = rs.getDate("Order.date");
+        this.user = User.from(rs);
+    }
     public void addOrderItem(OrderItem orderItem) {
         orderItems.add(orderItem);
     }

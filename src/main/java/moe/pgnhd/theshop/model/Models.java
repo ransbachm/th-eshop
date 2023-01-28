@@ -51,13 +51,13 @@ public class Models {
             while(rs.next()) {
                 if(i < rs.getInt(table_one + "." + pk_one)) {
                     i++;
-                    res.add((T) one.getDeclaredConstructor(ResultSet.class).newInstance(rs));
+                    res.add((T) one.getMethod("from", ResultSet.class).invoke(null, rs));
                 }
                 T obj = res.get(i - 1);
                 Field container_field = obj.getClass().getDeclaredField(container_name_one);
                 container_field.setAccessible(true); // Ignore private attribute
                 List<Object> container = (List<Object>) container_field.get(obj);
-                container.add(many.getDeclaredConstructor(ResultSet.class).newInstance(rs));
+                container.add(many.getMethod("from", ResultSet.class).invoke(null, rs));
             }
         } catch (SQLException e) {
             LOG.error(e.getMessage());
@@ -96,7 +96,7 @@ public class Models {
         List<T> res = new ArrayList<>();
         try {
             while(rs.next()) {
-                T obj = (T) what.getDeclaredConstructor(ResultSet.class).newInstance(rs);
+                T obj = (T) what.getMethod("from", ResultSet.class).invoke(null, rs);
                 res.add(obj);
             }
             return res;

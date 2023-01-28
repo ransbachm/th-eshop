@@ -10,24 +10,20 @@ public class Product implements ResultSetConstructable {
     private int available;
     private Seller seller;
 
-    public Product(int id, double price, String name, int available, Seller seller) {
-        this.id = id;
-        this.price = price;
-        this.name = name;
-        this.available = available;
-        this.seller = seller;
+    public static Product from(ResultSet rs) {
+        try {
+            return new Product(rs);
+        } catch (SQLException e) {
+            return null;
+        }
     }
 
-    public Product(ResultSet rs) throws SQLException {
-        try {
-            this.id = rs.getInt("Product.id");
-            this.price = rs.getDouble("Product.price");
-            this.name = rs.getString("Product.name");
-            this.available = rs.getInt("Product.available");
-            this.seller = new Seller(rs);
-        } catch (SQLException e) {
-            // object will have null attributes
-        }
+    private Product(ResultSet rs) throws SQLException {
+        this.id = rs.getInt("Product.id");
+        this.price = rs.getDouble("Product.price");
+        this.name = rs.getString("Product.name");
+        this.available = rs.getInt("Product.available");
+        this.seller = Seller.from(rs);
     }
 
 

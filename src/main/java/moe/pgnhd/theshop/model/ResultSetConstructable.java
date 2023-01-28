@@ -2,9 +2,10 @@ package moe.pgnhd.theshop.model;
 
 /**
  * Class can be constructed from ResultSet.
- * Class needs to have single parameter constructor that takes java.sql.ResultSet.
- * In case a table column is not found the constructor should not
- * throw but instead leave the object with null attributes.
+ * Class needs to have single parameter static method that takes java.sql.ResultSet.
+ * And returns a constructed object
+ * In case a table column is not found the method should not
+ * throw but instead return null.
  * Table name will be equal to class name.
  * Not enforced by Java!
  */
