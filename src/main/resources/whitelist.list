@@ -6,3 +6,5 @@ exact /register
 exact /login
 
 start /static/
+
+exact /favicon.ico
