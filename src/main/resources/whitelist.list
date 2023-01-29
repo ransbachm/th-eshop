@@ -1,0 +1,8 @@
+exact /
+exact /hello
+exact /hello2
+exact /register_confirm
+exact /register
+exact /login
+
+start /static/
