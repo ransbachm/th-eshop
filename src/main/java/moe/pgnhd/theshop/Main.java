@@ -23,7 +23,7 @@ public class Main {
     private static Logger LOG = LoggerFactory.getLogger(Main.class);
     public static Management management;
     public static Dotenv dotenv = Dotenv.load();
-    static boolean isDev = true;
+    static boolean isDev = Boolean.parseBoolean(dotenv.get("DEV_MODE"));
 
     private static Handlebars hbs;
 
