@@ -1,14 +1,15 @@
 <html>
 
 <head>
-    <title>first test</title>
+    {{>templates/partials/common}}
+    <title>Th_Eshop - Register you account</title>
 </head>
 
 <body>
+    {{>templates/partials/header}}
 
     <h1>Register</h1>
     <p>Or <a href="/login">Login</a></p>
-
 
     <form method="POST" action="register">
         <label for="firstname">First name</label>
@@ -46,7 +47,6 @@
         The confirmation email could not be sent.
     {{/if}}
 
-
-
+    {{>templates/partials/footer}}
 </body>
 </html>

@@ -1,10 +1,12 @@
 <html>
-    <body>
-    <header>
-        <a href="/">
-            <h1>Th_Eshop</h1>
-        </a>
-    </header>
+
+<head>
+    {{>templates/partials/common}}
+    <title>Th_Eshop - Conform your account</title>
+</head>
+
+<body>
+    {{>templates/partials/header}}
 
     <h2>Products this seller sells:</h2>
     <p>{{seller}}</p>
@@ -13,11 +15,12 @@
         <th>Price</th>
         {{#each products}}
             <tr>
-                <td>{{name}}</td>
+                <td><a href="/product/{{id}}">{{name}}</a></td>
                 <td>{{price}}</td>
             </tr>
         {{/each}}
     </table>
 
-    </body>
+    {{>templates/partials/footer}}
+</body>
 </html>

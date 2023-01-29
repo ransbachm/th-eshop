@@ -1,23 +1,18 @@
 <html>
 
 <head>
-    <title>first test</title>
+    {{>templates/partials/common}}
+    <title>Th_Eshop - Everything you didn't know you needed</title>
 </head>
 
 <body>
+    {{>templates/partials/header}}
 
-    <h1>Th_eShop</h1>
-    <header id = header> line 1 My account
-
-
-        <div>search
-        <form action="search" method="POST">
-            <label for="query"> test</label>
-            <input type="text" name="query" placeholder="type search query here">
-            <input type="submit" value="Search">
-        </form>
-        </div>
-     </header>
+    <form action="search" method="POST">
+        <label for="query" hidden>Search</label>
+        <input type="text" name="query" placeholder="Search Th_Eshop">
+        <input type="submit" value="Search">
+    </form>
 
     <p>{{testtext}}</p>
     <p><a href="hello">Hello</a></p>
@@ -25,7 +20,6 @@
     <p><a href="block/3">Block 3s</a></p>
     <p><a href="my/orders">My Orders</a></p>
 
-
-
+    {{>templates/partials/footer}}
 </body>
 </html>

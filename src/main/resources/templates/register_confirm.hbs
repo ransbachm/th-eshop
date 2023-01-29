@@ -1,10 +1,12 @@
 <html>
 
 <head>
-    <title>first test</title>
+    {{>templates/partials/common}}
+    <title>Th_Eshop - Conform your account</title>
 </head>
 
 <body>
+    {{>templates/partials/header}}
 
     <h1>Register confirm</h1>
     <p>Please check your email for the code</p>
@@ -25,8 +27,6 @@
         Code incorrect.
     {{/if}}
 
-
-
-
+    {{>templates/partials/footer}}
 </body>
 </html>

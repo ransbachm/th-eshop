@@ -2,15 +2,12 @@
 <head>
 
 </head>
-
+    {{>templates/partials/common}}
+    <title>Th_Eshop - Search</title>
 <body>
+    {{>templates/partials/header}}
 
-    <style>
-
-    </style>
-
-    <header><a href="/"><h1>Th_Eshop</h1></a></header>
-    <p>Search:</p>
+    <h2>[n] Results for "[search_query]"</h2>
     <table>
         {{#if products}}
             <tr>
@@ -31,6 +28,6 @@
             No products found.
         {{/unless}}
     </table>
-
+    {{>templates/partials/footer}}
 </body>
 </html>

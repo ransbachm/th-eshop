@@ -1,11 +1,14 @@
 <html>
 <head>
-
+    {{>templates/partials/common}}
+    <title>Th_Eshop - Your orders</title>
 </head>
 
 <body>
+    {{>templates/partials/header}}
 
-    <style>
+
+<style>
         table {
             border: 0.1rem solid black;
         }
@@ -15,7 +18,7 @@
         }
 
         .inner_table_cell {
-        //padding: 2rem;
+            //padding: 2rem;
         }
 
     </style>
@@ -41,5 +44,6 @@
         {{/each}}
     </table>
 
+    {{>templates/partials/footer}}
 </body>
 </html>
