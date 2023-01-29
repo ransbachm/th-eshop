@@ -101,7 +101,6 @@ public class Management {
         try(Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1,Integer.parseInt(id));
             ResultSet rs = stmt.executeQuery();
-            rs.next();
             return Models.list_of(rs, Product.class);
         } catch (SQLException e) {
             LOG.error(e.getMessage());
