@@ -2,13 +2,14 @@ package moe.pgnhd.theshop.model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Seller implements ResultSetConstructable {
-    private int id;
-    private String firstname;
-    private String lastname;
+public class Seller extends User implements ResultSetConstructable {
+    protected double balance;
+    protected List<Product> products = new ArrayList<>();
 
-    public static Seller from(ResultSet rs) {
+    static Seller from(ResultSet rs) {
         try {
             return new Seller(rs);
         } catch (SQLException e) {
@@ -16,10 +17,9 @@ public class Seller implements ResultSetConstructable {
         }
     }
 
-    private Seller(ResultSet rs) throws SQLException {
-        this.id = rs.getInt("Seller.id");
-        this.firstname = rs.getString("Seller.firstname");
-        this.lastname = rs.getString("Seller.lastname");
+    protected Seller(ResultSet rs) throws SQLException {
+        super(rs);
+        this.balance = rs.getDouble("Seller.balance");
     }
 
     @Override
@@ -49,5 +49,13 @@ public class Seller implements ResultSetConstructable {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 }

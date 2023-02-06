@@ -5,13 +5,13 @@ import java.sql.SQLException;
 import java.util.*;
 
 public class Order implements ResultSetConstructable {
-    private int id;
-    private List<OrderItem> orderItems = new ArrayList<>();
-    private Date date;
-    private User user;
+    protected int id;
+    protected List<OrderItem> orderItems = new ArrayList<>();
+    protected Date date;
+    protected User user;
 
 
-    public static Order from(ResultSet rs) {
+    static Order from(ResultSet rs) {
         try {
             return new Order(rs);
         } catch (SQLException e) {
@@ -19,7 +19,7 @@ public class Order implements ResultSetConstructable {
         }
     }
 
-    private Order(ResultSet rs) throws SQLException {
+    protected Order(ResultSet rs) throws SQLException {
         this.id = rs.getInt("Order.id");
         this.date = rs.getDate("Order.date");
         this.user = User.from(rs);

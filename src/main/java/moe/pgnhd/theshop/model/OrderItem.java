@@ -4,12 +4,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class OrderItem implements ResultSetConstructable {
-    private int id;
-    private int amount;
-    private double price;
-    private Product product;
+    protected int id;
+    protected int amount;
+    protected double price;
+    protected Product product;
+    protected Order order;
 
-    public static OrderItem from(ResultSet rs) {
+    static OrderItem from(ResultSet rs) {
         try {
             return new OrderItem(rs);
         } catch (SQLException e) {
@@ -17,11 +18,12 @@ public class OrderItem implements ResultSetConstructable {
         }
     }
 
-    private OrderItem(ResultSet rs) throws SQLException {
+    protected OrderItem(ResultSet rs) throws SQLException {
         this.id = rs.getInt("OrderItem.id");
         this.amount = rs.getInt("OrderItem.amount");
         this.price = rs.getDouble("OrderItem.price");
         this.product = Product.from(rs);
+        this.order = Order.from(rs);
     }
 
     public int getId() {
@@ -54,5 +56,13 @@ public class OrderItem implements ResultSetConstructable {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 }

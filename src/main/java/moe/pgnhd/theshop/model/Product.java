@@ -4,13 +4,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Product implements ResultSetConstructable {
-    private int id;
-    private double price;
-    private String name;
-    private int available;
+    protected int id;
+    protected double price;
+    protected String name;
+    protected int available;
+    protected String description;
+
     private Seller seller;
 
-    public static Product from(ResultSet rs) {
+    static Product from(ResultSet rs) {
         try {
             return new Product(rs);
         } catch (SQLException e) {
@@ -18,11 +20,12 @@ public class Product implements ResultSetConstructable {
         }
     }
 
-    private Product(ResultSet rs) throws SQLException {
+    protected Product(ResultSet rs) throws SQLException {
         this.id = rs.getInt("Product.id");
         this.price = rs.getDouble("Product.price");
         this.name = rs.getString("Product.name");
         this.available = rs.getInt("Product.available");
+        this.description = rs.getString("Product.description");
         this.seller = Seller.from(rs);
     }
 
@@ -64,7 +67,15 @@ public class Product implements ResultSetConstructable {
         return seller;
     }
 
-    public void getSeller(Seller seller) {
+    public void setSeller(Seller seller) {
         this.seller = seller;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
