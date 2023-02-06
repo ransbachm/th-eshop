@@ -4,16 +4,13 @@ import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
 import com.github.jknack.handlebars.io.FileTemplateLoader;
 import io.github.cdimascio.dotenv.Dotenv;
-import moe.pgnhd.theshop.handlers.*;
 import moe.pgnhd.theshop.handlers.Filters.RequireLogin;
+import moe.pgnhd.theshop.handlers.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import spark.Request;
-import spark.Response;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Map;
 
 import static spark.Spark.*;
@@ -46,9 +43,6 @@ public class Main {
             res.body("<h2>500 Internal Server Error</h2>");
         });
 
-        initExceptionHandler(e -> {LOG.error("ASD");});
-
-
         try {
             management = new Management();
         } catch (SQLException e) {
@@ -72,11 +66,7 @@ public class Main {
         // require logged-in user for paths below
         before("*", RequireLogin::filterRequireLogin);
 
-        get("/", (Request req, Response res) -> {
-            Map<String, Object> model = new HashMap<>();
-            model.put("testtext", "Rendered");
-            return render("index", model);
-        });
+        get("/", (req,res) -> render("index", null));
 
 
         get("hello", HelloHandler::handleHelloRequest);
@@ -96,7 +86,7 @@ public class Main {
         get("block/:sec", HelloHandler::handleBlockTest);
 
 
-        post("search", SearchHandler::handleSearch);
+        get("search", SearchHandler::handleSearch);
     }
 
 }
