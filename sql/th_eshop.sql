@@ -1,96 +1,227 @@
--- --------------------------------------------------------
--- Host:                         127.0.0.1
--- Server Version:               10.9.3-MariaDB-1:10.9.3+maria~ubu2204 - mariadb.org binary distribution
--- Server Betriebssystem:        debian-linux-gnu
--- HeidiSQL Version:             12.1.0.6537
--- --------------------------------------------------------
+-- phpMyAdmin SQL Dump
+-- version 5.2.0
+-- https://www.phpmyadmin.net/
+--
+-- Host: db
+-- Generation Time: Feb 06, 2023 at 11:17 AM
+-- Server version: 10.10.2-MariaDB-1:10.10.2+maria~ubu2204
+-- PHP Version: 8.0.27
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8 */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
+--
+-- Database: `th_eshop`
+--
 
--- Exportiere Datenbank Struktur für th_eshop
-CREATE DATABASE IF NOT EXISTS `th_eshop` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
-USE `th_eshop`;
+-- --------------------------------------------------------
 
--- Exportiere Struktur von Tabelle th_eshop.Order
-CREATE TABLE IF NOT EXISTS `Order` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+--
+-- Table structure for table `Order`
+--
+
+CREATE TABLE `Order` (
+  `id` int(11) NOT NULL,
   `date` date NOT NULL,
-  `user` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user` (`user`) USING BTREE,
-  CONSTRAINT `Order_ibfk_1` FOREIGN KEY (`user`) REFERENCES `User` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+  `user` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Daten Export vom Benutzer nicht ausgewählt
+-- --------------------------------------------------------
 
--- Exportiere Struktur von Tabelle th_eshop.OrderItem
-CREATE TABLE IF NOT EXISTS `OrderItem` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+--
+-- Table structure for table `OrderItem`
+--
+
+CREATE TABLE `OrderItem` (
+  `id` int(11) NOT NULL,
   `amount` int(11) NOT NULL,
   `price` decimal(15,2) NOT NULL,
   `product` int(11) NOT NULL,
-  `order` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `order` (`order`) USING BTREE,
-  KEY `product` (`product`) USING BTREE,
-  CONSTRAINT `OrderItem_ibfk_1` FOREIGN KEY (`order`) REFERENCES `Order` (`id`),
-  CONSTRAINT `OrderItem_ibfk_2` FOREIGN KEY (`product`) REFERENCES `Product` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+  `order` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Daten Export vom Benutzer nicht ausgewählt
+-- --------------------------------------------------------
 
--- Exportiere Struktur von Tabelle th_eshop.Product
-CREATE TABLE IF NOT EXISTS `Product` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+--
+-- Table structure for table `Product`
+--
+
+CREATE TABLE `Product` (
+  `id` int(11) NOT NULL,
   `price` decimal(15,2) NOT NULL,
   `name` varchar(255) NOT NULL,
   `available` int(11) NOT NULL,
-  `seller` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `seller` (`seller`) USING BTREE,
-  CONSTRAINT `Product_ibfk_1` FOREIGN KEY (`seller`) REFERENCES `Seller` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+  `description` text NOT NULL,
+  `seller` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Daten Export vom Benutzer nicht ausgewählt
+-- --------------------------------------------------------
 
--- Exportiere Struktur von Tabelle th_eshop.Seller
-CREATE TABLE IF NOT EXISTS `Seller` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `firstname` varchar(255) NOT NULL,
-  `lastname` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+--
+-- Table structure for table `Seller`
+--
 
--- Daten Export vom Benutzer nicht ausgewählt
+CREATE TABLE `Seller` (
+  `id` int(11) NOT NULL,
+  `balance` decimal(15,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Exportiere Struktur von Tabelle th_eshop.User
-CREATE TABLE IF NOT EXISTS `User` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Session`
+--
+
+CREATE TABLE `Session` (
+  `id` varchar(255) NOT NULL,
+  `until` timestamp NOT NULL,
+  `logged_in` tinyint(1) NOT NULL,
+  `user` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `User`
+--
+
+CREATE TABLE `User` (
+  `id` int(11) NOT NULL,
   `firstname` varchar(255) NOT NULL,
   `lastname` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `pwdhash` varchar(255) NOT NULL,
+  `salt` varchar(255) NOT NULL,
   `housenumber` varchar(255) NOT NULL,
   `street` varchar(255) NOT NULL,
   `zipcode` varchar(255) NOT NULL,
   `active` tinyint(1) NOT NULL,
-  `activationcode` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4;
+  `activationcode` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Daten Export vom Benutzer nicht ausgewählt
+--
+-- Indexes for dumped tables
+--
 
-/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
-/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
-/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+--
+-- Indexes for table `Order`
+--
+ALTER TABLE `Order`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user` (`user`) USING BTREE;
+
+--
+-- Indexes for table `OrderItem`
+--
+ALTER TABLE `OrderItem`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `order` (`order`) USING BTREE,
+  ADD KEY `product` (`product`) USING BTREE;
+
+--
+-- Indexes for table `Product`
+--
+ALTER TABLE `Product`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `seller` (`seller`) USING BTREE;
+
+--
+-- Indexes for table `Seller`
+--
+ALTER TABLE `Seller`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `Session`
+--
+ALTER TABLE `Session`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user` (`user`);
+
+--
+-- Indexes for table `User`
+--
+ALTER TABLE `User`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `Order`
+--
+ALTER TABLE `Order`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `OrderItem`
+--
+ALTER TABLE `OrderItem`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `Product`
+--
+ALTER TABLE `Product`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `Seller`
+--
+ALTER TABLE `Seller`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `User`
+--
+ALTER TABLE `User`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `Order`
+--
+ALTER TABLE `Order`
+  ADD CONSTRAINT `Order_ibfk_1` FOREIGN KEY (`user`) REFERENCES `User` (`id`);
+
+--
+-- Constraints for table `OrderItem`
+--
+ALTER TABLE `OrderItem`
+  ADD CONSTRAINT `OrderItem_ibfk_1` FOREIGN KEY (`order`) REFERENCES `Order` (`id`),
+  ADD CONSTRAINT `OrderItem_ibfk_2` FOREIGN KEY (`product`) REFERENCES `Product` (`id`);
+
+--
+-- Constraints for table `Product`
+--
+ALTER TABLE `Product`
+  ADD CONSTRAINT `Product_ibfk_1` FOREIGN KEY (`seller`) REFERENCES `Seller` (`id`);
+
+--
+-- Constraints for table `Seller`
+--
+ALTER TABLE `Seller`
+  ADD CONSTRAINT `Seller_ibfk_1` FOREIGN KEY (`id`) REFERENCES `User` (`id`);
+
+--
+-- Constraints for table `Session`
+--
+ALTER TABLE `Session`
+  ADD CONSTRAINT `Session_ibfk_1` FOREIGN KEY (`user`) REFERENCES `User` (`id`);
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
