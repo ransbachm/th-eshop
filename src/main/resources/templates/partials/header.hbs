@@ -1,14 +1,28 @@
 <link rel="stylesheet" href="/static/css/partials/header.css">
+<link rel="stylesheet" href="/static/css/form.css">
 <nav>
     <ul class="navbar">
         <li>
             <a href="/">Th_Eshop</a>
         </li>
+
+        <li>
+                     <form action="search" method="GET" id="headerform">
+                        <label for="query" hidden>Search</label>
+                        <input type="text" name="query" placeholder="Search Th_Eshop">
+                        <input type="submit" value="Search">
+                    </form>
+        </li>
+
         <li>
             <a href="/login">Login</a>
         </li>
+
         <li>
             <a href="/register">Register</a>
+        </li>
+        <li>
+            <a href="/profile">Profile</a>
         </li>
     </ul>
 </nav>

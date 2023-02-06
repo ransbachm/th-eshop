@@ -18,8 +18,8 @@
             {{#each products}}
                 <tr>
                     <td><a href="/product/{{id}}">{{name}}</a> </td>
-                    <td>{{price}}</td>
-                    <td>{{seller}}</td>
+                    <td>{{price}}€</td>
+                    <td><a href="/product/{{seller.id}}">{{seller}}</a></td>
                 </tr>
             {{/each}}
         {{/if}}
