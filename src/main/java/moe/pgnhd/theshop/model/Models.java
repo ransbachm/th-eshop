@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -51,13 +52,16 @@ public class Models {
             while(rs.next()) {
                 if(i < rs.getInt(table_one + "." + pk_one)) {
                     i++;
-                    res.add((T) one.getMethod("from", ResultSet.class).invoke(null, rs));
+                    Method from = one.getDeclaredMethod("from", ResultSet.class);
+                    res.add((T) from.invoke(null, rs));
                 }
                 T obj = res.get(i - 1);
                 Field container_field = obj.getClass().getDeclaredField(container_name_one);
                 container_field.setAccessible(true); // Ignore private attribute
                 List<Object> container = (List<Object>) container_field.get(obj);
-                container.add(many.getMethod("from", ResultSet.class).invoke(null, rs));
+                Method from = many.getDeclaredMethod("from", ResultSet.class);
+                from.setAccessible(true);
+                container.add(from.invoke(null, rs));
             }
         } catch (SQLException e) {
             LOG.error(e.getMessage());
@@ -96,7 +100,8 @@ public class Models {
         List<T> res = new ArrayList<>();
         try {
             while(rs.next()) {
-                T obj = (T) what.getMethod("from", ResultSet.class).invoke(null, rs);
+                Method from = what.getDeclaredMethod("from", ResultSet.class);
+                T obj = (T) from.invoke(null, rs);
                 res.add(obj);
             }
             return res;
@@ -109,4 +114,17 @@ public class Models {
         }
     }
 
+    public static <T extends ResultSetConstructable> T single(ResultSet rs, Class<T> what) {
+        try {
+            rs.next();
+            Method from = what.getDeclaredMethod("from", ResultSet.class);
+            return (T) from.invoke(null, rs);
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+            return null;
+        } catch (Exception e) {
+            LOG.error(e.getMessage());
+            return null;
+        }
+    }
 }
