@@ -7,6 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.*;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 public class Management {
@@ -65,6 +68,7 @@ public class Management {
         String sql = "SELECT *\n" +
                 "FROM Product\n" +
                 "JOIN Seller ON Product.seller = Seller.id\n" +
+                "JOIN User ON Seller.id = User.id\n" +
                 "WHERE Product.name LIKE ?\n" +
                 "ORDER BY Product.id ASC";
 
@@ -82,12 +86,12 @@ public class Management {
        String sql =  "Select *\n" +
                      "FROM Product\n" +
                      "JOIN Seller on Product.seller = Seller.id\n" +
+                     "JOIN User ON Seller.id = User.id\n" +
                      "WHERE Product.id = ?";
         try(Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1,Integer.parseInt(id));
             ResultSet rs = stmt.executeQuery();
-            rs.next();
-            return Product.from(rs);
+            return Models.single(rs, Product.class);
         } catch (SQLException e) {
             LOG.error(e.getMessage());
             return null;
@@ -111,35 +115,36 @@ public class Management {
     public Seller getSeller(String id){
         String sql = "SELECT *\n" +
                      "FROM Seller\n" +
+                     "JOIN User ON Seller.id = User.id\n" +
                      "WHERE Seller.id = ?";
         try(Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1,Integer.parseInt(id));
             ResultSet rs = stmt.executeQuery();
-            rs.next();
-            return Seller.from(rs);
+            return Models.single(rs, Seller.class);
         } catch (SQLException e) {
             LOG.error(e.getMessage());
             return null;
         }
     }
 
-    public void createUser(String firstname, String lastname, String email, String pwdhash, String housenumber,
+    public void createUser(String firstname, String lastname, String email, String pwdhash, String salt, String housenumber,
                            String street, String zipcode, String activation_code) throws SQLIntegrityConstraintViolationException {
         String sql = "INSERT \n" +
                 "INTO User\n" +
-                "(User.firstname, User.lastname, User.email, User.pwdhash,\n" +
+                "(User.firstname, User.lastname, User.email, User.pwdhash, User.salt,\n" +
                 "User.housenumber, User.street, User.zipcode, User.active, User.activationcode)\n" +
-                "VALUES(?,?,?,?,?,?,?,?,?)";
+                "VALUES(?,?,?,?,?,?,?,?,?,?)";
         try(Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, firstname);
             stmt.setString(2, lastname);
             stmt.setString(3, email);
             stmt.setString(4, pwdhash);
-            stmt.setString(5, housenumber);
-            stmt.setString(6, street);
-            stmt.setString(7, zipcode);
-            stmt.setBoolean(8, false);
-            stmt.setString(9, activation_code);
+            stmt.setString(5, salt);
+            stmt.setString(6, housenumber);
+            stmt.setString(7, street);
+            stmt.setString(8, zipcode);
+            stmt.setBoolean(9, false);
+            stmt.setString(10, activation_code);
             stmt.executeUpdate();
         } catch (SQLIntegrityConstraintViolationException e) {
             LOG.info("User  [" + email + "] tried to register already existing email." );
@@ -156,8 +161,7 @@ public class Management {
         try(Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, email);
             ResultSet rs = stmt.executeQuery();
-            rs.next();
-            return User.from(rs);
+            return Models.single(rs, User.class);
         } catch (SQLException e) {
             LOG.error(e.getMessage());
         }
@@ -171,8 +175,7 @@ public class Management {
         try(Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, activationcode);
             ResultSet rs = stmt.executeQuery();
-            rs.next();
-            return User.from(rs);
+            return Models.single(rs, User.class);
         } catch (SQLException e) {
             LOG.error(e.getMessage());
         }
@@ -191,4 +194,68 @@ public class Management {
             LOG.error(e.getMessage());
         }
     }
+
+    public User getUserIfSessionValid(String id) {
+        String sql = "SELECT * \n" +
+                "FROM `Session`\n" +
+                "JOIN User ON `Session`.user = User.id\n" +
+                "WHERE `Session`.until < NOW()\n" +
+                "AND Session.id = ?\n" +
+                "LIMIT 1";
+        try(Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setString(1, id);
+            ResultSet rs = stmt.executeQuery();
+            return Models.single(rs, User.class);
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+            return null;
+        }
+    }
+
+    public Session createSession() {
+        String sql = "INSERT INTO Session\n" +
+                "(id, until, user, logged_in) VALUES\n" +
+                "(?, ?, NULL, FALSE)";
+        String id = Util.randomString(64);
+        Instant until = LocalDateTime.now().plusYears(1).toInstant(ZoneOffset.UTC);
+        try(Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setString(1, id);
+            stmt.setTimestamp(2, Timestamp.from(until));
+            stmt.executeUpdate();
+            return new Session(id, until);
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+            return null;
+        }
+    }
+
+    public void logInSession(String session_id, User user) {
+        String sql = "UPDATE Session \n" +
+                "SET Session.user = ?, \n" +
+                "Session.logged_in = TRUE\n" +
+                "WHERE Session.id = ?\n";
+        try(Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setInt(1, user.getId());
+            stmt.setString(2, session_id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+        }
+    }
+
+    public Session getSession(String session_id) {
+        String sql = "SELECT * FROM Session\n" +
+                "LEFT JOIN User ON Session.user = User.id\n" +
+                "WHERE Session.id = ?";
+
+        try(Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setString(1, session_id);
+            ResultSet rs = stmt.executeQuery();
+            return Models.single(rs, Session.class);
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+            return null;
+        }
+    }
+
 }
