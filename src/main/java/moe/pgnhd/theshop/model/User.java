@@ -4,18 +4,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class User implements ResultSetConstructable {
-    private int id;
-    private String firstname;
-    private String lastname;
-    private String email;
-    private String pwdhash;
-    private String housenumber;
-    private String street;
-    private String zipcode;
-    private boolean active;
-    private String activationcode;
+    protected int id;
+    protected String firstname;
+    protected String lastname;
+    protected String email;
+    protected String pwdhash;
+    protected String salt;
+    protected String housenumber;
+    protected String street;
+    protected String zipcode;
+    protected boolean active;
+    protected String activationcode;
 
-    public static User from(ResultSet rs) {
+    static User from(ResultSet rs) {
         try {
             return new User(rs);
         } catch (SQLException e) {
@@ -24,12 +25,13 @@ public class User implements ResultSetConstructable {
 
     }
 
-    private User(ResultSet rs) throws SQLException {
+    protected User(ResultSet rs) throws SQLException {
         this.id = rs.getInt("User.id");
         this.firstname = rs.getString("User.firstname");
         this.lastname = rs.getString("User.lastname");
         this.email = rs.getString("User.email");
         this.pwdhash = rs.getString("User.pwdhash");
+        this.salt = rs.getString("User.salt");
         this.housenumber = rs.getString("User.housenumber");
         this.street = rs.getString("User.street");
         this.zipcode = rs.getString("User.zipcode");
@@ -115,5 +117,13 @@ public class User implements ResultSetConstructable {
 
     public void setActivationcode(String activationcode) {
         this.activationcode = activationcode;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 }

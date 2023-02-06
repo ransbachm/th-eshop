@@ -48,8 +48,10 @@ public class RegisterAndLoginHandler {
         String activation_code = Util.randomString(32);
 
         Map<String, Object> model = new HashMap<>();
+        String salt = Util.randomString(20);
 
-        String base64_pwd_hash = calculatePwdHash(password);
+        String base64_pwd_hash = calculatePwdHash(password+salt);
+
 
         User maybe_user = Main.management.findUserByEmail(email);
         if(maybe_user != null) {
@@ -67,7 +69,7 @@ public class RegisterAndLoginHandler {
 
         // Will not be put into db if sending email already fails
         try {
-            Main.management.createUser(firstname, lastname, email, base64_pwd_hash,
+            Main.management.createUser(firstname, lastname, email, base64_pwd_hash, salt,
                     housenumber, street, zipcode, activation_code);
         } catch (SQLIntegrityConstraintViolationException e) {
             model.put("email_not_available", true);
@@ -118,16 +120,20 @@ public class RegisterAndLoginHandler {
         Map<String, Object> model = new HashMap<>();
 
         User user = Main.management.findUserByEmail(req.queryParams("email"));
-        String pwdHash = calculatePwdHash(req.queryParams("password"));
+        String pwdHash;
 
         if(user == null) {
             return wrong_pwd(req, res, model);
-        } else if(!user.isActive()) {
+        }
+
+        pwdHash = calculatePwdHash(req.queryParams("password") + user.getSalt());
+
+        if(!user.isActive()) {
             model.put("user_not_confirmed", true);
             return Main.render("login", model);
         } else if(user.getPwdhash().equals(pwdHash)) {
-            req.session().attribute("user", user);
-            String login_redirect_back = req.session().attribute("login_redirect_back");
+            Main.management.logInSession(req.cookie("t_session_id"), user);
+            String login_redirect_back = req.cookie("login_redirect_back");
             if(login_redirect_back == null) {
                 login_redirect_back = "/";
             }
