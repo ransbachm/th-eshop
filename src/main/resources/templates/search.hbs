@@ -7,7 +7,7 @@
 <body>
     {{>templates/partials/header}}
 
-    <h2>[n] Results for "[search_query]"</h2>
+    <h2>{{result_count}} Results for "{{search_query}}"</h2>
     <table>
         {{#if products}}
             <tr>
