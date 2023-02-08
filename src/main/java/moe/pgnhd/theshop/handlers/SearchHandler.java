@@ -14,6 +14,8 @@ public class SearchHandler {
         List<Product> products = Main.management.searchProducts(req.queryParams("query"));
         Map<String, Object> model = new HashMap<>();
         model.put("products", products);
+        model.put("result_count", products.size());
+        model.put("search_query", req.queryParams("query"));
         return Main.render("search", model);
     }
 }
