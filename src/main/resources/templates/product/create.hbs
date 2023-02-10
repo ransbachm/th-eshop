@@ -3,15 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    {{>templates/partials/common}}
 </head>
 <body>
-
+    {{>templates/partials/header}}
     <header><a href="/"><h1>Th_Eshop</h1></a></header>
 
-    <form>
-        <input type="text" name="">
+    <form method="POST" action="/product/create">
+        <label for="productname">product name</label>
+        <input type="text" name="name"><br>
+
+        <label for="price">product price</label>
+        <input type="number" name="price"><br>
+
+        <lable for = "description">description</lable>
+        <input type = "text"  name = "description"><br>
+
+        <lable for="available">product available</lable>
+        <input type="number" name="available"><br>
+
+    <input type="submit" value="confirm"></input>
     </form>
 
-    <button>no</button>
+    {{#if invalidInput}}
+        <b>Invalid input</b>
+    {{/if}}
+    {{#if notSeller}}<b>not a Seller</b>{{/if}}
+
 </body>
 </html>

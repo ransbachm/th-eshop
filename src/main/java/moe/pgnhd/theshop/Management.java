@@ -258,4 +258,33 @@ public class Management {
         }
     }
 
+    public void registerProduct(String name, double price, int available, String description, int seller){
+        String sql = "INSERT INTO `Product` \n" +
+                "(`price`, `name`, `available`, `description`, `seller`) \n" +
+                "VALUES (?,?,?,?,?)";
+        try(Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setDouble(1, price);
+            stmt.setString(2, name);
+            stmt.setInt(3, available);
+            stmt.setString(4,description);
+            stmt.setInt(5, seller);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+        }
+
+
+    }
+    public Seller getSellerFromSession(Session session) {
+        int id = session.getUser().getId();
+        String sql = "SELECT * FROM Seller JOIN User ON User.id = Seller.id WHERE Seller.id = ?";
+        try (Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            return Models.single(rs, Seller.class);
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+        }
+        return null;
+    }
 }

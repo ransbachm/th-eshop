@@ -81,6 +81,7 @@ public class Main {
 
         get("my/orders", OrderHandler::handleGetOrders);
         get("/product/create", ProductHandler::handleCreateProduct);
+        post("/product/create", ProductHandler::handleCreateProductSubmit);
         get("/product/:id", ProductHandler::handleShowProduct);
         get("/seller/:id", SellerHandler::handleSeller);
         get("block/:sec", HelloHandler::handleBlockTest);
