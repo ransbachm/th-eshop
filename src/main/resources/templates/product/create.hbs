@@ -7,28 +7,31 @@
 </head>
 <body>
     {{>templates/partials/header}}
-    <header><a href="/"><h1>Th_Eshop</h1></a></header>
-
-    <form method="POST" action="/product/create">
+    <h2>Add a product to sell</h2>
+    <form method="POST" action="/product/create" enctype="multipart/form-data">
         <label for="productname">product name</label>
         <input type="text" name="name"><br>
 
         <label for="price">product price</label>
         <input type="number" name="price"><br>
 
-        <lable for = "description">description</lable>
+        <lablel for = "description">description</lablel>
         <input type = "text"  name = "description"><br>
 
-        <lable for="available">product available</lable>
+        <lablel for="available">product available</lablel>
         <input type="number" name="available"><br>
 
-    <input type="submit" value="confirm"></input>
+        <label for="image">image</label>
+        <input type="file" name="image"><br>
+
+        <input type="submit" value="confirm">
     </form>
 
     {{#if invalidInput}}
         <b>Invalid input</b>
     {{/if}}
-    {{#if notSeller}}<b>not a Seller</b>{{/if}}
+    {{#if invalidImageFormat}}This image format is not supported{{/if}}
+    {{#if notSeller}}<b>Error: You are not a seller</b>{{/if}}
 
 </body>
 </html>

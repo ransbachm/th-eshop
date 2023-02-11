@@ -55,12 +55,11 @@ public class Main {
         // Live refresh cannot work with the class path loader
         if (!isDev) {
             hbs = new Handlebars();
-            staticFiles.location("/public/");
         } else {
             hbs = new Handlebars(new FileTemplateLoader(
                     "src/main/resources/"));
-            staticFiles.externalLocation("src/main/resources/public");
         }
+        staticFiles.externalLocation("public");
 
         port(4567);
         // require logged-in user for paths below

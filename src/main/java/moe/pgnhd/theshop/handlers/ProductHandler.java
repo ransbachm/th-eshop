@@ -1,15 +1,31 @@
 package moe.pgnhd.theshop.handlers;
 
 import moe.pgnhd.theshop.Main;
+import moe.pgnhd.theshop.Util;
 import moe.pgnhd.theshop.model.Product;
 import moe.pgnhd.theshop.model.Seller;
+import moe.pgnhd.theshop.model.User;
 import spark.Request;
 import spark.Response;
 
+import javax.imageio.ImageIO;
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletException;
+import javax.servlet.http.Part;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ProductHandler {
+    private static Path uploadDir = Paths.get("public/upload/product");
+
     public static String handleShowProduct(Request req, Response res) {
         Product product = Main.management.getProduct(req.params(":id"));
         Map<String, Object> model = new HashMap<>();
@@ -26,27 +42,70 @@ public class ProductHandler {
     public static String handleCreateProductSubmit(Request req, Response res){
         Map<String, Object> model = new HashMap<>();
 
-        Seller seller = Main.management.getSellerFromSession(req.attribute("t_session"));
-        int sellerID;
-        try {
-             sellerID = seller.getId();
-        } catch (NullPointerException e) {
+        // Required for file upload
+        req.attribute("org.eclipse.jetty.multipartConfig",
+                new MultipartConfigElement(uploadDir.resolve("tmp.tmp").toString()));
+        uploadDir.toFile().mkdirs();
+
+        User user = req.attribute("user");
+        Seller seller = Main.management.getSellerFromUser(user);
+        if(seller == null) {
             model.put("notSeller", true);
             return Main.render("product/create", model);
         }
+        int sellerID = seller.getId();
+        int productID;
 
         try {
             double price = Double.parseDouble(req.queryParams("price"));
             String name = req.queryParams("name").trim();
             String description = req.queryParams("description").trim();
             int available = Integer.parseInt(req.queryParams("available"));
-            Main.management.registerProduct(name, price, available, description, sellerID);
+            String tmp_code = saveImageTemp(req.raw().getPart("image"));
+            productID = Main.management.registerProduct(name, price, available, description, sellerID);
+            renameTempImage(tmp_code, productID);
         } catch (IllegalArgumentException e){
             model.put("invalidInput", true);
+            return Main.render("product/create", model);
+        } catch (SQLException | ServletException | IOException e) {
+            res.status(500);
+            if(e.getMessage().equals("Not supported file type")) {
+                model.put("invalidImageFormat", true);
+                return Main.render("product/create", model);
+            }
+            return "Something went wrong";
         }
 
-        return Main.render("product/create", model);
+        res.redirect("/product/" + productID);
+        return "";
     }
 
+    private static void renameTempImage(String tmp_filename, int productID) {
+        File tmp = uploadDir.resolve(tmp_filename).toFile();
 
+        String[] split = tmp.toString().split("\\.");
+        String extension = split[split.length-1];
+        File new_file = uploadDir.resolve(productID + "." + extension).toFile();
+
+        tmp.renameTo(new_file);
+    }
+
+    private static String saveImageTemp(Part part) throws IOException, IllegalArgumentException {
+        try(InputStream is = part.getInputStream()) {
+            String extension = Util.getExtension(is);
+            if(Util.isValidImage(extension)) {
+                String random_name = Util.randomString(32);
+                String filename = "tmp_" + random_name + ".png";
+                FileOutputStream fos = new FileOutputStream(
+                        uploadDir.resolve(filename).toFile());
+
+                BufferedImage img = ImageIO.read(is);
+                ImageIO.write(img, "png", fos);
+                fos.close();
+                return filename;
+            } else {
+                throw new IllegalArgumentException("Not supported file type");
+            }
+        }
+    }
 }
