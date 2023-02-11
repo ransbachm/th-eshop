@@ -61,18 +61,18 @@ public class ProductHandler {
             String name = req.queryParams("name").trim();
             String description = req.queryParams("description").trim();
             int available = Integer.parseInt(req.queryParams("available"));
-            String tmp_code = saveImageTemp(req.raw().getPart("image"));
+            String tmp_code = saveTempImage(req.raw().getPart("image"));
             productID = Main.management.registerProduct(name, price, available, description, sellerID);
             renameTempImage(tmp_code, productID);
         } catch (IllegalArgumentException e){
-            model.put("invalidInput", true);
-            return Main.render("product/create", model);
-        } catch (SQLException | ServletException | IOException e) {
-            res.status(500);
             if(e.getMessage().equals("Not supported file type")) {
                 model.put("invalidImageFormat", true);
                 return Main.render("product/create", model);
             }
+            model.put("invalidInput", true);
+            return Main.render("product/create", model);
+        } catch (SQLException | ServletException | IOException e) {
+            res.status(500);
             return "Something went wrong";
         }
 
@@ -90,7 +90,7 @@ public class ProductHandler {
         tmp.renameTo(new_file);
     }
 
-    private static String saveImageTemp(Part part) throws IOException, IllegalArgumentException {
+    private static String saveTempImage(Part part) throws IOException, IllegalArgumentException {
         try(InputStream is = part.getInputStream()) {
             String extension = Util.getExtension(is);
             if(Util.isValidImage(extension)) {
