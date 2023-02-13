@@ -41,7 +41,7 @@ public class ProductHandler {
 
     public static String handleCreateProductSubmit(Request req, Response res){
         Map<String, Object> model = new HashMap<>();
-
+        boolean doNotcreateProduct = false;
         // Required for file upload
         req.attribute("org.eclipse.jetty.multipartConfig",
                 new MultipartConfigElement(uploadDir.resolve("tmp.tmp").toString()));
@@ -51,19 +51,42 @@ public class ProductHandler {
         Seller seller = Main.management.getSellerFromUser(user);
         if(seller == null) {
             model.put("notSeller", true);
-            return Main.render("product/create", model);
+            doNotcreateProduct = true;
         }
         int sellerID = seller.getId();
         int productID;
 
         try {
             double price = Double.parseDouble(req.queryParams("price"));
+            if(price < 0){
+                model.put("pricetolow", true);
+                doNotcreateProduct = true;
+            }
             String name = req.queryParams("name").trim();
+            if(name.isBlank()){
+                model.put("noname", true);
+                doNotcreateProduct = true;
+            }
+
             String description = req.queryParams("description").trim();
+            if(description.isBlank()){
+                model.put("nodescription", true);
+                doNotcreateProduct = true;
+            }
+
             int available = Integer.parseInt(req.queryParams("available"));
+            if(available < 0){
+                model.put("availabletolow", true);
+                doNotcreateProduct = true;
+            }
+
             String tmp_code = saveTempImage(req.raw().getPart("image"));
+
+            if(doNotcreateProduct) {return Main.render("product/create", model);}
+
             productID = Main.management.registerProduct(name, price, available, description, sellerID);
             renameTempImage(tmp_code, productID);
+
         } catch (IllegalArgumentException e){
             if(e.getMessage().equals("Not supported file type")) {
                 model.put("invalidImageFormat", true);
