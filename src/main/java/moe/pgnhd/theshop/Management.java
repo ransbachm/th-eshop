@@ -258,4 +258,45 @@ public class Management {
         }
     }
 
+    // Returns the id of the product
+    public int registerProduct(String name, double price, int available, String description, int seller) throws SQLException {
+        String sql = "INSERT INTO `Product` \n" +
+                "(Product.`price`, Product.`name`, Product.`available`, " +
+                "Product.`description`, Product.`seller`) \n" +
+                "VALUES (?,?,?,?,?);";
+        String sql2 = "SELECT LAST_INSERT_ID();";
+        try(Connection con = ds.getConnection();
+                PreparedStatement stmt = con.prepareStatement(sql);
+                PreparedStatement stmt2 = con.prepareStatement(sql2)) {
+            // Insert
+            stmt.setDouble(1, price);
+            stmt.setString(2, name);
+            stmt.setInt(3, available);
+            stmt.setString(4,description);
+            stmt.setInt(5, seller);
+            stmt.executeUpdate();
+
+            // Get id of inserted data
+            ResultSet rs2 = stmt2.executeQuery();
+            rs2.next();
+            return rs2.getInt("LAST_INSERT_ID()");
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+            throw e;
+        }
+    }
+    public Seller getSellerFromUser(User user) {
+        int id = user.getId();
+        String sql = "SELECT * FROM Seller\n" +
+                "JOIN User ON User.id = Seller.id\n" +
+                "WHERE Seller.id = ?";
+        try (Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            return Models.single(rs, Seller.class);
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+        }
+        return null;
+    }
 }
