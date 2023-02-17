@@ -1,0 +1,25 @@
+<html>
+
+<head>
+    {{>templates/partials/common}}
+    <title>Th_Eshop - Conform your account</title>
+</head>
+
+<body>
+    {{>templates/partials/header}}
+
+    <p>Customer id: {{user.id}}</p>
+    <p>Email: {{user.email}}</p>
+    <p>Name: {{user.firstname}} {{user.lastname}}</p>
+    <p>Address: {{user.street}} {{user.housenumber}} {{user.zipcode}}</p>
+    <p>Seller status: {{#if seller}} U are a seller
+    {{else}} U are not a seller.
+    <form method="POST" action="/profile">
+        <input type="submit" value="Become seller"> {{#if sucsses}}Seller added successfully{{/if}}
+    </form>
+    {{/if}}
+    </p>
+    
+{{>templates/partials/footer}}
+</body>
+</html>

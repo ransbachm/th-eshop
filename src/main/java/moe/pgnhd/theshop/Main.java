@@ -84,6 +84,8 @@ public class Main {
         get("/product/:id", ProductHandler::handleShowProduct);
         get("/seller/:id", SellerHandler::handleSeller);
         get("block/:sec", HelloHandler::handleBlockTest);
+        get("profile", ProfileHandler::handleProfile);
+        post("profile",ProfileHandler::handleMakeUserSeller);
 
 
         get("search", SearchHandler::handleSearch);
