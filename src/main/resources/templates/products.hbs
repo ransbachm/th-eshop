@@ -21,7 +21,8 @@
             <td><a href="/product/{{id}}">Product [{{id}}]</a><br></td>
             <td>{{name}}</td>
             <td>{{price}}€</td>
-            <td><form method="POST" action="/my/products">{{available}} <label>Add product</label> <input name="productid" value="{{id}}" hidden> <input name="availableincrease" type="number">  <input type="submit" value="add Available"> </form></td>
+            <td><form method="POST" action="/my/products">{{available}} <label>Add product</label>
+                <input name="productid" value="{{id}}" hidden> <input name="availableincrease" type="number">  <input type="submit" value="add Available"> </form></td>
             <td>{{description}}</td>
         </tr>
     {{/each}}
