@@ -98,12 +98,12 @@ public class Management {
         }
     }
 
-    public List<Product> getProductsOfSeller(String id){
+    public List<Product> getProductsOfSeller(int id){
         String sql =  "Select *\n" +
                 "FROM Product\n" +
                 "WHERE Product.seller = ?";
         try(Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setInt(1,Integer.parseInt(id));
+            stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             return Models.list_of(rs, Product.class);
         } catch (SQLException e) {
@@ -318,5 +318,19 @@ public class Management {
             return true;
         }
         return false;
+    }
+
+    public void increaseProductAvailablity(int productID, int increase){
+        String sql ="UPDATE Product\n" +
+                "SET Product.available = Product.available + ?\n" +
+                "WHERE Product.id = ?";
+        try(Connection con = ds.getConnection();
+            PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setInt(1, increase);
+            stmt.setInt(2, productID);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+        }
     }
 }
