@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static spark.Spark.*;
+import static spark.Spark.halt;
 public class RequireLogin {
     private static Logger LOG = LoggerFactory.getLogger(Main.class);
 
@@ -91,6 +91,10 @@ public class RequireLogin {
                 req.attribute("t_session", session);
                 req.attribute("user", session.getUser());
 
+                // Also get seller if user is seller
+                req.attribute("seller", Main.management.getSellerFromUser(session.getUser()));
+
+                
                 if (!onWhiteList) {
                     redirect_login(req, res);
                 }
@@ -100,6 +104,9 @@ public class RequireLogin {
             // Stores session + user for handlers after
             req.attribute("t_session", session);
             req.attribute("user", session.getUser());
+
+            // Also get seller if user is seller
+            req.attribute("seller", Main.management.getSellerFromUser(session.getUser()));
         }
 
         boolean loggedIn = session.isLogged_in();

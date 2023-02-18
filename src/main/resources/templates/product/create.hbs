@@ -3,15 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    {{>templates/partials/common}}
 </head>
 <body>
+    {{>templates/partials/header}}
+    <h2>Add a product to sell</h2>
+    <form method="POST" action="/product/create" enctype="multipart/form-data">
+        <label for="productname">product name</label>
+        <input type="text" name="name">
+        {{#if noname}}Product must have a name{{/if}}<br>
 
-    <header><a href="/"><h1>Th_Eshop</h1></a></header>
+        <label for="price">product price</label>
+        <input type="number" name="price">
+        {{#if pricetolow}} Product price must be greater than zero.{{/if}}<br>
 
-    <form>
-        <input type="text" name="">
+        <lablel for = "description">description</lablel>
+        <input type = "text"  name = "description">
+        {{#if nodescription}} Product must have a description{{/if}}<br>
+
+        <lablel for="available">product available</lablel>
+        <input type="number" name="available">
+        {{#if availabletolow}} Available product must be greater than zero.{{/if}}<br>
+
+        <label for="image">image</label>
+        <input type="file" name="image">
+        {{#if noimage}} A product requires an image.{{/if}}<br>
+
+        <input type="submit" value="confirm">
     </form>
 
-    <button>no</button>
+    {{#if invalidInput}}
+        <b>Invalid input</b>
+    {{/if}}
+    {{#if invalidImageFormat}}This image format is not supported{{/if}}
+    {{#if notSeller}}<b>Error: You are not a seller</b>{{/if}}
+
 </body>
 </html>

@@ -56,22 +56,18 @@ public class Main {
         // Live refresh cannot work with the class path loader
         if (!isDev) {
             hbs = new Handlebars();
-            staticFiles.location("/public/");
         } else {
             hbs = new Handlebars(new FileTemplateLoader(
                     "src/main/resources/"));
-            staticFiles.externalLocation("src/main/resources/public");
         }
+        staticFiles.externalLocation("public");
 
         port(4567);
         // require logged-in user for paths below
         before("*", RequireLogin::filterRequireLogin);
 
-        get("/", (req,res) -> render("index", null));
+        get("/", (req,res) -> render("index", Util.getModel(req)));
 
-
-        get("hello", HelloHandler::handleHelloRequest);
-        get("hello2", HelloHandler::handleAnyUserFirstName);
 
         get("login", RegisterAndLoginHandler::handleLogin);
         post("login", RegisterAndLoginHandler::handleLoginSubmit);
@@ -86,18 +82,18 @@ public class Main {
         post("my/basket/order", BasketHandler::order);
 
 
-
         get("product/create", ProductHandler::handleCreateProduct);
+        post("/product/create", ProductHandler::handleCreateProductSubmit);
         post("product/addToCart", ProductHandler::addToBasket);
         get("product/:id", ProductHandler::handleShowProduct);
 
-
         get("seller/:id", SellerHandler::handleSeller);
 
+        get("profile", ProfileHandler::handleShowProfile);
+        post("profile",ProfileHandler::handleMakeUserSeller);
 
-
-
-
+        get("my/products", ProductHandler::handleMyProducts);
+        post("my/products", ProductHandler::handleAlterMyProduct);
 
         get("search", SearchHandler::handleSearch);
     }

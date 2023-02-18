@@ -98,12 +98,12 @@ public class Management {
         }
     }
 
-    public List<Product> getProductsOfSeller(String id){
+    public List<Product> getProductsOfSeller(int id){
         String sql =  "Select *\n" +
                 "FROM Product\n" +
                 "WHERE Product.seller = ?";
         try(Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setInt(1,Integer.parseInt(id));
+            stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             return Models.list_of(rs, Product.class);
         } catch (SQLException e) {
@@ -442,6 +442,81 @@ public class Management {
             }
         } catch (SQLException e) {
             throw e;
+        }
+    }
+    // Returns the id of the product
+    public int registerProduct(String name, double price, int available, String description, int seller) throws SQLException {
+        String sql = "INSERT INTO `Product` \n" +
+                "(Product.`price`, Product.`name`, Product.`available`, " +
+                "Product.`description`, Product.`seller`) \n" +
+                "VALUES (?,?,?,?,?);";
+        String sql2 = "SELECT LAST_INSERT_ID();";
+        try(Connection con = ds.getConnection();
+                PreparedStatement stmt = con.prepareStatement(sql);
+                PreparedStatement stmt2 = con.prepareStatement(sql2)) {
+            // Insert
+            stmt.setDouble(1, price);
+            stmt.setString(2, name);
+            stmt.setInt(3, available);
+            stmt.setString(4,description);
+            stmt.setInt(5, seller);
+            stmt.executeUpdate();
+
+            // Get id of inserted data
+            ResultSet rs2 = stmt2.executeQuery();
+            rs2.next();
+            return rs2.getInt("LAST_INSERT_ID()");
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+            throw e;
+        }
+    }
+    public Seller getSellerFromUser(User user) {
+        int id = user.getId();
+        String sql = "SELECT * FROM Seller\n" +
+                "JOIN User ON User.id = Seller.id\n" +
+                "WHERE Seller.id = ?";
+        try (Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            return Models.single(rs, Seller.class);
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+        }
+        return null;
+    }
+
+    public boolean createSeller(User user){
+        //Will not create a second seller
+
+        if(getSellerFromUser(user) == null){
+            String sql = "INSERT INTO `Seller` \n" +
+                    "(Seller.`id`,Seller.`balance`) \n" +
+                    "VALUES (?, 0);";
+            try(Connection con = ds.getConnection();
+                PreparedStatement stmt = con.prepareStatement(sql)) {
+                stmt.setInt(1, user.getId());
+                stmt.executeUpdate();
+            } catch (SQLException e) {
+                LOG.error(e.getMessage());
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public void setProductAvailablity(int productID, int increase){
+        String sql ="UPDATE Product\n" +
+                "SET Product.available = ?\n" +
+                "WHERE Product.id = ?";
+        try(Connection con = ds.getConnection();
+            PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setInt(1, increase);
+            stmt.setInt(2, productID);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
         }
     }
 }

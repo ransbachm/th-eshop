@@ -6,13 +6,16 @@
         </li>
 
         <li>
-                     <form action="search" method="GET" id="headerform">
+            <a>
+                     <form action="/search" method="GET" id="header-form">
                         <label for="query" hidden>Search</label>
                         <input type="text" name="query" placeholder="Search Th_Eshop">
                         <input type="submit" value="Search">
                     </form>
+            </a>
         <li>
             <a href="/my/basket">Basket</a>
+            
         </li>
 
         <li>
@@ -23,7 +26,19 @@
             <a href="/register">Register</a>
         </li>
         <li>
-            <a href="/profile">Profile</a>
+
+        </li>
+        <li>
+            <div id = "dropdown">
+                <div>
+                    <a href="/profile"><button id = "dropdown-button">Account</button></a>
+                </div>
+                <div id = "dropdown-content">
+                    <a href="/profile">Profile</a>
+                    <a href="/my/orders">My orders</a>
+                    {{#if seller}}<a href="/my/products">My products</a>{{/if}}
+                </div>
+            </div>
         </li>
     </ul>
 </nav>
