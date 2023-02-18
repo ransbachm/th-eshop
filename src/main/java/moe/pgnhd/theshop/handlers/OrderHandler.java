@@ -1,6 +1,7 @@
 package moe.pgnhd.theshop.handlers;
 
 import moe.pgnhd.theshop.Main;
+import moe.pgnhd.theshop.model.User;
 import moe.pgnhd.theshop.Util;
 import spark.Request;
 import spark.Response;
@@ -12,6 +13,6 @@ public class OrderHandler {
         Map<String, Object> model = Util.getModel(req);
         model.put("orders", Main.management.getOrders());
 
-        return Main.render("orders", model);
+        return Main.render("my/orders", model);
     }
 }

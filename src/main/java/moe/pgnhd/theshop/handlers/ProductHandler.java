@@ -31,6 +31,8 @@ public class ProductHandler {
         Product product = Main.management.getProduct(req.params(":id"));
         Map<String, Object> model = Util.getModel(req);
         model.put("product", product);
+        model.put("more_than_zero", product.getAvailable() > 0);
+
 
         return Main.render("product/show", model);
     }
@@ -38,6 +40,23 @@ public class ProductHandler {
     public static String handleCreateProduct(Request req, Response res) {
         Map<String, Object> model = Util.getModel(req);
         return Main.render("product/create", model);
+    }
+
+    public static String addToBasket(Request req, Response res) {
+        Map<String, Object> model = Util.getModel(req);
+        int product_id = Integer.parseInt(req.queryParams("id"));
+        int amount = Integer.parseInt(req.queryParams("amount"));
+        User user = req.attribute("user");
+
+        if(amount <= 0) {
+            res.status(400);
+            return "Invalid input";
+        }
+
+        Main.management.addProductToBasket(product_id, user, amount);
+
+        res.redirect("/product/" + product_id);
+        return "";
     }
 
     public static String handleCreateProductSubmit(Request req, Response res){

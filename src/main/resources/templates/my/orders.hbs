@@ -23,6 +23,7 @@
 
 </style>
     <p>Orders:</p>
+    {{#if orders}}
     <table>
         {{#each orders}}
             <tr>
@@ -41,6 +42,9 @@
             </tr>
         {{/each}}
     </table>
+    {{else}}
+    <p>You have no orders</p>
+    {{/if}}
 
     {{>templates/partials/footer}}
 </body>
