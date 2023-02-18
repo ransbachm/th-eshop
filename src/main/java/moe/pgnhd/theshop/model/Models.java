@@ -47,10 +47,12 @@ public class Models {
                                                    String table_one, String pk_one) {
         checkForInterface(one, many);
         List<T> res = new ArrayList<T>();
+        int last=0;
         int i=0;
         try {
             while(rs.next()) {
-                if(i < rs.getInt(table_one + "." + pk_one)) {
+                if(last != rs.getInt(table_one + "." + pk_one)) {
+                    last = rs.getInt(table_one + "." + pk_one);
                     i++;
                     Method from = one.getDeclaredMethod("from", ResultSet.class);
                     res.add((T) from.invoke(null, rs));

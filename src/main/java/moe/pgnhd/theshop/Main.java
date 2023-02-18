@@ -4,6 +4,7 @@ import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
 import com.github.jknack.handlebars.io.FileTemplateLoader;
 import io.github.cdimascio.dotenv.Dotenv;
+import moe.pgnhd.theshop.handlers.BasketHandler;
 import moe.pgnhd.theshop.handlers.Filters.RequireLogin;
 import moe.pgnhd.theshop.handlers.*;
 import org.slf4j.Logger;
@@ -68,9 +69,6 @@ public class Main {
         get("/", (req,res) -> render("index", Util.getModel(req)));
 
 
-        get("hello", HelloHandler::handleHelloRequest);
-        get("hello2", HelloHandler::handleAnyUserFirstName);
-
         get("login", RegisterAndLoginHandler::handleLogin);
         post("login", RegisterAndLoginHandler::handleLoginSubmit);
         get("register", RegisterAndLoginHandler::handleRegister);
@@ -79,11 +77,18 @@ public class Main {
         post("register_confirm", RegisterAndLoginHandler::handleRegisterConfirmSubmit);
 
         get("my/orders", OrderHandler::handleGetOrders);
-        get("/product/create", ProductHandler::handleCreateProduct);
+        get("my/basket", BasketHandler::show);
+        post("my/basket/change", BasketHandler::change);
+        post("my/basket", BasketHandler::order);
+
+
+        get("product/create", ProductHandler::handleCreateProduct);
         post("/product/create", ProductHandler::handleCreateProductSubmit);
-        get("/product/:id", ProductHandler::handleShowProduct);
-        get("/seller/:id", SellerHandler::handleSeller);
-        get("block/:sec", HelloHandler::handleBlockTest);
+        post("product/addToCart", ProductHandler::addToBasket);
+        get("product/:id", ProductHandler::handleShowProduct);
+
+        get("seller/:id", SellerHandler::handleSeller);
+
         get("profile", ProfileHandler::handleShowProfile);
         post("profile",ProfileHandler::handleMakeUserSeller);
 

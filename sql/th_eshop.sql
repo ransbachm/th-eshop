@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Feb 06, 2023 at 11:17 AM
+-- Generation Time: Feb 18, 2023 at 06:49 PM
 -- Server version: 10.10.2-MariaDB-1:10.10.2+maria~ubu2204
 -- PHP Version: 8.0.27
 
@@ -20,6 +20,18 @@ SET time_zone = "+00:00";
 --
 -- Database: `th_eshop`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `BasketItem`
+--
+
+CREATE TABLE `BasketItem` (
+  `product` int(11) NOT NULL,
+  `user` int(11) NOT NULL,
+  `amount` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -111,6 +123,13 @@ CREATE TABLE `User` (
 --
 
 --
+-- Indexes for table `BasketItem`
+--
+ALTER TABLE `BasketItem`
+  ADD PRIMARY KEY (`product`,`user`),
+  ADD KEY `user` (`user`);
+
+--
 -- Indexes for table `Order`
 --
 ALTER TABLE `Order`
@@ -189,6 +208,13 @@ ALTER TABLE `User`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `BasketItem`
+--
+ALTER TABLE `BasketItem`
+  ADD CONSTRAINT `BasketItem_ibfk_1` FOREIGN KEY (`product`) REFERENCES `Product` (`id`),
+  ADD CONSTRAINT `BasketItem_ibfk_2` FOREIGN KEY (`user`) REFERENCES `User` (`id`);
 
 --
 -- Constraints for table `Order`

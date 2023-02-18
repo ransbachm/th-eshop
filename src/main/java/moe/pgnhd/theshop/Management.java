@@ -258,6 +258,192 @@ public class Management {
         }
     }
 
+    public List<Order> getMyOrders(User user) {
+        String sql = "SELECT * \n" +
+                "FROM OrderItem\n" +
+                "JOIN `Order` ON OrderItem.`Order` = `Order`.id\n" +
+                "JOIN Product ON OrderItem.product = Product.id\n" +
+                "JOIN User ON Order.user = User.id\n" +
+                "WHERE User.id = ?\n" +
+                "ORDER BY `Order`.id ASC, OrderItem.id ASC";
+
+        try(Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setInt(1, user.getId());
+            ResultSet rs = stmt.executeQuery();
+            return Models.multiple_one_to_many(rs, Order.class, OrderItem.class, "orderItems");
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+            return null;
+        }
+    }
+
+    public void addProductToBasket(int product_id, User user, int amount) {
+        String sql = "INSERT INTO BasketItem\n" +
+                "(product, user, amount) VALUES\n" +
+                "(?, ?, ?)\n" +
+                "ON DUPLICATE KEY UPDATE\n" +
+                "amount = amount + ?\n";
+
+        try(Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setInt(1, product_id);
+            stmt.setInt(2, user.getId());
+            stmt.setInt(3, amount);
+            stmt.setInt(4, amount);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+        }
+    }
+
+    public List<BasketItem> getBasketOfUser(User user) {
+        String sql = "SELECT *\n" +
+                "FROM BasketItem\n" +
+                "JOIN Product ON BasketItem.product = Product.id\n" +
+                "JOIN Seller ON Product.seller = Seller.id\n" +
+                "JOIN User ON Seller.id = User.id\n" +
+                "WHERE BasketItem.`user` = ?";
+
+        try(Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setInt(1, user.getId());
+            ResultSet rs = stmt.executeQuery();
+            return Models.list_of(rs, BasketItem.class);
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+            return null;
+        }
+    }
+
+    public void setBasketAmount(int user_id, int product_id, int amount) {
+        String sql = "UPDATE BasketItem\n" +
+                "SET BasketItem.amount = ?\n" +
+                "WHERE BasketItem.product = ?\n" +
+                "AND BasketItem.`user` = ?";
+
+        try(Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setInt(1, amount);
+            stmt.setInt(2, product_id);
+            stmt.setInt(3, user_id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+        }
+    }
+
+    public void deleteBasketItem(int user_id, int product_id) {
+        String sql = "DELETE\n" +
+                "FROM BasketItem\n" +
+                "WHERE BasketItem.product = ?\n" +
+                "AND BasketItem.`user` = ?";
+
+        try(Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setInt(1, product_id);
+            stmt.setInt(2, user_id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+        }
+    }
+
+    public void orderBasket(int user_id) throws SQLException {
+        try(Connection con = ds.getConnection()) {
+            try {
+                con.setAutoCommit(false); // start transaction
+
+                // Set variables
+                String sql1 = "SET @user_id = ?;";
+                PreparedStatement ps1 = con.prepareStatement(sql1);
+                ps1.setInt(1, user_id);
+                ps1.execute();
+
+                // Check if empty order
+                String sql2 = "SELECT * FROM BasketItem\n" +
+                        "WHERE BasketItem.user = @user_id";
+                ResultSet rs2 = con.prepareStatement(sql2).executeQuery();
+                if(!rs2.next()) {
+                    throw new EmptyBasketException("Your basket is empty");
+                }
+
+
+                // Check if every product is in stock
+                String sql3 = "SELECT Product.*, Product.available - BasketItem.amount AS test\n" +
+                        "FROM BasketItem\n" +
+                        "JOIN Product ON BasketItem.product = Product.id\n" +
+                        "WHERE USER = ?";
+                PreparedStatement ps3 = con.prepareStatement(sql3);
+                ps3.setInt(1, user_id);
+                ResultSet rs3 = ps3.executeQuery();
+                while(rs3.next()) {
+                    int product_id = rs3.getInt("Product.id");
+                    int test = rs3.getInt("test");
+                    if(test < 0) {
+                        String product_name = rs3.getString("Product.name");
+                        throw new OutOfStockException(product_name);
+                    }
+                }
+
+
+                // Create new Order
+                String sql4 = "INSERT INTO `Order`\n" +
+                        "(date, user)\n" +
+                        "VALUES(NOW(), @user_id);";
+                con.prepareStatement(sql4).executeUpdate();
+
+                // Store order_id
+                String sql5 = "SET @order_id = LAST_INSERT_ID();";
+                con.prepareStatement(sql5).execute();
+
+                // Create OrderItems for BasketItems
+                String sql6 = "INSERT INTO OrderItem\n" +
+                        "(amount, price, product, `order`)\n" +
+                        "SELECT BasketItem.amount, Product.price, BasketItem.product, @order_id\n" +
+                        "FROM BasketItem \n" +
+                        "JOIN Product ON BasketItem.product = Product.id\n" +
+                        "WHERE BasketItem.user = @user_id;";
+                con.prepareStatement(sql6).executeUpdate();
+
+                //  Pay seller correct amounts
+                String sql7 = "UPDATE Seller s\n" +
+                        "SET balance = balance + \n" +
+                        "\t(\n" +
+                        "\tSELECT SUM(Product.price * BasketItem.amount)\n" +
+                        "\tFROM BasketItem\n" +
+                        "\tJOIN Product ON BasketItem.product = Product.id\n" +
+                        "\tWHERE Product.seller = s.id \n" +
+                        "\t)\n" +
+                        "WHERE s.id IN \n" +
+                        "\t(\n" +
+                        "\tSELECT DISTINCT Product.seller\n" +
+                        "\tFROM BasketItem\n" +
+                        "\tJOIN Product ON BasketItem.product = Product.id\n" +
+                        "\tWHERE Product.seller = s.id\n" +
+                        "\t);";
+                con.prepareStatement(sql7).executeUpdate();
+
+                // Reduce available products by bought amount
+                String sql8 = "UPDATE Product\n" +
+                        "JOIN BasketItem ON Product.id = BasketItem.product\n" +
+                        "SET Product.available = Product.available - BasketItem.amount\n" +
+                        "WHERE BasketItem.user = @user_id;";
+                con.prepareStatement(sql8).executeUpdate();
+
+                // Clear Basket
+                String sql9 = "DELETE FROM BasketItem\n" +
+                        "WHERE BasketItem.user = @user_id;";
+                con.prepareStatement(sql9).executeUpdate();
+                
+                con.commit();
+            } catch(OutOfStockException | EmptyBasketException e) {
+                con.rollback();
+                throw e;
+            } catch (Exception e) {
+                con.rollback();
+                LOG.error(e.getMessage());
+                throw e;
+            }
+        } catch (SQLException e) {
+            throw e;
+        }
+    }
     // Returns the id of the product
     public int registerProduct(String name, double price, int available, String description, int seller) throws SQLException {
         String sql = "INSERT INTO `Product` \n" +
