@@ -43,7 +43,7 @@ public class ProductHandler {
     }
 
     public static String addToBasket(Request req, Response res) {
-        Map<String, Object> model = new HashMap<>();
+        Map<String, Object> model = Util.getModel(req);
         int product_id = Integer.parseInt(req.queryParams("id"));
         int amount = Integer.parseInt(req.queryParams("amount"));
         User user = req.attribute("user");
