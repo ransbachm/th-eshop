@@ -258,6 +258,25 @@ public class Management {
         }
     }
 
+    public List<Order> getMyOrders(User user) {
+        String sql = "SELECT * \n" +
+                "FROM OrderItem\n" +
+                "JOIN `Order` ON OrderItem.`Order` = `Order`.id\n" +
+                "JOIN Product ON OrderItem.product = Product.id\n" +
+                "JOIN User ON Order.user = User.id\n" +
+                "WHERE User.id = ?\n" +
+                "ORDER BY `Order`.id ASC, OrderItem.id ASC";
+
+        try(Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setInt(1, user.getId());
+            ResultSet rs = stmt.executeQuery();
+            return Models.multiple_one_to_many(rs, Order.class, OrderItem.class, "orderItems");
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+            return null;
+        }
+    }
+
     public void addProductToBasket(int product_id, User user, int amount) {
         String sql = "INSERT INTO BasketItem\n" +
                 "(product, user, amount) VALUES\n" +
