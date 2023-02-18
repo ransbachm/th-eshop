@@ -10,7 +10,6 @@ import spark.Request;
 import spark.Response;
 
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +27,7 @@ public class BasketHandler {
     }
 
     public static String change(Request req, Response res) {
-        Map<String, Object> model = new HashMap<>();
+        Map<String, Object> model = Util.getModel(req);
 
         User user = req.attribute("user");
         int product_id = Integer.parseInt(req.queryParams("product_id"));
