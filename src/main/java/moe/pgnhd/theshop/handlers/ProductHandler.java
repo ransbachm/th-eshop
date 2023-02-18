@@ -2,6 +2,7 @@ package moe.pgnhd.theshop.handlers;
 
 import moe.pgnhd.theshop.Main;
 import moe.pgnhd.theshop.model.Product;
+import moe.pgnhd.theshop.model.User;
 import spark.Request;
 import spark.Response;
 
@@ -13,6 +14,8 @@ public class ProductHandler {
         Product product = Main.management.getProduct(req.params(":id"));
         Map<String, Object> model = new HashMap<>();
         model.put("product", product);
+        model.put("more_than_zero", product.getAvailable() > 0);
+
 
         return Main.render("product/show", model);
     }
