@@ -299,4 +299,24 @@ public class Management {
         }
         return null;
     }
+
+    public boolean createSeller(User user){
+        //Will not create a second seller
+
+        if(getSellerFromUser(user) == null){
+            String sql = "INSERT INTO `Seller` \n" +
+                    "(Seller.`id`,Seller.`balance`) \n" +
+                    "VALUES (?, 0);";
+            try(Connection con = ds.getConnection();
+                PreparedStatement stmt = con.prepareStatement(sql)) {
+                stmt.setInt(1, user.getId());
+                stmt.executeUpdate();
+            } catch (SQLException e) {
+                LOG.error(e.getMessage());
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
 }
