@@ -313,6 +313,7 @@ public class Management {
                 stmt.executeUpdate();
             } catch (SQLException e) {
                 LOG.error(e.getMessage());
+                return false;
             }
             return true;
         }
