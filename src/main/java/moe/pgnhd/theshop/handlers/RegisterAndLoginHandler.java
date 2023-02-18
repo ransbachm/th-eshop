@@ -15,7 +15,6 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Base64;
-import java.util.HashMap;
 import java.util.Map;
 
 public class RegisterAndLoginHandler {
@@ -32,7 +31,7 @@ public class RegisterAndLoginHandler {
         }
     }
     public static String handleRegister(Request req, Response res) {
-        Map<String, Object> model = new HashMap<>();
+        Map<String, Object> model = Util.getModel(req);
         return Main.render("register", model);
     }
 
@@ -47,7 +46,7 @@ public class RegisterAndLoginHandler {
 
         String activation_code = Util.randomString(32);
 
-        Map<String, Object> model = new HashMap<>();
+        Map<String, Object> model = Util.getModel(req);
         String salt = Util.randomString(20);
 
         String base64_pwd_hash = calculatePwdHash(password+salt);
@@ -82,7 +81,7 @@ public class RegisterAndLoginHandler {
     }
 
     public static String handleRegisterConfirm(Request req, Response res) {
-        Map<String, Object> model = new HashMap<>();
+        Map<String, Object> model = Util.getModel(req);
         return Main.render("register_confirm", model);
     }
 
@@ -91,7 +90,7 @@ public class RegisterAndLoginHandler {
         return Main.render("register_confirm", model);
     }
     public static String handleRegisterConfirmSubmit(Request req, Response res) {
-        Map<String, Object> model = new HashMap<>();
+        Map<String, Object> model = Util.getModel(req);
         String activationcode = req.queryParams("activationcode");
 
         User try_user = Main.management.findUserByActivationCode(activationcode);
@@ -107,7 +106,7 @@ public class RegisterAndLoginHandler {
     }
 
     public static String handleLogin(Request req, Response res) {
-        Map<String, Object> model = new HashMap<>();
+        Map<String, Object> model = Util.getModel(req);
         return Main.render("login", model);
     }
 
@@ -117,7 +116,7 @@ public class RegisterAndLoginHandler {
         return Main.render("login", model);
     }
     public static String handleLoginSubmit(Request req, Response res) {
-        Map<String, Object> model = new HashMap<>();
+        Map<String, Object> model = Util.getModel(req);
 
         User user = Main.management.findUserByEmail(req.queryParams("email"));
         String pwdHash;

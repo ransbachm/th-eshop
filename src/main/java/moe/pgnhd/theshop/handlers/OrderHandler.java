@@ -1,14 +1,15 @@
 package moe.pgnhd.theshop.handlers;
 
 import moe.pgnhd.theshop.Main;
+import moe.pgnhd.theshop.Util;
 import spark.Request;
 import spark.Response;
 
-import java.util.HashMap;
+import java.util.Map;
 
 public class OrderHandler {
     public static String handleGetOrders(Request req, Response res) {
-        HashMap<String, Object> model = new HashMap<>();
+        Map<String, Object> model = Util.getModel(req);
         model.put("orders", Main.management.getOrders());
 
         return Main.render("orders", model);

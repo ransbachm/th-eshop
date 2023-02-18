@@ -21,7 +21,6 @@ import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,19 +29,19 @@ public class ProductHandler {
 
     public static String handleShowProduct(Request req, Response res) {
         Product product = Main.management.getProduct(req.params(":id"));
-        Map<String, Object> model = new HashMap<>();
+        Map<String, Object> model = Util.getModel(req);
         model.put("product", product);
 
         return Main.render("product/show", model);
     }
 
     public static String handleCreateProduct(Request req, Response res) {
-        Map<String, Object> model = new HashMap<>();
+        Map<String, Object> model = Util.getModel(req);
         return Main.render("product/create", model);
     }
 
     public static String handleCreateProductSubmit(Request req, Response res){
-        Map<String, Object> model = new HashMap<>();
+        Map<String, Object> model = Util.getModel(req);
         boolean doNotCreateProduct = false;
         // Required for file upload
         req.attribute("org.eclipse.jetty.multipartConfig",
@@ -135,7 +134,7 @@ public class ProductHandler {
     }
 
     public static Object handleMyProducts(Request req, Response res) {
-        HashMap<String, Object> model = new HashMap<>();
+        Map<String, Object> model = Util.getModel(req);
         Session session = req.attribute("t_session");
         List<Product> products = Main.management.getProductsOfSeller(session.getUser().getId());
         model.put("products", products);

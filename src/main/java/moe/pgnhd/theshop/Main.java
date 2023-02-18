@@ -65,7 +65,7 @@ public class Main {
         // require logged-in user for paths below
         before("*", RequireLogin::filterRequireLogin);
 
-        get("/", (req,res) -> render("index", null));
+        get("/", (req,res) -> render("index", Util.getModel(req)));
 
 
         get("hello", HelloHandler::handleHelloRequest);
