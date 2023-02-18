@@ -145,10 +145,10 @@ public class ProductHandler {
 
     public static Object handleAlterMyProduct(Request req, Response res) {
 
-        int increase = Integer.parseInt(req.queryParams("availableincrease"));
+        int new_amount = Integer.parseInt(req.queryParams("new_amount"));
         int productId = Integer.parseInt(req.queryParams("productid"));
-        if(increase > 0) {
-            Main.management.increaseProductAvailablity(productId, increase);
+        if(new_amount > 0) {
+            Main.management.setProductAvailablity(productId, new_amount);
         }
 
         res.redirect("/my/products");

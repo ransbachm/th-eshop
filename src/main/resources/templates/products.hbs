@@ -7,23 +7,28 @@
 <body>
 {{>templates/partials/header}}
 
-    Your Products
+<h2>Your Products</h2>
 <table>
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>description</th>
+        <th>price</th>
+        <th>available</th>
+    </tr>
+    {{#each products}}
         <tr>
-            <th>id</th>
-            <th>name</th>
-            <th>price</th>
-            <th>available</th>
-            <th>description</th>
-        </tr>
-        {{#each products}}
-        <tr>
-            <td><a href="/product/{{id}}">Product [{{id}}]</a><br></td>
-            <td>{{name}}</td>
-            <td>{{price}}€</td>
-            <td><form method="POST" action="/my/products">{{available}} <label>Add product</label>
-                <input name="productid" value="{{id}}" hidden> <input name="availableincrease" type="number">  <input type="submit" value="add Available"> </form></td>
+            <td>{{id}}</td>
+            <td><a href="/product/{{id}}">{{name}}</a></td>
             <td>{{description}}</td>
+            <td>{{price}}€</td>
+            <td>
+                <form method="POST" action="/my/products">
+                    <input name="productid" value="{{id}}" hidden>
+                    <input name="new_amount" type="number" value="{{available}}">
+                    <input type="submit" value="Set">
+                </form>
+            </td>
         </tr>
     {{/each}}
 </table>
