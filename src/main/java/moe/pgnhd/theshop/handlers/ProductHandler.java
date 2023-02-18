@@ -4,6 +4,7 @@ import moe.pgnhd.theshop.Main;
 import moe.pgnhd.theshop.Util;
 import moe.pgnhd.theshop.model.Product;
 import moe.pgnhd.theshop.model.Seller;
+import moe.pgnhd.theshop.model.Session;
 import moe.pgnhd.theshop.model.User;
 import spark.Request;
 import spark.Response;
@@ -21,6 +22,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ProductHandler {
@@ -130,5 +132,26 @@ public class ProductHandler {
                 throw new IllegalArgumentException("Not supported file type");
             }
         }
+    }
+
+    public static Object handleMyProducts(Request req, Response res) {
+        HashMap<String, Object> model = new HashMap<>();
+        Session session = req.attribute("t_session");
+        List<Product> products = Main.management.getProductsOfSeller(session.getUser().getId() +"");
+        model.put("products", products);
+
+        return Main.render("products", model);
+    }
+
+    public static Object handleAlterMyProduct(Request req, Response res) {
+
+        int increase = Integer.parseInt(req.queryParams("availableincrease"));
+        int productId = Integer.parseInt(req.queryParams("productid"));
+        if(increase > 0) {
+            Main.management.increaseProductAvailablity(productId, increase);
+        }
+
+        res.redirect("/my/products");
+        return "";
     }
 }

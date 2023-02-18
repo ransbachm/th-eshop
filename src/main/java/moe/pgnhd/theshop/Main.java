@@ -87,6 +87,8 @@ public class Main {
         get("profile", ProfileHandler::handleProfile);
         post("profile",ProfileHandler::handleMakeUserSeller);
 
+        get("my/products", ProductHandler::handleMyProducts);
+        post("my/products", ProductHandler::handleAlterMyProduct);
 
         get("search", SearchHandler::handleSearch);
     }
