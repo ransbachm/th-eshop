@@ -29,12 +29,11 @@
             <div id = "dropdown">
                 <div>
                     <a><button id = "dropdown-button">Account</button></a>
-
                 </div>
                 <div id = "dropdown-content">
-                    <a href="/profile" value = "/profile">Profile</a>
-                    <a href="/my/orders">Your orders</a>
-                    {{#if seller}}<a href="/product/create">change to my products</a>{{/if}}
+                    <a href="/profile">Profile</a>
+                    <a href="/my/orders">My orders</a>
+                    {{#if seller}}<a href="/my/products">My products</a>{{/if}}
                 </div>
             </div>
         </li>
