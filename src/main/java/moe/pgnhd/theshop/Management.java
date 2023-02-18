@@ -377,7 +377,7 @@ public class Management {
                     int test = rs3.getInt("test");
                     if(test < 0) {
                         String product_name = rs3.getString("Product.name");
-                        throw new OutOfStockException("Product \"" + product_name + "\" is out of stock");
+                        throw new OutOfStockException(product_name);
                     }
                 }
 

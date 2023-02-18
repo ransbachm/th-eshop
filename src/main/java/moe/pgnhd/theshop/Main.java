@@ -79,7 +79,7 @@ public class Main {
         get("my/orders", OrderHandler::handleGetOrders);
         get("my/basket", BasketHandler::show);
         post("my/basket/change", BasketHandler::change);
-        post("my/basket/order", BasketHandler::order);
+        post("my/basket", BasketHandler::order);
 
 
         get("product/create", ProductHandler::handleCreateProduct);

@@ -158,9 +158,17 @@
 
     </script>
 
-    <form method="POST" action="/my/basket/order">
+    <form method="POST" action="/my/basket">
         <input type="submit" value="Buy">
     </form>
+
+    {{#if submitted_empty_cart}}
+        Your cart is empty.
+    {{/if}}
+
+    {{#if out_of_stock_product}}
+        {{out_of_stock_product}} Is out of stock.
+    {{/if}}
 
     {{>templates/partials/footer}}
 </body>
