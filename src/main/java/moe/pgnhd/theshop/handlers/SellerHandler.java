@@ -13,7 +13,7 @@ import java.util.Map;
 public class SellerHandler {
     public static String handleSeller(Request req, Response res) {
         Seller seller = Main.management.getSeller(req.params(":id"));
-        List<Product> products = Main.management.getProductsOfSeller(req.params(":id"));
+        List<Product> products = Main.management.getProductsOfSeller(seller.getId());
         Map<String, Object> model = new HashMap<>();
         model.put("seller", seller);
         model.put("products", products);

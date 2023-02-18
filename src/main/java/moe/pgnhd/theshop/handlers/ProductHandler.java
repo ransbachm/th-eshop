@@ -137,7 +137,7 @@ public class ProductHandler {
     public static Object handleMyProducts(Request req, Response res) {
         HashMap<String, Object> model = new HashMap<>();
         Session session = req.attribute("t_session");
-        List<Product> products = Main.management.getProductsOfSeller(session.getUser().getId() +"");
+        List<Product> products = Main.management.getProductsOfSeller(session.getUser().getId());
         model.put("products", products);
 
         return Main.render("products", model);
