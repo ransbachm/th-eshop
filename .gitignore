@@ -40,4 +40,4 @@ build/
 
 
 .env
-public/uploads/*
+public/upload/*
