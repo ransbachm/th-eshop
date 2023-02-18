@@ -7,10 +7,13 @@ import org.apache.tika.io.TikaInputStream;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.mime.MediaType;
 import org.apache.tika.mime.MimeType;
+import spark.Request;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.SecureRandom;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Util {
     public static String randomString(int length) {
@@ -55,5 +58,13 @@ public class Util {
             }
         }
         return false;
+    }
+
+    public static Map<String, Object> getModel(Request req) {
+        Map<String, Object> model = new HashMap<>();
+        model.put("user", req.attribute("user"));
+        model.put("seller", req.attribute("seller"));
+        model.put("session", req.attribute("t_session"));
+        return model;
     }
 }

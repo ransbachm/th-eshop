@@ -320,9 +320,9 @@ public class Management {
         return false;
     }
 
-    public void increaseProductAvailablity(int productID, int increase){
+    public void setProductAvailablity(int productID, int increase){
         String sql ="UPDATE Product\n" +
-                "SET Product.available = Product.available + ?\n" +
+                "SET Product.available = ?\n" +
                 "WHERE Product.id = ?";
         try(Connection con = ds.getConnection();
             PreparedStatement stmt = con.prepareStatement(sql)) {
