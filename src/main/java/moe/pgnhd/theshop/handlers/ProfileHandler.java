@@ -9,7 +9,7 @@ import spark.Response;
 import java.util.HashMap;
 
 public class ProfileHandler {
-    public static String handleProfile(Request req, Response res) {
+    public static String handleShowProfile(Request req, Response res) {
         HashMap<String, Object> model = new HashMap<>();
         Session session = req.attribute("t_session");
         User user = session.getUser();
@@ -22,7 +22,9 @@ public class ProfileHandler {
         HashMap<String, Object> model = new HashMap<>();
         Session session = req.attribute("t_session");
         boolean success = Main.management.createSeller(session.getUser());
-        if (success) model.put("success", true);
+        if (success) {
+            model.put("success", true);
+        }
 
         res.redirect("/profile");
         return "";
