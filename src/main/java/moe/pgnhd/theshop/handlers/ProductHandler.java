@@ -21,4 +21,21 @@ public class ProductHandler {
         Map<String, Object> model = new HashMap<>();
         return Main.render("product/create", model);
     }
+
+    public static String addToBasket(Request req, Response res) {
+        Map<String, Object> model = new HashMap<>();
+        int product_id = Integer.parseInt(req.queryParams("id"));
+        int amount = Integer.parseInt(req.queryParams("amount"));
+        User user = req.attribute("user");
+
+        if(amount <= 0) {
+            res.status(400);
+            return "Invalid input";
+        }
+
+        Main.management.addProductToBasket(product_id, user, amount);
+
+        res.redirect("/product/" + product_id);
+        return "";
+    }
 }

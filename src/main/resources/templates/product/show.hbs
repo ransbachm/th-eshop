@@ -12,10 +12,24 @@
 
     <img src="/public/static/img"{{imgid}}>
     <p>{{product.price}}€</p>
+    <p>{{product.available}} Available</p>
 
-    <a href="/seller/{{product.seller.id}}">{{product.seller}}</a>
 
-    <button>Buy</button>
+    <a href="/seller/{{product.seller.id}}">{{product.seller}}</a><br>
+
+
+        <form method="POST" action="/product/addToCart">
+            <label for="amount">Amount</label><br>
+            <input value="1" name="amount" type="number" min="1" max="{{product.available}}"><br>
+            {{#if more_than_zero}}
+            <input type="submit" value="Add to basket">
+            {{else}}
+                Product not available.<br>
+                <input type="submit" value="Add to basket" disabled>
+            {{/if}}
+
+                    <input type="number" name="id" value="{{product.id}}" hidden>
+        </form>
 
     {{>templates/partials/footer}}
 </body>

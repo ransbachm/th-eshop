@@ -2,6 +2,8 @@ package moe.pgnhd.theshop.model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class User implements ResultSetConstructable {
     protected int id;
@@ -15,6 +17,7 @@ public class User implements ResultSetConstructable {
     protected String zipcode;
     protected boolean active;
     protected String activationcode;
+    protected List<BasketItem> basket = new ArrayList<>();
 
     static User from(ResultSet rs) {
         try {

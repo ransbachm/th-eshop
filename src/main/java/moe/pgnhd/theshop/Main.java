@@ -4,6 +4,7 @@ import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
 import com.github.jknack.handlebars.io.FileTemplateLoader;
 import io.github.cdimascio.dotenv.Dotenv;
+import moe.pgnhd.theshop.handlers.BasketHandler;
 import moe.pgnhd.theshop.handlers.Filters.RequireLogin;
 import moe.pgnhd.theshop.handlers.*;
 import org.slf4j.Logger;
@@ -80,10 +81,22 @@ public class Main {
         post("register_confirm", RegisterAndLoginHandler::handleRegisterConfirmSubmit);
 
         get("my/orders", OrderHandler::handleGetOrders);
-        get("/product/create", ProductHandler::handleCreateProduct);
-        get("/product/:id", ProductHandler::handleShowProduct);
-        get("/seller/:id", SellerHandler::handleSeller);
-        get("block/:sec", HelloHandler::handleBlockTest);
+        get("my/basket", BasketHandler::show);
+        post("my/basket/change", BasketHandler::change);
+        post("my/basket/order", BasketHandler::order);
+
+
+
+        get("product/create", ProductHandler::handleCreateProduct);
+        post("product/addToCart", ProductHandler::addToBasket);
+        get("product/:id", ProductHandler::handleShowProduct);
+
+
+        get("seller/:id", SellerHandler::handleSeller);
+
+
+
+
 
 
         get("search", SearchHandler::handleSearch);
