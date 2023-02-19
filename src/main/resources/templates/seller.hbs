@@ -7,26 +7,30 @@
 
 <body>
     {{>templates/partials/header}}
+    <div class="mainbody">
+        <div class="contentbody">
+            <h2>Products this seller sells:</h2>
+            <p>{{seller}}</p>
+            <img src="/upload/user/{{seller.id}}.png">
+            <style>
+                img {
+                    width: 10rem;
+                    height: 10rem;
+                }
+            </style>
+            <table>
+                <th>Product</th>
+                <th>Price</th>
+                {{#each products}}
+                    <tr>
+                        <td><a href="/product/{{id}}">{{name}}</a></td>
+                        <td>{{price}}</td>
+                    </tr>
+                {{/each}}
+            </table>
+        </div>
+    </div>
 
-    <h2>Products this seller sells:</h2>
-    <p>{{seller}}</p>
-    <img src="/upload/user/{{seller.id}}.png">
-    <style>
-        img {
-            width: 10rem;
-            height: 10rem;
-        }
-    </style>
-    <table>
-        <th>Product</th>
-        <th>Price</th>
-        {{#each products}}
-            <tr>
-                <td><a href="/product/{{id}}">{{name}}</a></td>
-                <td>{{price}}</td>
-            </tr>
-        {{/each}}
-    </table>
 
     {{>templates/partials/footer}}
 </body>

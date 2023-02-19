@@ -6,28 +6,31 @@
     <title>Th_Eshop - Search</title>
 <body>
     {{>templates/partials/header}}
+    <div class="mainbody">
+        <h2>{{result_count}} Results for "{{search_query}}"</h2>
+        <div class="contentbody">
+            <table>
+                {{#if products}}
+                    <tr>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Seller</th>
+                    </tr>
+                    {{#each products}}
+                        <tr>
+                            <td><a href="/product/{{id}}">{{name}}</a> </td>
+                            <td>{{price}}€</td>
+                            <td><a href="/seller/{{seller.id}}">{{seller}}</a></td>
+                        </tr>
+                    {{/each}}
+                {{/if}}
 
-    <h2>{{result_count}} Results for "{{search_query}}"</h2>
-    <table>
-        {{#if products}}
-            <tr>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Seller</th>
-            </tr>
-            {{#each products}}
-                <tr>
-                    <td><a href="/product/{{id}}">{{name}}</a> </td>
-                    <td>{{price}}€</td>
-                    <td><a href="/seller/{{seller.id}}">{{seller}}</a></td>
-                </tr>
-            {{/each}}
-        {{/if}}
-
-        {{#unless products}}
-            No products found.
-        {{/unless}}
-    </table>
+                {{#unless products}}
+                    No products found.
+                {{/unless}}
+            </table>
+        </div>
+    </div>
     {{>templates/partials/footer}}
 </body>
 </html>

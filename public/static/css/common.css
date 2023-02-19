@@ -2,3 +2,48 @@ html,body {
     margin: 0;
     padding: 0;
 }
+.mainbody {
+    margin-left : auto;
+    margin-right : auto;
+    box-sizing : border-box;
+    display : block;
+    max-width : 73.75rem;
+}
+
+.contentbody {
+    align-items : center;
+    display : grid;
+}
+
+.contentbody table {
+    border-left: 1px solid;
+    border-right: 1px solid;
+    border-color: black;
+}
+/*
+.contentbody th {
+    border-left: 1px solid;
+    border-color: black;
+}
+.contentbody td {
+    border-left: 1px solid;
+    border-color: black;
+}
+
+.contentbody img {
+     position :
+     float : right;
+     margin : 50 px;
+     color : black;
+     }
+*/
+.contentbody th {
+    text-align: left;
+}
+.outerbox {
+    display : flex;
+}
+.box {
+    display: inline-block;
+    width : 50%;
+}

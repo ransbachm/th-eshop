@@ -7,30 +7,38 @@
 </head>
 <body>
     {{>templates/partials/header}}
+    <div class="mainbody">
 
-    <h1>{{product.name}}</h1>
-    <p>{{product.description}}</p>
-    <img id="product_img" src="/upload/product/{{product.id}}.png">
+        <div class="contentbody">
+            <h1>{{product.name}}</h1>
+            <div class="outerbox">
+                <div class="box">
+                    <img id="product_img" src="/upload/product/{{product.id}}.png">
+                </div>
+                <div class="box">
+                    <p>{{product.description}}</p>
+                    <p>{{product.price}}€</p>
+                    <p>{{product.available}} Available</p>
 
-    <p>{{product.price}}€</p>
-    <p>{{product.available}} Available</p>
-
-    <a href="/seller/{{product.seller.id}}">{{product.seller}}</a><br>
+                    <a href="/seller/{{product.seller.id}}">{{product.seller}}</a><br>
 
 
-        <form method="POST" action="/product/addToCart">
-            <label for="amount">Amount</label><br>
-            <input value="1" name="amount" type="number" min="1" max="{{product.available}}"><br>
-            {{#if more_than_zero}}
-            <input type="submit" value="Add to basket">
-            {{else}}
-                Product not available.<br>
-                <input type="submit" value="Add to basket" disabled>
-            {{/if}}
+                    <form method="POST" action="/product/addToCart">
+                        <label for="amount">Amount</label><br>
+                        <input value="1" name="amount" type="number" min="1" max="{{product.available}}"><br>
+                        {{#if more_than_zero}}
+                        <input type="submit" value="Add to basket">
+                        {{else}}
+                            Product not available.<br>
+                            <input type="submit" value="Add to basket" disabled>
+                        {{/if}}
 
-                    <input type="number" name="id" value="{{product.id}}" hidden>
-        </form>
-
+                                <input type="number" name="id" value="{{product.id}}" hidden>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     {{>templates/partials/footer}}
 </body>
 </html>

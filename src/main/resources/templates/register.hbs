@@ -8,44 +8,51 @@
 <body>
     {{>templates/partials/header}}
 
-    <h1>Register</h1>
-    <p>Or <a href="/login">Login</a></p>
+    <div class="mainbody">
+        <div class="contentbody">
+            <h1>Register</h1>
+            <p>Or <a href="/login">Login</a></p>
+            <table>
+                <form method="POST" action="/register">
+                    <label for="firstname">First name</label>
+                    <input type="text" name="firstname"><br>
 
-    <form method="POST" action="/register">
-        <label for="firstname">First name</label>
-        <input type="text" name="firstname"><br>
+                    <label for="lastname">Last name</label>
+                    <input type="text" name="lastname"><br>
 
-        <label for="lastname">Last name</label>
-        <input type="text" name="lastname"><br>
+                    <label for="email">Email</label>
+                    <input type="text" name="email"><br>
 
-        <label for="email">Email</label>
-        <input type="text" name="email"><br>
+                    <label for="password">Password</label>
+                    <input type="password" name="password"><br>
 
-        <label for="password">Password</label>
-        <input type="password" name="password"><br>
+                    <label for="password_confirm">Confirm password</label>
+                    <input type="password" name="password_confirm"><br>
 
-        <label for="password_confirm">Confirm password</label>
-        <input type="password" name="password_confirm"><br>
+                    <label for="housenumber">House No.</label>
+                    <input type="text" name="housenumber"><br>
 
-        <label for="housenumber">House No.</label>
-        <input type="text" name="housenumber"><br>
+                    <label for="street">Street</label>
+                    <input type="text" name="street"><br>
 
-        <label for="street">Street</label>
-        <input type="text" name="street"><br>
+                    <label for="zipcode">Zipcode</label>
+                    <input type="text" name="zipcode"> <br>
 
-        <label for="zipcode">Zipcode</label>
-        <input type="text" name="zipcode"> <br>
+                    <input value="confirm" type="submit">
+                </form>
 
-        <input value="confirm" type="submit">
-    </form>
+                {{#if email_not_available}}
+                    This email is not available.
+                {{/if}}
 
-    {{#if email_not_available}}
-        This email is not available.
-    {{/if}}
+                {{#if email_send_failure}}
+                    The confirmation email could not be sent.
+                {{/if}}
+            </table>
 
-    {{#if email_send_failure}}
-        The confirmation email could not be sent.
-    {{/if}}
+        </div>
+    </div>
+
 
     {{>templates/partials/footer}}
 </body>
