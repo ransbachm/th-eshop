@@ -69,7 +69,7 @@ public class Util {
         return model;
     }
 
-    public static String handle404(Response res){
+    public static String handle404(Request req, Response res){
         res.status(404);
         return "404 not found";
     }

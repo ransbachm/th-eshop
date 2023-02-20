@@ -96,6 +96,8 @@ public class Main {
         post("my/products", ProductHandler::handleAlterMyProduct);
 
         get("search", SearchHandler::handleSearch);
+
+        notFound(Util::handle404);
     }
 
 }

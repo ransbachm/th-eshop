@@ -1,0 +1,14 @@
+#profile-table {
+    width : 50%;
+}
+
+#profile-table th{
+    text-align : left;
+}
+
+#profile-table td{
+    background : grey;
+    border-radius : 5px;
+    color : white;
+}
+
