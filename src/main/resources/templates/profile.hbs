@@ -7,19 +7,55 @@
 
 <body>
     {{>templates/partials/header}}
+    <link rel="stylesheet" href="/static/css/profile.css">
+    <div class="mainbody">
 
-    <p>Email: {{user.email}}</p>
-    <p>Name: {{user.firstname}} {{user.lastname}}</p>
-    <p>Address: {{user.street}} {{user.housenumber}} {{user.zipcode}}</p>
-    <p>Seller status:
-        {{#if seller}}You are a seller
-            {{else}} You are not a seller.
-                <form method="POST" action="/profile">
-                    <input type="submit" value="Become seller"> {{#if success}}Seller added successfully{{/if}}
-                </form>
-        {{/if}}
-    </p>
-
+        <div class="contentbody">
+            <p>Email: {{user.email}}</p>
+            <p>Name: {{user.firstname}} {{user.lastname}}</p>
+            <p>Address: {{user.street}} {{user.housenumber}} {{user.zipcode}}</p>
+            <p>Seller status:
+                {{#if seller}}You are a seller
+                    {{else}} You are not a seller.
+                        <form method="POST" action="/profile">
+                            <input type="submit" value="Become seller"> {{#if success}}Seller added successfully{{/if}}
+                        </form>
+                {{/if}}
+            </p>
+        </div>
+            <table id="profile-table">
+                <th>Email</th>
+                <tr>
+                    <td>{{user.email}}</td>
+                </tr>
+                <th>Given name</th>
+                <th>Surname</th>
+                <tr>
+                    <td>{{user.firstname}}</td>
+                    <td>{{user.lastname}}</td>
+                </tr>
+                <th>Street</th>
+                <th>House number</th>
+                <th>Zipcode</th>
+                <tr>
+                    <td>{{user.street}}</td>
+                    <td>{{user.housenumber}}</td>
+                    <td>{{user.zipcode}}</td>
+                </tr>
+                <th>Account status</th>
+                <tr>
+                    <td>{{#if seller}}You are a seller {{else}} Your a customer{{/if}}</td>
+                </tr>
+                <tr>
+                    {{#if seller}}
+                        {{else}}
+                        <form method="POST" action="/profile">
+                            <input type="submit" value="Become seller"> {{#if success}}Seller added successfully{{/if}}
+                        </form>
+                    {{/if}}
+                </tr>
+            </table>
+    </div>
 {{>templates/partials/footer}}
 </body>
 </html>
