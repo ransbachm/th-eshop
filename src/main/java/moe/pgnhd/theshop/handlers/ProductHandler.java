@@ -29,12 +29,17 @@ public class ProductHandler {
 
     public static String handleShowProduct(Request req, Response res) {
         Product product = Main.management.getProduct(req.params(":id"));
-        Map<String, Object> model = Util.getModel(req);
-        model.put("product", product);
-        model.put("more_than_zero", product.getAvailable() > 0);
+        if(product != null) {
+            Map<String, Object> model = Util.getModel(req);
+            model.put("product", product);
+            model.put("more_than_zero", product.getAvailable() > 0);
 
 
-        return Main.render("product/show", model);
+            return Main.render("product/show", model);
+        }
+        else {
+            return Util.handle404(res);
+        }
     }
 
     public static String handleCreateProduct(Request req, Response res) {

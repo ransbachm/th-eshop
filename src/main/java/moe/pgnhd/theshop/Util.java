@@ -8,6 +8,7 @@ import org.apache.tika.metadata.Metadata;
 import org.apache.tika.mime.MediaType;
 import org.apache.tika.mime.MimeType;
 import spark.Request;
+import spark.Response;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -66,5 +67,10 @@ public class Util {
         model.put("seller", req.attribute("seller"));
         model.put("session", req.attribute("t_session"));
         return model;
+    }
+
+    public static String handle404(Response res){
+        res.status(404);
+        return "404 not found";
     }
 }
