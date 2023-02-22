@@ -100,7 +100,8 @@ public class RegisterAndLoginHandler {
             Main.management.setUserActivated(try_user.getId(), true);
             model.put("register_confirm_success", true);
             model.put("login_redirect_back", req.session().attribute("login_redirect_back"));
-            return Main.render("register_confirm", model);
+            res.redirect("/login");
+            return "";
         }
         return failHandleRegisterConfirmSubmit(model);
     }
