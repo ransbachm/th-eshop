@@ -1,0 +1,60 @@
+.structure-column {
+    max-width: 73.75rem;
+    margin-right: auto;
+    margin-left: auto;
+    display : flex;
+    align-items: center;
+    flex-direction : colum;
+    min-height : 100%;
+    height : auto;
+}
+
+.column-color {
+    background : white;
+    margin-left : auto;
+    margin-right: auto;
+    height : 100%;
+    padding : 1%;
+    min-width : 90%
+}
+
+.structure-box-large {
+    width : 100%;
+    margin-left : auto;
+    margin-right : auto;
+}
+
+.structure-box {
+    margin-left : auto;
+    margin-right : auto;
+}
+
+.structure-box-small {
+    width : 50%;
+    flex : 50%
+
+}
+.structure-box-small img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.structure-box-out {
+    padding : 10px;
+    display : flex;
+    flex-direction : row;
+}
+
+.structure-box-o {
+    padding : 10px;
+    padding : 10px;
+    margin : 0 auto;
+}
+
+.structure-colum-out {
+    padding : 10px;
+    display : flex;
+    flex-direction : row;
+}
+

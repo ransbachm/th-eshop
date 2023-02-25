@@ -22,7 +22,7 @@ public class SellerHandler {
             return Main.render("seller", model);
         }
         else {
-            return Util.handle404(res);
+            return Util.handle404(req, res);
         }
     }
 }

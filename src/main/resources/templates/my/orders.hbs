@@ -9,42 +9,46 @@
 
 
 <style>
-        table {
-            border: 0.1rem solid black;
-        }
+
 
         th,tc {
-            padding: 0.4rem;
-        }
-
-        .inner_table_cell {
-            //padding: 2rem;
+            padding-bottom: 1%;
         }
 
 </style>
-    <p>Orders:</p>
-    {{#if orders}}
-    <table>
-        {{#each orders}}
-            <tr>
-                <td>Orders [{{id}}]<br>{{date}}</td>
-                <td>
-                    <table>
-                        {{#each orderItems}}
-                            <tr>
-                                <td>{{product.name}}</td>
-                                <td>{{price}}€</td>
-                                <td>{{amount}}</td>
-                            </tr>
-                        {{/each}}
+    <div class="structure-column">
+        <div class="column-color">
+            <div class="structure-box-large">
+                <h2>Orders</h2>
+                {{#if orders}}
+                    {{#each orders}}
+                        <table class ="space">
+                            <tr><th> <b>Order {{id}} from the {{date}}</b></th> </tr>
+                                {{#each orderItems}}
+                                    <tr>
+                                        <td class="ord">
+                                            <div class="structure-box-out">
+                                                <div class = "structure-box-small">
+                                                    <img id="product_img" src="/upload/product/{{product.id}}.png">
+                                                </div>
+                                                <div class = "structure-box-small">
+                                                    <a href="/product/{{product.id}}"><b>{{product.name}}</b></a> <br>
+                                                    <p> {{amount}}x {{price}}€</p>
+                                                    <p>{{product.description}}</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {{/each}}
+                            {{/each}}
                     </table>
-                </td>
-            </tr>
-        {{/each}}
-    </table>
-    {{else}}
-    <p>You have no orders</p>
-    {{/if}}
+                {{else}}
+                    <p>You have no orders</p>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+
 
     {{>templates/partials/footer}}
 </body>

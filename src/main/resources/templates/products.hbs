@@ -6,36 +6,43 @@
 
 <body>
     {{>templates/partials/header}}
-    <div class="mainbody">
-        <h2>Your Products</h2>
-        <div class="contentbody">
-            <table>
-                <tr>
-                    <th>id</th>
-                    <th>name</th>
-                    <th>description</th>
-                    <th>price</th>
-                    <th>available</th>
-                </tr>
-                {{#each products}}
-                    <tr>
-                        <td>{{id}}</td>
-                        <td><a href="/product/{{id}}">{{name}}</a></td>
-                        <td>{{description}}</td>
-                        <td>{{price}}€</td>
-                        <td>
-                            <form method="POST" action="/my/products">
-                                <input name="productid" value="{{id}}" hidden>
-                                <input name="new_amount" type="number" value="{{available}}">
-                                <input type="submit" value="Set">
-                            </form>
-                        </td>
-                    </tr>
-                {{/each}}
-            </table>
-            <a href="/product/create">Create Products</a>
+
+    <div class="structure-column">
+        <div class="column-color">
+            <h2>Your Products</h2>
+            <div class="structure-box">
+
+                    <table class="space">
+                        <tr>
+                            <th><b>Id</b></th>
+                            <th><b>Name</b></th>
+                            <th><b>Description</b></th>
+                            <th><b>Price</b></th>
+                            <th><b>Available</b></th>
+                        </tr>
+                        {{#each products}}
+                            <tr>
+                                <td><p>{{id}}</p></td>
+                                <td><a href="/product/{{id}}">{{name}}</a></td>
+                                <td><p>{{description}}</p></td>
+                                <td><p>{{price}}€</p></td>
+                                <td>
+                                    <form method="POST" action="/my/products">
+                                        <input name="productid" value="{{id}}" hidden>
+                                        <input name="new_amount" type="number" value="{{available}}">
+                                        <input type="submit" value="Set">
+                                    </form>
+                                </td>
+                            </tr>
+                        {{/each}}
+                    </table>
+            </div>
+            <div class="structure-box">
+                <a href="/product/create"><i>Create Products</i></a>
+            </div>
         </div>
     </div>
+
     {{>templates/partials/footer}}
 </body>
 </html>
