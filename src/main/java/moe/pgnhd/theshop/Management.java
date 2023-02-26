@@ -6,11 +6,17 @@ import moe.pgnhd.theshop.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.*;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Management {
     private static Logger LOG = LoggerFactory.getLogger(Management.class);
@@ -20,8 +26,14 @@ public class Management {
     private HikariDataSource ds;
 
     public Management() throws SQLException {
+        String db = Main.dotenv.get("SQL_DB");
+        String host = Main.dotenv.get("SQL_HOST");
+
+        String jdbc_url = "jdbc:mariadb://" + host + "/" + db;
+        LOG.error(jdbc_url);
+
         HikariConfig config = new HikariConfig();
-        config.setJdbcUrl(Main.dotenv.get("SQL_DB_URL"));
+        config.setJdbcUrl(jdbc_url);
         config.setUsername(Main.dotenv.get("SQL_DB_USER"));
         config.setPassword(Main.dotenv.get("SQL_DB_PWD"));
 
@@ -517,6 +529,100 @@ public class Management {
             stmt.executeUpdate();
         } catch (SQLException e) {
             LOG.error(e.getMessage());
+        }
+    }
+
+    public List<Product> recommend_random(int user_id, int max) {
+        String sql ="SELECT * \n" +
+                "FROM Product\n" +
+                "Order BY RAND()\n" +
+                "LIMIT ?";
+        try(Connection con = ds.getConnection();
+            PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setInt(1, max);
+            ResultSet rs = stmt.executeQuery();
+            return Models.multiple(rs, Product.class);
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+            return null;
+        }
+    }
+
+    public List<Product> recommend_for_product(int user_id, int product_id, int max) {
+        return recommend_random(user_id, max);
+    }
+
+    private static List<Integer> get_recommendations_for_user(int user_id, int max) {
+        try {
+            String[] args = new String[] {"python", "calc.py", String.valueOf(user_id)};
+            ProcessBuilder pb = new ProcessBuilder(args);
+            pb.directory(new File("py"));
+            Process p = pb.start();
+
+            p.waitFor();
+
+            Scanner scan = new Scanner(new BufferedReader(new InputStreamReader(p.getInputStream())));
+
+            List<Integer> recommendations = new ArrayList<>();
+            for(int i=0; scan.hasNext() && i<max; i++) {
+                String[] split = scan.nextLine().split(",");
+                int product_id = Integer.parseInt(split[0]);
+                recommendations.add(product_id);
+            }
+            scan.close();
+            return recommendations;
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Product> recommend_for_user(int user_id, int max) {
+        List<Integer> reco_ids = get_recommendations_for_user(user_id, max);
+        if(reco_ids != null && reco_ids.size() > 0) {
+            return getProducts(reco_ids);
+        }
+        return null;
+    }
+
+    private String get_question_marks_for_in_clause(int amount) {
+        if(amount == 0) {
+            throw new IllegalArgumentException("Cannot have empty in clause");
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append("(");
+        for(int i=0; i<amount-1; i++) {
+            sb.append("?,");
+        }
+        sb.append("?)");
+        return sb.toString();
+    }
+
+    public void insert_ints_into_in_clause(PreparedStatement ps, int start_index, List<Integer> in) throws SQLException {
+        for(int i=0; i<in.size(); i++) {
+            ps.setInt(start_index+i, in.get(i));
+        }
+    }
+
+    public List<Product> getProducts(List<Integer> ids) {
+        if(ids.size() == 0) {
+            return null;
+        }
+        String sql ="SELECT * \n" +
+                "FROM Product\n" +
+                "WHERE Product.id IN";
+        sql += get_question_marks_for_in_clause(ids.size());
+        sql += ";";
+
+        try(Connection con = ds.getConnection();
+            PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            insert_ints_into_in_clause(stmt, 1, ids);
+            ResultSet rs = stmt.executeQuery();
+
+            return Models.multiple(rs, Product.class);
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+            return null;
         }
     }
 }

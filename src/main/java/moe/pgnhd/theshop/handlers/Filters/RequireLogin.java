@@ -15,7 +15,7 @@ import java.util.Scanner;
 
 import static spark.Spark.halt;
 public class RequireLogin {
-    private static Logger LOG = LoggerFactory.getLogger(Main.class);
+    private static Logger LOG = LoggerFactory.getLogger(RequireLogin.class);
 
     private static class Entry {
         public boolean exact;
@@ -89,11 +89,6 @@ public class RequireLogin {
 
                 // Stores session + user for handlers after
                 req.attribute("t_session", session);
-                req.attribute("user", session.getUser());
-
-                // Also get seller if user is seller
-                req.attribute("seller", Main.management.getSellerFromUser(session.getUser()));
-
                 
                 if (!onWhiteList) {
                     redirect_login(req, res);

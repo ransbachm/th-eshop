@@ -11,7 +11,11 @@ import java.util.Map;
 
 public class SearchHandler {
     public static String handleSearch(Request req, Response res) {
-        List<Product> products = Main.management.searchProducts(req.queryParams("query"));
+        String query = req.queryParams("query");
+        if(query == null) {
+            query = "";
+        }
+        List<Product> products = Main.management.searchProducts(query);
         Map<String, Object> model = Util.getModel(req);
         model.put("products", products);
         model.put("result_count", products.size());

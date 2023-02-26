@@ -29,11 +29,18 @@ public class ProductHandler {
 
     public static String handleShowProduct(Request req, Response res) {
         Product product = Main.management.getProduct(req.params(":id"));
+        User user = req.attribute("t_session");
         if(product != null) {
             Map<String, Object> model = Util.getModel(req);
             model.put("product", product);
             model.put("more_than_zero", product.getAvailable() > 0);
 
+            List<Product> recommendations = Main.management.recommend_for_product
+                (user.getId(), product.getId(), 5*3);
+
+            model.put("recommendations_outer", Util.to_list_of_lists(recommendations, 5));
+            model.put("product", product);
+            model.put("more_than_zero", product.getAvailable() > 0);
 
             return Main.render("product/show", model);
         }
