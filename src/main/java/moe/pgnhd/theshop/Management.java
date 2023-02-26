@@ -625,7 +625,7 @@ public class Management {
             return null;
         }
     }
-
+    
     public void invalidate_session(Session session) {
         String sql ="UPDATE Session\n" +
                 "SET until = ?\n" +
