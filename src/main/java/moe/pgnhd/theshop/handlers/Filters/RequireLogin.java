@@ -76,7 +76,7 @@ public class RequireLogin {
 
             // Makes the client remember the session id
             res.cookie("t_session_id", session.getId());
-        } else { // user logged in
+        } else { // session exists
             session = Main.management
                     .getSession(req.cookie("t_session_id"));
 
@@ -96,12 +96,14 @@ public class RequireLogin {
                 return;
             }
 
-            // Stores session + user for handlers after
-            req.attribute("t_session", session);
-            req.attribute("user", session.getUser());
+            if(session.getUser() != null) {
+                // Stores session + user for handlers after
+                req.attribute("t_session", session);
+                req.attribute("user", session.getUser());
 
-            // Also get seller if user is seller
-            req.attribute("seller", Main.management.getSellerFromUser(session.getUser()));
+                // Also get seller if user is seller
+                req.attribute("seller", Main.management.getSellerFromUser(session.getUser()));
+            }
         }
 
         boolean loggedIn = session.isLogged_in();

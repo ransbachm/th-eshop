@@ -4,6 +4,7 @@ import moe.pgnhd.theshop.Mail;
 import moe.pgnhd.theshop.Main;
 import moe.pgnhd.theshop.Management;
 import moe.pgnhd.theshop.Util;
+import moe.pgnhd.theshop.model.Session;
 import moe.pgnhd.theshop.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -133,14 +134,23 @@ public class RegisterAndLoginHandler {
             return Main.render("login", model);
         } else if(user.getPwdhash().equals(pwdHash)) {
             Main.management.logInSession(req.cookie("t_session_id"), user);
-            String login_redirect_back = req.cookie("login_redirect_back");
-            if(login_redirect_back == null) {
-                login_redirect_back = "/";
-            }
-            res.redirect(login_redirect_back);
+            // needs overhaul
+            //String login_redirect_back = req.cookie("login_redirect_back");
+            //if(login_redirect_back == null) {
+            //    login_redirect_back = "/";
+            //}
+            res.redirect("/");
             return "";
         } else {
             return wrong_pwd(req, res, model);
         }
+    }
+
+    public static String logout(Request req, Response res) {
+        Session session = req.attribute("t_session");
+        Main.management.invalidate_session(session);
+        res.removeCookie("t_session_id");
+        res.redirect("/");
+        return "";
     }
 }

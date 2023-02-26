@@ -30,6 +30,9 @@ public class User implements ResultSetConstructable {
 
     protected User(ResultSet rs) throws SQLException {
         this.id = rs.getInt("User.id");
+        if(id == 0) {
+            throw new SQLException("User is null");
+        }
         this.firstname = rs.getString("User.firstname");
         this.lastname = rs.getString("User.lastname");
         this.email = rs.getString("User.email");
@@ -128,5 +131,10 @@ public class User implements ResultSetConstructable {
 
     public void setSalt(String salt) {
         this.salt = salt;
+    }
+
+    @Override
+    public String toString() {
+        return firstname + " " + lastname;
     }
 }
