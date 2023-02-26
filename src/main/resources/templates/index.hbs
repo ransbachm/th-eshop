@@ -8,7 +8,24 @@
 
 <body>
     {{>templates/partials/header}}
-    <div id="bcontents">
+
+    {{#unless recommendations_outer}}
+        <!-- <h2>For you:</h2> -->
+        <!-- show alternative recommendations -->
+    {{/unless}}
+
+    {{#each recommendations_outer}}
+        <div class="parent">
+            {{#each this}}
+                <a href="/product/{{id}}">
+                    <div class="div{{@index}}" >
+                        {{name}}<br>
+                        <img class="reco-img" src="/upload/product/{{id}}.png">
+                    </div>
+                </a>
+            {{/each}}
+        </div>
+    {{/each}}
 
     {{>templates/partials/footer}}
     </div>

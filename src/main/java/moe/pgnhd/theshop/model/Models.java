@@ -129,4 +129,21 @@ public class Models {
             return null;
         }
     }
+
+    public static <T extends ResultSetConstructable> List<T> multiple(ResultSet rs, Class<T> what) {
+        List<T> res = new ArrayList<>();
+        try {
+            Method from = what.getDeclaredMethod("from", ResultSet.class);
+            while (rs.next()) {
+                res.add((T) from.invoke(null, rs));
+            }
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+            return null;
+        } catch (Exception e) {
+            LOG.error(e.getMessage());
+            return null;
+        }
+        return res;
+    }
 }

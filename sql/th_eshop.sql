@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Feb 18, 2023 at 06:49 PM
+-- Generation Time: Feb 26, 2023 at 12:49 PM
 -- Server version: 10.10.2-MariaDB-1:10.10.2+maria~ubu2204
 -- PHP Version: 8.0.27
 
@@ -72,6 +72,18 @@ CREATE TABLE `Product` (
   `available` int(11) NOT NULL,
   `description` text NOT NULL,
   `seller` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Rating`
+--
+
+CREATE TABLE `Rating` (
+  `user` int(11) NOT NULL,
+  `product` int(11) NOT NULL,
+  `rating` decimal(2,1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -152,6 +164,13 @@ ALTER TABLE `Product`
   ADD KEY `seller` (`seller`) USING BTREE;
 
 --
+-- Indexes for table `Rating`
+--
+ALTER TABLE `Rating`
+  ADD PRIMARY KEY (`user`,`product`),
+  ADD KEY `product` (`product`);
+
+--
 -- Indexes for table `Seller`
 --
 ALTER TABLE `Seller`
@@ -226,7 +245,7 @@ ALTER TABLE `Order`
 -- Constraints for table `OrderItem`
 --
 ALTER TABLE `OrderItem`
-  ADD CONSTRAINT `OrderItem_ibfk_1` FOREIGN KEY (`order`) REFERENCES `Order` (`id`),
+  ADD CONSTRAINT `OrderItem_ibfk_1` FOREIGN KEY (`order`) REFERENCES `Order` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `OrderItem_ibfk_2` FOREIGN KEY (`product`) REFERENCES `Product` (`id`);
 
 --
@@ -234,6 +253,13 @@ ALTER TABLE `OrderItem`
 --
 ALTER TABLE `Product`
   ADD CONSTRAINT `Product_ibfk_1` FOREIGN KEY (`seller`) REFERENCES `Seller` (`id`);
+
+--
+-- Constraints for table `Rating`
+--
+ALTER TABLE `Rating`
+  ADD CONSTRAINT `Rating_ibfk_1` FOREIGN KEY (`user`) REFERENCES `User` (`id`),
+  ADD CONSTRAINT `Rating_ibfk_2` FOREIGN KEY (`product`) REFERENCES `Product` (`id`);
 
 --
 -- Constraints for table `Seller`

@@ -9,11 +9,9 @@ import org.apache.tika.mime.MediaType;
 import org.apache.tika.mime.MimeType;
 import spark.Request;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.security.SecureRandom;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Util {
     public static String randomString(int length) {
@@ -66,5 +64,19 @@ public class Util {
         model.put("seller", req.attribute("seller"));
         model.put("session", req.attribute("t_session"));
         return model;
+    }
+
+    public static <T> List<List<T>> to_list_of_lists(List<T> recommendations, int list_size) {
+        List<List<T>> outer_recommendations = new ArrayList<>();
+        List<T> crr = new ArrayList<>();
+        for(int i = 0; i< recommendations.size(); i++) {
+            if(i % list_size == 0 && i > 0) {
+                outer_recommendations.add(crr);
+                crr = new ArrayList<>();
+            }
+            crr.add(recommendations.get(i));
+        }
+        outer_recommendations.add(crr);
+        return outer_recommendations;
     }
 }
