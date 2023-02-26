@@ -7,26 +7,38 @@
 
 <body>
     {{>templates/partials/header}}
+    <div class="structure-column">
+            <div class="column-color">
 
-    <h1>Register confirm</h1>
-    <p>Please check your email for the code</p>
+                <div class="structure-box-large">
+                    <h2>Register confirm</h2>
+                    <p>Please check your email for the code</p>
 
-    <form method="POST" action="register_confirm">
-        <label for="activationcode">Activation code</label>
-        <input type="text" name="activationcode"><br>
+                    <form method="POST" action="register_confirm">
+                        <div class="structure-box-out">
+                            <div class="structure-box-small">
+                                <input type="text" name="activationcode">
+                            </div>
+                            <div class="structure-box-small">
+                                <div class="structure-box-centered">
+                                    <input type="submit" value="confirm">
+                                </div>
+                            </div>
+                        </div>
+                        <label for="activationcode">Activation code</label>
+                    </form>
 
-        <input type="submit">
-    </form>
+                    {{#if register_confirm_success}}
+                        Your account was confirmed! <br>
+                        <a href="{{login_redirect_back}}">Continue</a>
+                    {{/if}}
 
-    {{#if register_confirm_success}}
-        Your account was confirmed! <br>
-        <a href="{{login_redirect_back}}">Continue</a>
-    {{/if}}
-
-    {{#if register_confirm_failure}}
-        Code incorrect.
-    {{/if}}
-
+                    {{#if register_confirm_failure}}
+                        Code incorrect.
+                    {{/if}}
+                </div>
+        </div>
+    </div>
     {{>templates/partials/footer}}
 </body>
 </html>
