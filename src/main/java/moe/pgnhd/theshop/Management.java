@@ -578,13 +578,16 @@ public class Management {
 
     public List<Product> recommend_for_user(int user_id, int max) {
         List<Integer> reco_ids = get_recommendations_for_user(user_id, max);
-        if(reco_ids != null) {
+        if(reco_ids != null && reco_ids.size() > 0) {
             return getProducts(reco_ids);
         }
         return null;
     }
 
     private String get_question_marks_for_in_clause(int amount) {
+        if(amount == 0) {
+            throw new IllegalArgumentException("Cannot have empty in clause");
+        }
         StringBuilder sb = new StringBuilder();
         sb.append("(");
         for(int i=0; i<amount-1; i++) {
@@ -601,6 +604,9 @@ public class Management {
     }
 
     public List<Product> getProducts(List<Integer> ids) {
+        if(ids.size() == 0) {
+            return null;
+        }
         String sql ="SELECT * \n" +
                 "FROM Product\n" +
                 "WHERE Product.id IN";
