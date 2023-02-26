@@ -39,7 +39,7 @@ public class Main {
         LOG.info("Application is starting");
 
         exception(Exception.class, (e,req,res) -> {
-            LOG.error(e.getMessage());
+            LOG.error(req.pathInfo() + " " + e.getMessage());
             res.status(500);
             res.body("<h2>500 Internal Server Error</h2>");
         });
@@ -66,7 +66,7 @@ public class Main {
         // require logged-in user for paths below
         before("*", RequireLogin::filterRequireLogin);
 
-        get("/", (req,res) -> render("index", Util.getModel(req)));
+        get("/", IndexHandler::show);
 
 
         get("login", RegisterAndLoginHandler::handleLogin);

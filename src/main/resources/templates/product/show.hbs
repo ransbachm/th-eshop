@@ -31,6 +31,22 @@
                     <input type="number" name="id" value="{{product.id}}" hidden>
         </form>
 
+    <h2>Other products you might like:</h2>
+
+    {{#each recommendations_outer}}
+        <div class="parent">
+            {{#each this}}
+                <a href="/product/{{id}}">
+                    <div class="div{{@index}}" >
+                        {{name}}<br>
+                        <img class="reco-img" src="/upload/product/{{id}}.png">
+                    </div>
+                </a>
+            {{/each}}
+        </div>
+    {{/each}}
+
+
     {{>templates/partials/footer}}
 </body>
 </html>
