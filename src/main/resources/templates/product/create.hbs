@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Th_Eshop-Create Product</title>
     {{>templates/partials/common}}
 </head>
 <body>
@@ -19,14 +19,14 @@
                                 <div class="structure-box-out">
                                     <div class="structure-box-small">
                                         <label for="productname">Product name</label>
-                                        <input type="text" name="name">
-                                        {{#if noname}}Product must have a name{{/if}}
+                                        <input type="text" name="name" onchange="test(this.value)">
+                                        {{#if noname}}<p>Product must have a name</p>{{/if}}
                                     </div>
 
                                     <div class="structure-box-small">
                                         <label for="price">Product price</label>
                                         <input type="number" name="price">
-                                        {{#if pricetolow}} Product price must be greater than zero.{{/if}}
+                                        {{#if pricetolow}} <p>Product price must be greater than zero.</p>{{/if}}
                                     </div>
                                 </div>
 
@@ -35,7 +35,7 @@
                                     <div class="structure-box">
                                         <input id ="description-input" type = "text"  name = "description">
                                     </div>
-                                    {{#if nodescription}} Product must have a description{{/if}}
+                                    {{#if nodescription}} <p>Product must have a description</p>{{/if}}
                                 </div>
 
 
@@ -43,7 +43,7 @@
                                     <div>
                                         <lablel for="available">Product available</lablel>
                                         <input type="number" name="available">
-                                        {{#if availabletolow}} Available product must be greater than zero.{{/if}}<br>
+                                        {{#if availabletolow}} <p>Available product must be greater than zero.</p>{{/if}}<br>
                                     </div>
                                 </div>
 
@@ -51,23 +51,23 @@
                                     <div>
                                         <label for="image">Image</label>
                                         <input type="file" name="image" value="select image">
-                                        {{#if noimage}} A product requires an image.{{/if}}<br>
-
+                                        {{#if noimage}} <p>A product requires an image.</p>{{/if}}<br>
                                     </div>
 
                                     <input type="submit" value="confirm">
                                 </div>
                             </div>
-                        </div>
-                    </div>
                     </form>
-                {{#if invalidInput}}
-                    <b>Invalid input</b>
-                {{/if}}
-                {{#if invalidImageFormat}}This image format is not supported{{/if}}
-                {{#if notSeller}}<b>Error: You are not a seller</b>{{/if}}
-
-            </div>
+                    {{#if invalidInput}}
+                        <b>Invalid input</b>
+                    {{/if}}
+                    {{#if invalidImageFormat}}
+                        <b>This image format is not supported</b>
+                    {{/if}}
+                    {{#if notSeller}}
+                        <b>Error: You are not a seller</b>
+                    {{/if}}
+                </div>
             </div>
         </div>
     </div>

@@ -19,15 +19,18 @@
                     <form method="POST" action="login">
 
                         <div class="structure-box-out">
-                            <div class="structure-box-small"><label for="email">Email</label></div>
+                            <div class="structure-box-small"><label for="email"><p>Email</p></label></div>
                             <div class="structure-box-small"><input type="text" name="email"></div>
                         </div>
 
                         <div class="structure-box-out">
-                            <div class="structure-box-small"><label for="password">Password</label></div>
+                            <div class="structure-box-small"><label for="password"><p>Password</p></label></div>
                             <div class="structure-box-small"><input type="password" name="password"></div>
                         </div>
-                        <input type="submit" value="confirm">
+
+                        <div class="structure-box-centred">
+                            <input type="submit" value="confirm">
+                        </div>
                     </form>
 
                     {{#if user_wrong_pwd}}

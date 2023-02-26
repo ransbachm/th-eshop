@@ -58,3 +58,15 @@
     flex-direction : row;
 }
 
+.structure-box-small input{
+    width : 100%;
+}
+
+.structure-box-centered{
+    display: flex;
+    align-items : center;
+}
+
+label p {
+    margin: 0;
+}
