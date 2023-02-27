@@ -3,8 +3,7 @@
     color : white;
     border : none;
     font-family : 'Roboto';
-    font : 'Roboto';
-    font-size: 15;
+    font-size: 15px;
 }
 
 .structure-box-large input[type=submit]{

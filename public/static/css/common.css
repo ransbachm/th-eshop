@@ -9,7 +9,7 @@ body {
 h2 {
     color : black;
     font-family : 'Bebas Neue', display;
-    font-size : 30;
+    font-size : 30px;
     margin-top : 0;
 }
 p, a, label {
@@ -29,77 +29,7 @@ input {
     font-family : "Roboto";
     font-weight : 300;
 }
-/*
-.mainbody {
-    margin-left : auto;
-    margin-right : auto;
-    box-sizing : border-box;
-    display : block;
-    max-width : 73.75rem;
-    background: white;
-    padding : 1%;
-    margin-top : 0%;
-}
 
-.contentbody {
-    align-items : center;
-    display : grid;
-}
-
-.contentbody table {
-    border-left: 1px solid;
-    border-right: 1px solid;
-    border-color: black;
-}
-.min-border td {
-    border-left: 1px solid;
-    border-right: 1px solid;
-    border-color: black;
-    margin-right: 5%;
-    align-items : center;
-}
-/*
-.contentbody th {
-    border-left: 1px solid;
-    border-color: black;
-}
-.contentbody td {
-    border-left: 1px solid;
-    border-color: black;
-}
-
-.contentbody img {
-     position :
-     float : right;
-     margin : 50 px;
-     color : black;
-     }
-*/
-/*
-.contentbody th {
-    text-align: left;
-}
-
-.min-border th {
-    text-align: left;
-    margin : auto;
-}
-
-.min-border td {
-    text-align: left;
-    margin : 5%;
-}
-
-
-
-.min-border {
-    margin-left:  5%;
-    margin-right: 5%;
-}
-
-
-}
-*/
 .outerbox {
     display : flex;
 }
@@ -108,12 +38,9 @@ input {
     font-family: "Roboto";
 }
 
-
-
 #product-creation .structure-box-small input {
     width : 100%;
     font-family : "Roboto";
-    font : "Roboto";
 }
 
 #spacer {

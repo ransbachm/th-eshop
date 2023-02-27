@@ -4,7 +4,6 @@
     margin-left: auto;
     display : flex;
     align-items: center;
-    flex-direction : colum;
     min-height : 100%;
     height : auto;
 }
@@ -31,7 +30,7 @@
 
 .structure-box-small {
     width : 50%;
-    flex : 50%
+    flex : 50%;
 
 }
 .structure-box-small img{
