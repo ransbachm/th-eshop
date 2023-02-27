@@ -7,38 +7,37 @@
 
         <li>
             <a>
-                     <form action="/search" method="GET" id="header-form">
-                        <label for="query" hidden>Search</label>
-                        <input type="text" name="query" placeholder="Search Th_Eshop">
-                        <input type="submit" value="Search">
-                    </form>
+                <form action="/search" method="GET" id="header-form">
+                    <label for="query" hidden>Search</label>
+                    <input type="text" name="query" placeholder="Search Th_Eshop">
+                    <input type="submit" value="Search">
+                </form>
             </a>
-        <li>
-            <a href="/my/basket">Basket</a>
-            
         </li>
 
-        <li>
-            <a href="/login">Login</a>
-        </li>
+        {{#unless user}}
+            <li><a href="/register">Register</a></li>
+            <li><a href="/login">Login</a></li>
+        {{/unless}}
 
-        <li>
-            <a href="/register">Register</a>
-        </li>
-        <li>
+        {{#if user}}
+            <li><a href="/my/basket">Basket</a></li>
 
-        </li>
-        <li>
-            <div id = "dropdown">
-                <div>
-                    <a href="/profile"><button id = "dropdown-button">Account</button></a>
+            <li>
+                <div id = "dropdown">
+                    <div>
+                        <a href="/profile"><button id = "dropdown-button">{{user}}</button></a>
+                    </div>
+                    <div id = "dropdown-content">
+                        <a href="/profile">Profile</a>
+                        <a href="/my/orders">My orders</a>
+                        {{#if seller}}<a href="/my/products">My products</a>{{/if}}
+                        <form action="/logout" method="POST">
+                            <a class="for_input" ><input type="submit" value="Logout"></a>
+                        </form>
+                    </div>
                 </div>
-                <div id = "dropdown-content">
-                    <a href="/profile">Profile</a>
-                    <a href="/my/orders">My orders</a>
-                    {{#if seller}}<a href="/my/products">My products</a>{{/if}}
-                </div>
-            </div>
-        </li>
+            </li>
+        {{/if}}
     </ul>
 </nav>

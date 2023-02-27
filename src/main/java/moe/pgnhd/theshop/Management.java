@@ -625,4 +625,20 @@ public class Management {
             return null;
         }
     }
+    
+    public void invalidate_session(Session session) {
+        String sql ="UPDATE Session\n" +
+                "SET until = ?\n" +
+                "WHERE id = ?";
+        try(Connection con = ds.getConnection();
+            PreparedStatement stmt = con.prepareStatement(sql)) {
+            Instant until = LocalDateTime.now().toInstant(ZoneOffset.UTC);
+
+            stmt.setTimestamp(1, Timestamp.from(until));
+            stmt.setString(2, session.getId());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+        }
+    }
 }

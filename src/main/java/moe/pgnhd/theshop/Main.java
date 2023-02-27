@@ -75,6 +75,7 @@ public class Main {
         post("register", RegisterAndLoginHandler::handleRegisterSubmit);
         get("register_confirm", RegisterAndLoginHandler::handleRegisterConfirm);
         post("register_confirm", RegisterAndLoginHandler::handleRegisterConfirmSubmit);
+        post("logout", RegisterAndLoginHandler::logout);
 
         get("my/orders", OrderHandler::handleGetOrders);
         get("my/basket", BasketHandler::show);
