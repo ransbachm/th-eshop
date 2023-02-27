@@ -5,7 +5,7 @@
     display : flex;
     align-items: center;
     flex-direction : colum;
-    /*min-height : 100%; Caused Problems in non Firefox browsers*/
+    min-height : 100%;
     height : auto;
 }
 
