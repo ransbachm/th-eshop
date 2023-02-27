@@ -2,41 +2,82 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Th_Eshop-Create Product</title>
     {{>templates/partials/common}}
 </head>
 <body>
     {{>templates/partials/header}}
-    <h2>Add a product to sell</h2>
-    <form method="POST" action="/product/create" enctype="multipart/form-data">
-        <label for="productname">product name</label>
-        <input type="text" name="name">
-        {{#if noname}}Product must have a name{{/if}}<br>
 
-        <label for="price">product price</label>
-        <input type="number" name="price">
-        {{#if pricetolow}} Product price must be greater than zero.{{/if}}<br>
 
-        <lablel for = "description">description</lablel>
-        <input type = "text"  name = "description">
-        {{#if nodescription}} Product must have a description{{/if}}<br>
+    <div class="structure-column">
+        <div class="column-color">
+            <div class="structure-box-large">
+                <h2>Add a product to sell</h2>
+                <div id="product-creation">
+                    <div class="structure-column-out">
+                         <form method="POST" action="/product/create" enctype="multipart/form-data">
+                                <div class="structure-box-out">
+                                    <div class="structure-box-small">
+                                        <label for="productname">Product name</label>
+                                        <input type="text" name="name" onchange="test(this.value)">
+                                        {{#if noname}}<p>Product must have a name</p>{{/if}}
+                                    </div>
 
-        <lablel for="available">product available</lablel>
-        <input type="number" name="available">
-        {{#if availabletolow}} Available product must be greater than zero.{{/if}}<br>
+                                    <div id="spacer"> </div>
 
-        <label for="image">image</label>
-        <input type="file" name="image">
-        {{#if noimage}} A product requires an image.{{/if}}<br>
+                                    <div class="structure-box-small">
+                                        <label for="price">Product price</label>
+                                        <input type="number" name="price">
+                                        {{#if pricetolow}} <p>Product price must be greater than zero.</p>{{/if}}
+                                    </div>
+                                </div>
 
-        <input type="submit" value="confirm">
-    </form>
+                                <div class="structure-box-o">
+                                    <div class="structure-box">
+                                        <lablel for = "description">Description</lablel>
+                                        <input type = "text"  name = "description">
+                                    </div>
+                                    {{#if nodescription}} <p>Product must have a description</p>{{/if}}
+                                </div>
 
-    {{#if invalidInput}}
-        <b>Invalid input</b>
-    {{/if}}
-    {{#if invalidImageFormat}}This image format is not supported{{/if}}
-    {{#if notSeller}}<b>Error: You are not a seller</b>{{/if}}
+
+                                <div class="structure-box-out">
+                                    <div class="structure-box-small">
+                                        <lablel for="available">Product available</lablel>
+                                        <input type="number" name="available">
+                                        {{#if availabletolow}} <p>Available product must be greater than zero.</p>{{/if}}<br>
+                                    </div>
+
+                                    <div id="spacer"></div>
+
+                                    <div class="structure-box-small">
+                                        <label for="image">Image</label>
+                                        <input type="file" name="image" value="select image">
+                                        {{#if noimage}} <p>A product requires an image.</p>{{/if}}<br>
+                                    </div>
+                                    <br>
+
+                                </div>
+                             <div class="structure-box-large">
+                             <input class="black-button" type="submit" value="confirm">
+                         </div>
+                        </form>
+                    </div>
+                    {{#if invalidInput}}
+                        <b>Invalid input</b>
+                    {{/if}}
+                    {{#if invalidImageFormat}}
+                        <b>This image format is not supported</b>
+                    {{/if}}
+                    {{#if notSeller}}
+                        <b>Error: You are not a seller</b>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+    {{>templates/partials/footer}}
+
 
 </body>
 </html>

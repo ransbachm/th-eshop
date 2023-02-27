@@ -1,0 +1,49 @@
+tr {
+    text-align: left;
+    border-bottom: 1px solid black;
+}
+
+
+table {
+    border-collapse: collapse;
+}
+th, td {
+    border-bottom : 1px solid black;
+    margin : 0;
+    max-width : 1%;
+    padding : 5px;
+    width : 60%;
+    padding-top : 1%;
+    text-decoration: none;
+}
+a {
+    text-decoration: none;
+    color : black;
+}
+td {
+    max-width : 1%;
+}
+th {
+    font-family : "Roboto";
+    font-weight : 400;
+}
+
+td {
+    font-family : "Roboto";
+    font-weight : 300;
+}
+td a, td p {
+    font-family : "Roboto";
+    font-weight : 300;
+}
+
+table input {
+    border : 1px solid white;
+    background : #242333;
+    color : white;
+    text-align : center;
+}
+
+.space {
+    margin-bottom : 5%;
+}

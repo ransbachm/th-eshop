@@ -13,11 +13,16 @@ import java.util.Map;
 public class SellerHandler {
     public static String handleSeller(Request req, Response res) {
         Seller seller = Main.management.getSeller(req.params(":id"));
-        List<Product> products = Main.management.getProductsOfSeller(seller.getId());
-        Map<String, Object> model = Util.getModel(req);
-        model.put("seller", seller);
-        model.put("products", products);
+        if(seller != null) {
+            List<Product> products = Main.management.getProductsOfSeller(seller.getId());
+            Map<String, Object> model = Util.getModel(req);
+            model.put("seller", seller);
+            model.put("products", products);
 
-        return Main.render("seller", model);
+            return Main.render("seller", model);
+        }
+        else {
+            return Util.handle404(req, res);
+        }
     }
 }

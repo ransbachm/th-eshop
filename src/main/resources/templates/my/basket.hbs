@@ -7,58 +7,61 @@
 <body>
     {{>templates/partials/header}}
 
-    <h2>Your basket:</h2>
-    <table class="basket">
-        {{#if basket}}
-            <tr>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Amount</th>
-                <th>Seller</th>
-            </tr>
-            {{#each basket}}
-                <tr class="basket_row">
-                    <td><a href="/product/{{product.id}}">{{product.name}}</a> </td>
-                    <td>{{product.price}}€</td>
-                    <td class="amount_col">
-                        <option hidden class="val" value="{{amount}}"></option>
-                        <option hidden class="pid" value="{{product.id}}"></option>
-                        <form onsubmit="return false">
-                            <select onchange="change(this);" class="amount" name="amount">
-                                <option value="0">0 (delete)</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="more" class="more">More</option>
-                            </select>
-                        </form>
-                    </td>
-                    <td><a href="/seller/{{product.seller.id}}">{{product.seller}}</a></td>
-                </tr>
-            {{/each}}
+    <div class="structure-column">
+        <div class="column-color">
+            <div class="structure-box-large">
+                <h2>Your basket:</h2>
+                <table class="basket">
+                    {{#if basket}}
+                        <tr>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Amount</th>
+                            <th>Seller</th>
+                        </tr>
+                        {{#each basket}}
+                            <tr class="basket_row">
+                                <td><a href="/product/{{product.id}}">{{product.name}}</a> </td>
+                                <td>{{product.price}}€</td>
+                                <td class="amount_col">
+                                    <option hidden class="val" value="{{amount}}"></option>
+                                    <option hidden class="pid" value="{{product.id}}"></option>
+                                    <form onsubmit="return false">
+                                        <select onchange="change(this);" class="amount" name="amount">
+                                            <option value="0">0 (delete)</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="more" class="more">More</option>
+                                        </select>
+                                    </form>
+                                </td>
+                                <td><a href="/seller/{{product.seller.id}}">{{product.seller}}</a></td>
+                            </tr>
+                        {{/each}}
 
-            <select id="reference" hidden onchange="change(this);" class="amount" name="amount">
-                <option value="0">0 (delete)</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="more" class="more">More</option>
-            </select>
+                        <select id="reference" hidden onchange="change(this);" class="amount" name="amount">
+                            <option value="0">0 (delete)</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="more" class="more">More</option>
+                        </select>
 
-            <input id="reference2" hidden onchange="change2(this);"
-                  class="amount" name="amount" type="number" min="0">
-        {{else}}
-            No products found.
-        {{/if}}
-    </table>
+                        <input id="reference2" hidden onchange="change2(this);"
+                               class="amount" name="amount" type="number" min="0">
+                    {{else}}
+                        <p>No products found.</p>
+                    {{/if}}
+                </table>
 
-    <script>
+                <script>
 
         (function() {
             let rows = document.querySelectorAll(".basket > tbody > .basket_row");
@@ -158,17 +161,24 @@
 
     </script>
 
-    <form method="POST" action="/my/basket">
-        <input type="submit" value="Buy">
-    </form>
+                <form method="POST" action="/my/basket">
+                    <div class="structure-box-large">
+                        <input class="black-button" type="submit" value="Buy">
+                    </div>
+                </form>
 
-    {{#if submitted_empty_cart}}
-        Your cart is empty.
-    {{/if}}
+                {{#if submitted_empty_cart}}
+                    Your cart is empty.
+                {{/if}}
 
-    {{#if out_of_stock_product}}
-        {{out_of_stock_product}} is out of stock.
-    {{/if}}
+                {{#if out_of_stock_product}}
+                    {{out_of_stock_product}} is out of stock.
+                {{/if}}
+
+            </div>
+        </div>
+    </div>
+
 
     {{>templates/partials/footer}}
 </body>

@@ -8,6 +8,7 @@ import org.apache.tika.metadata.Metadata;
 import org.apache.tika.mime.MediaType;
 import org.apache.tika.mime.MimeType;
 import spark.Request;
+import spark.Response;
 
 import java.io.*;
 import java.security.SecureRandom;
@@ -66,6 +67,11 @@ public class Util {
         return model;
     }
 
+    public static String handle404(Request req, Response res){
+        res.status(404);
+        return "404 not found";
+    }
+
     public static <T> List<List<T>> to_list_of_lists(List<T> recommendations, int list_size) {
         List<List<T>> outer_recommendations = new ArrayList<>();
         List<T> crr = new ArrayList<>();
@@ -80,3 +86,4 @@ public class Util {
         return outer_recommendations;
     }
 }
+

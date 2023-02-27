@@ -2,3 +2,59 @@ html,body {
     margin: 0;
     padding: 0;
 }
+body {
+    background : lightgrey;
+}
+
+h2 {
+    color : black;
+    font-family : 'Bebas Neue', display;
+    font-size : 30px;
+    margin-top : 0;
+}
+p, a, label {
+    font-family : 'Roboto';
+    font-weight : 400;
+}
+b {
+    font-family : "Roboto";
+}
+
+#product_img {
+    max-width: 50%;
+    max-height: 100%;
+}
+
+input {
+    font-family : "Roboto";
+    font-weight : 300;
+}
+
+.outerbox {
+    display : flex;
+}
+#product-creation form {
+    color : black;
+    font-family: "Roboto";
+}
+
+#product-creation .structure-box-small input {
+    width : 100%;
+    font-family : "Roboto";
+}
+
+#spacer {
+    width : 10%;
+}
+
+#product-creation .structure-box input[type="text"], #product-creation .structure-box input[type="number"]{
+    width : 100%;
+}
+.box {
+      display: inline-block;
+      width : 50%;
+}
+
+#register label {
+    color : black;
+}

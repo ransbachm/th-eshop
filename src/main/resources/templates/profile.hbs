@@ -7,19 +7,47 @@
 
 <body>
     {{>templates/partials/header}}
+    <link rel="stylesheet" href="/static/css/profile.css">
+    <div class="structure-column">
+        <div class="column-color">
+            <div class="structure-box-large">
+                <h2>Profile</h2>
+                <table id="profile-table">
+                    <th><b>Email</b></th>
+                    <tr>
+                        <td><p>{{user.email}}</p></td>
+                    </tr>
+                    <th><b>Given name</b></th>
+                    <th><b>Surname</b></th>
+                    <tr>
+                        <td><p>{{user.firstname}}</p></td>
+                        <td><p>{{user.lastname}}</p></td>
+                    </tr>
+                    <th><b>Street</b></th>
+                    <th><b>House number</b></th>
+                    <th><b>Zipcode</b></th>
+                    <tr>
+                        <td><p>{{user.street}}</p></td>
+                        <td><p>{{user.housenumber}}</p></td>
+                        <td><p>{{user.zipcode}}</p></td>
+                    </tr>
+                    <th><b>Account status</b></th>
+                    <tr>
+                        <td>{{#if seller}}<p>You are a seller</p> {{else}} <p>You are a customer</p>{{/if}}</td>
+                    </tr>
+                </table>
+                <br>
+                <div class="structure-box-large">
+                    {{#unless seller}}
+                        <form method="POST" action="/profile">
+                            <input class="black-button" type="submit" value="Become seller"> {{#if success}}<p>Seller added successfully</p>{{/if}}
+                        </form>
+                    {{/unless}}
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <p>Email: {{user.email}}</p>
-    <p>Name: {{user.firstname}} {{user.lastname}}</p>
-    <p>Address: {{user.street}} {{user.housenumber}} {{user.zipcode}}</p>
-    <p>Seller status:
-        {{#if seller}}You are a seller
-            {{else}} You are not a seller.
-                <form method="POST" action="/profile">
-                    <input type="submit" value="Become seller"> {{#if success}}Seller added successfully{{/if}}
-                </form>
-        {{/if}}
-    </p>
-
-{{>templates/partials/footer}}
+    {{>templates/partials/footer}}
 </body>
 </html>

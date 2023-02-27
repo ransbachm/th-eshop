@@ -2,51 +2,59 @@
 <html lang="en">
 <head>
     {{>templates/partials/common}}
-    <title>Title</title>
+    <title>Th_Eshop - {{product.name}}</title>
     <link rel="stylesheet" href="/static/css/product/show.css">
 </head>
 <body>
     {{>templates/partials/header}}
+    <div class="structure-column">
+        <div class="column-color">
+            <div class="structure-box-large">
 
-    <h1>{{product.name}}</h1>
-    <p>{{product.description}}</p>
-    <img id="product_img" src="/upload/product/{{product.id}}.png">
-
-    <p>{{product.price}}€</p>
-    <p>{{product.available}} Available</p>
-
-    <a href="/seller/{{product.seller.id}}">{{product.seller}}</a><br>
-
-
-        <form method="POST" action="/product/addToCart">
-            <label for="amount">Amount</label><br>
-            <input value="1" name="amount" type="number" min="1" max="{{product.available}}"><br>
-            {{#if more_than_zero}}
-            <input type="submit" value="Add to basket">
-            {{else}}
-                Product not available.<br>
-                <input type="submit" value="Add to basket" disabled>
-            {{/if}}
-
-                    <input type="number" name="id" value="{{product.id}}" hidden>
-        </form>
-
-    <h2>Other products you might like:</h2>
-
-    {{#each recommendations_outer}}
-        <div class="parent">
-            {{#each this}}
-                <a href="/product/{{id}}">
-                    <div class="div{{@index}}" >
-                        {{name}}<br>
-                        <img class="reco-img" src="/upload/product/{{id}}.png">
+                <h2>{{product.name}}</h2>
+                <div class="outerbox">
+                    <div class="box">
+                        <img id="product_img" src="/upload/product/{{product.id}}.png">
                     </div>
-                </a>
-            {{/each}}
+                    <div class="box">
+                        <p>{{product.description}}</p>
+                        <p>{{product.price}}€</p>
+                        <p>{{product.available}} Available</p>
+
+                        <a href="/seller/{{product.seller.id}}">{{product.seller}}</a><br>
+
+
+                        <form method="POST" action="/product/addToCart">
+                            <label for="amount">Amount</label><br>
+                            <input value="1" name="amount" type="number" min="1" max="{{product.available}}"><br>
+                            {{#if more_than_zero}}
+                                <input class="black-button" type="submit" value="Add to basket">
+                            {{else}}
+                                Product not available.<br>
+                                <input class="black-button" type="submit" value="Add to basket" disabled>
+                            {{/if}}
+
+                            <input type="number" name="id" value="{{product.id}}" hidden>
+                        </form>
+                    </div>
+                </div>
+
+                <h2>Other products you might like:</h2>
+                {{#each recommendations_outer}}
+                    <div class="parent">
+                        {{#each this}}
+                            <a href="/product/{{id}}">
+                                <div class="div{{@index}}" >
+                                    {{name}}<br>
+                                    <img class="reco-img" src="/upload/product/{{id}}.png">
+                                </div>
+                            </a>
+                        {{/each}}
+                    </div>
+                {{/each}}
+            </div>
         </div>
-    {{/each}}
-
-
+    </div>
     {{>templates/partials/footer}}
 </body>
 </html>
