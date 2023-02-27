@@ -14,14 +14,16 @@
             <div class="structure-box-large">
                 <h2>Add a product to sell</h2>
                 <div id="product-creation">
-                    <form method="POST" action="/product/create" enctype="multipart/form-data">
-                            <div class="structure-column-out ">
+                    <div class="structure-column-out">
+                         <form method="POST" action="/product/create" enctype="multipart/form-data">
                                 <div class="structure-box-out">
                                     <div class="structure-box-small">
                                         <label for="productname">Product name</label>
                                         <input type="text" name="name" onchange="test(this.value)">
                                         {{#if noname}}<p>Product must have a name</p>{{/if}}
                                     </div>
+
+                                    <div id="spacer"> </div>
 
                                     <div class="structure-box-small">
                                         <label for="price">Product price</label>
@@ -30,34 +32,37 @@
                                     </div>
                                 </div>
 
-                                <div id="description" class="structure-box-o">
-                                    <lablel for = "description">Description</lablel> <br>
+                                <div class="structure-box-o">
                                     <div class="structure-box">
-                                        <input id ="description-input" type = "text"  name = "description">
+                                        <lablel for = "description">Description</lablel>
+                                        <input type = "text"  name = "description">
                                     </div>
                                     {{#if nodescription}} <p>Product must have a description</p>{{/if}}
                                 </div>
 
 
-                                <div class="structure-box-o">
-                                    <div>
+                                <div class="structure-box-out">
+                                    <div class="structure-box-small">
                                         <lablel for="available">Product available</lablel>
                                         <input type="number" name="available">
                                         {{#if availabletolow}} <p>Available product must be greater than zero.</p>{{/if}}<br>
                                     </div>
-                                </div>
 
-                                <div class="structure-box-o">
-                                    <div>
+                                    <div id="spacer"></div>
+
+                                    <div class="structure-box-small">
                                         <label for="image">Image</label>
                                         <input type="file" name="image" value="select image">
                                         {{#if noimage}} <p>A product requires an image.</p>{{/if}}<br>
                                     </div>
+                                    <br>
 
-                                    <input type="submit" value="confirm">
                                 </div>
-                            </div>
-                    </form>
+                             <div class="structure-box-large">
+                             <input class="black-button" type="submit" value="confirm">
+                         </div>
+                        </form>
+                    </div>
                     {{#if invalidInput}}
                         <b>Invalid input</b>
                     {{/if}}

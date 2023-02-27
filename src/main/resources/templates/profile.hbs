@@ -33,17 +33,17 @@
                     </tr>
                     <th><b>Account status</b></th>
                     <tr>
-                        <td>{{#if seller}}<p>You are a seller</p> {{else}} <p>Your a customer</p>{{/if}}</td>
-                    </tr>
-                    <tr>
-                        {{#if seller}}
-                        {{else}}
-                            <form method="POST" action="/profile">
-                                <input type="submit" value="Become seller"> {{#if success}}<p>Seller added successfully</p>{{/if}}
-                            </form>
-                        {{/if}}
+                        <td>{{#if seller}}<p>You are a seller</p> {{else}} <p>You are a customer</p>{{/if}}</td>
                     </tr>
                 </table>
+                <br>
+                <div class="structure-box-large">
+                    {{#unless seller}}
+                        <form method="POST" action="/profile">
+                            <input class="black-button" type="submit" value="Become seller"> {{#if success}}<p>Seller added successfully</p>{{/if}}
+                        </form>
+                    {{/unless}}
+                </div>
             </div>
         </div>
     </div>

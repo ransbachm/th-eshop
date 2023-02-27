@@ -105,23 +105,27 @@ input {
 }
 #product-creation form {
     color : black;
+    font-family: "Roboto";
 }
+
+
 
 #product-creation .structure-box-small input {
-    width : 90%;
+    width : 100%;
+    font-family : "Roboto";
+    font : "Roboto";
 }
 
-#product-creation .structure-box-o input {
-    width : 90%;
+#spacer {
+    width : 10%;
+}
+
+#product-creation .structure-box input[type="text"], #product-creation .structure-box input[type="number"]{
+    width : 100%;
 }
 .box {
       display: inline-block;
       width : 50%;
-}
-
-#description {
-    width : 100%;
-    height : 40%;
 }
 
 #register label {

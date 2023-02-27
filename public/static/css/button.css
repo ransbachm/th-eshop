@@ -1,0 +1,13 @@
+.black-button {
+    background : #242333;
+    color : white;
+    border : none;
+    font-family : 'Roboto';
+    font : 'Roboto';
+    font-size: 15;
+}
+
+.structure-box-large input[type=submit]{
+    width : 100%;
+    height : 30px;
+}

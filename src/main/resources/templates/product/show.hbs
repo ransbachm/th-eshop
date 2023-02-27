@@ -11,7 +11,7 @@
         <div class="column-color">
             <div class="structure-box-large">
 
-                <h1>{{product.name}}</h1>
+                <h2>{{product.name}}</h2>
                 <div class="outerbox">
                     <div class="box">
                         <img id="product_img" src="/upload/product/{{product.id}}.png">
@@ -28,10 +28,10 @@
                             <label for="amount">Amount</label><br>
                             <input value="1" name="amount" type="number" min="1" max="{{product.available}}"><br>
                             {{#if more_than_zero}}
-                                <input type="submit" value="Add to basket">
+                                <input class="black-button" type="submit" value="Add to basket">
                             {{else}}
                                 Product not available.<br>
-                                <input type="submit" value="Add to basket" disabled>
+                                <input class="black-button" type="submit" value="Add to basket" disabled>
                             {{/if}}
 
                             <input type="number" name="id" value="{{product.id}}" hidden>
