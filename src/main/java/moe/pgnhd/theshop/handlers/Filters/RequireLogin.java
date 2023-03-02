@@ -112,6 +112,10 @@ public class RequireLogin {
         if(onWhiteList) {
             return;
         } else if(expired) {
+            session = Main.management.createSession();
+            res.cookie("t_session_id", session.getId());
+            req.attribute("t_session", session);
+            req.attribute("user", session.getUser());
             redirect_login(req, res);
             return;
         } else if(loggedIn) {
