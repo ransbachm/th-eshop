@@ -60,7 +60,7 @@ public class RegisterAndLoginHandler {
         }
 
         try{
-            Mail.sendRegisterConfirmMail(email, activation_code);
+            Mail.sendRegisterConfirmMail(req, email, activation_code);
         } catch (MessagingException e) {
             LOG.info(e.getMessage());
             model.put("email_send_failure", true);

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {{> templates/secondary/partials/common}}
+    <title>Th_Eshop</title>
+    <link rel="stylesheet" href="static/secondary/css/index.css">
+</head>
+
+<body>
+{{> templates/secondary/partials/header}}
+
+<div class="back-content">
+    <div class="content">
+
+        {{#if recommendations_outer}}
+            <h2>Your picks:</h2>
+        {{else}}
+            <!-- <h2>For you:</h2> -->
+            <!-- show alternative recommendations -->
+        {{/if}}
+        {{#each recommendations_outer}}
+            <div class="reco-box">
+                {{#each this}}
+                        <div class="reco{{@index}}" >
+                            {{name}}<br>
+                            <img class="reco-img" src="/upload/product/{{id}}.png">
+                        </div>
+                {{/each}}
+            </div>
+        {{/each}}
+    </div>
+</div>
+
+{{> templates/secondary/partials/footer}}
+</body>
+</html>

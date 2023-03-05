@@ -1,0 +1,46 @@
+@import "normalize.css";
+
+@font-face {
+    font-family: "Roboto";
+    src: url(/static/secondary/fonts/Roboto-Regular.ttf)
+}
+
+:root {
+    --col-bg: #1F2227;
+    --col-bg2: #32323A;
+    --col-hd: #1A1D21;
+    --col-tx: #8D8F91;
+    --col-hd-tx: #F3F3F3FF;
+    --col-cnt: #373b42;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    min-width: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    font-family: "Roboto";
+    text-align: center;
+    background: linear-gradient(
+            93deg,
+            var(--col-bg) 0%,
+            var(--col-bg2) 100%
+    );
+}
+
+.back-content {
+    display: grid;
+    grid-template-columns: 1fr 90% 1fr;
+    grid-template-rows: 1fr 90% 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+.content {
+    grid-area: 2 / 2 / 3 / 3;
+    background: var(--col-cnt);
+    box-shadow: 0px 0px 17px 4px var(--col-hd);
+}

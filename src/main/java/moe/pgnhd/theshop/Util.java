@@ -64,6 +64,8 @@ public class Util {
         model.put("user", req.attribute("user"));
         model.put("seller", req.attribute("seller"));
         model.put("session", req.attribute("t_session"));
+        String design = req.cookie("t_design");
+        model.put("t_design", design != null ? design : "primary");
         return model;
     }
 
