@@ -21,11 +21,16 @@
             <li><a href="/login">Login</a></li>
         {{/unless}}
 
+        <li>
+            <a><input type="checkbox" class="design_switch">Dark</a>
+        </li>
+
+
         {{#if user}}
             <li><a href="/my/basket">Basket</a></li>
 
             <li>
-                <div id = "dropdown">
+                <div id="dropdown">
                     <div>
                         <a href="/profile"><button id = "dropdown-button">{{user}}</button></a>
                     </div>
@@ -41,4 +46,19 @@
             </li>
         {{/if}}
     </ul>
+
+    <script>
+        function change_design(dark, a) {
+            if(this.checked) {
+                setCookie("t_design", "secondary", 365);
+            } else {
+                setCookie("t_design", "primary", 365);
+            }
+            window.location = window.location;
+        }
+
+        let checkbox = document.querySelector(".design_switch");
+        checkbox.addEventListener("change",change_design);
+        checkbox.checked = getCookie("t_design") == "secondary";
+    </script>
 </nav>
