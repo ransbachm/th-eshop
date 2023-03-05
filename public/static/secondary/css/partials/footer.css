@@ -1,0 +1,8 @@
+footer {
+    grid-row-start: 3;
+    grid-row-end: 4;
+    background-color: var(--col-hd);
+
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
