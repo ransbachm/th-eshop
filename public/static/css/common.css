@@ -16,6 +16,14 @@ p, a, label {
     font-family : 'Roboto';
     font-weight : 400;
 }
+
+.justify {
+    text-align : justify;
+}
+
+a:hover {
+    color : #01B0D3;
+}
 b {
     font-family : "Roboto";
 }
