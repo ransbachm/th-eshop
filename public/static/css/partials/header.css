@@ -56,6 +56,10 @@ li:nth-child(n+2) {
     font-family: inherit;
     color : white;
 }
+
+#dropdown-button:hover {
+    color : #01B0D3;
+}
 #dropdown-content{
   display: none;
   position: absolute;
@@ -68,6 +72,10 @@ li:nth-child(n+2) {
 
 #dropdown:hover #dropdown-content{
     display: block;
+}
+
+.hover-blue:hover{
+    color : #01B0D3;
 }
 
 #header-form {
