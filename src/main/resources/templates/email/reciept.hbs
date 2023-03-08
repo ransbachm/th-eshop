@@ -28,8 +28,8 @@
             {{#each order.orderItems}}
                 <tr style="#eee;">
                     <td style="min-width : 20%; border-bottom : 1px #eee solid; padding : 0 10px; vertical-align: text-top;">
-                        <p>{{product.name}}
-                            <i>{{amount}}</i> x {{product.price}}€</p>
+                        <p>{{product.name}} <br>
+                            <i>{{amount}}</i> x <i>{{product.price}}€</i></p>
                     </td>
                     <td style="min-width : 20%; border-bottom : 1px #eee solid; padding : 0 10px;">
                         <p style="padding : 0 5px;">{{product.description}}</p>
@@ -37,7 +37,7 @@
                 </tr>
             {{/each}}
         </table>
-        <p style="padding : 0 10px; margin: 0;">Price total: <b>{{total-price}}€</b></p>
+        <p style="padding : 0 10px;">Price total: <b>{{total-price}}€</b></p>
     </div>
 
 
