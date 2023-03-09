@@ -47,7 +47,6 @@
 
 .structure-box-o {
     padding : 10px;
-    padding : 10px;
     margin : 0 auto;
 }
 
@@ -68,4 +67,16 @@
 
 label p {
     margin: 0;
+}
+
+.padding-box {
+    padding : 10px;
+}
+
+.padding-box-small {
+    padding : 5px;
+}
+
+.padding-box-horizontal {
+    padding : 0 10px;
 }

@@ -1,21 +1,22 @@
-.parent {
-    border: #111111 solid;
-}
-.parent>div {
-    border: #111111 solid;
-    margin-right: 0.5rem;
-    overflow: hidden;
-}
-
-.parent>div:last-child {
-    margin-right: 0rem;
-}
 
 .reco-img {
     height: 10rem;
     width: 10rem;
 }
 
+/*
+.parent {
+      border: #111111 solid;
+  }
+  .parent>div {
+      border: #111111 solid;
+      margin-right: 0.5rem;
+      overflow: hidden;
+  }
+
+  .parent>div:last-child {
+      margin-right: 0rem;
+  }
 
 .parent {
     display: grid;
@@ -30,3 +31,4 @@
 .div2 { grid-area: 1 / 3 / 2 / 4; }
 .div3 { grid-area: 1 / 4 / 2 / 5; }
 .div4 { grid-area: 1 / 5 / 2 / 6; }
+*/

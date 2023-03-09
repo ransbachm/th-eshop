@@ -1,6 +1,15 @@
 #product_img {
+    object-fit : cover;
+    /*
     width: 20rem;
     height: 20rem;
+    */
+    display: block;
+    /*margin: auto;
+    */
+    margin-left: auto;
+    margin-right: auto;
+
 }
 
 .parent {
