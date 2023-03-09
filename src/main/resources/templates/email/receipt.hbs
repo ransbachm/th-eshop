@@ -1,8 +1,6 @@
 <html>
 
 <head>
-    <title>reciept</title>
-
     <style>
         .tr {
             background : grey;
@@ -26,7 +24,7 @@
 
         <table style="margin: 0 auto;">
             {{#each order.orderItems}}
-                <tr style="#eee;">
+                <tr>
                     <td style="min-width : 20%; border-bottom : 1px #eee solid; padding : 0 10px; vertical-align: text-top;">
                         <p>{{product.name}} <br>
                             <i>{{amount}}</i> x <i>{{product.price}}€</i></p>

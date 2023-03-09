@@ -442,6 +442,7 @@ public class Management {
                 String sql9 = "DELETE FROM BasketItem\n" +
                         "WHERE BasketItem.user = @user_id;";
                 con.prepareStatement(sql9).executeUpdate();
+
                 String sql10 = "SELECT @order_id as order_id;";
                 ResultSet rs10 = con.prepareStatement(sql10).executeQuery();
                 rs10.next();
@@ -659,8 +660,7 @@ public class Management {
             stmt.setInt(1, orderId);
             ResultSet rs = stmt.executeQuery();
 
-            List<Order> orders =  Models.multiple_one_to_many(rs, Order.class, OrderItem.class, "orderItems");
-            return orders.get(0);
+            return Models.single_one_to_many(rs, Order.class, OrderItem.class, "orderItems");
         } catch (SQLException e) {
             LOG.error(e.getMessage());
             return null;

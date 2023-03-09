@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class BasketHandler {
 
-    private static Logger LOG = LoggerFactory.getLogger(Management.class);
+    private static Logger LOG = LoggerFactory.getLogger(BasketHandler.class);
     private static String renderShow(Request req, Response res, Map<String, Object> model) {
         User user = req.attribute("user");
         List<BasketItem> basket = Main.management.getBasketOfUser(user);
@@ -53,10 +53,9 @@ public class BasketHandler {
         User user = req.attribute("user");
         try {
             int orderId = Main.management.orderBasket(user.getId());
-            Main.management.getMyOrders(user);
             model.put("order", Main.management.getOrder(orderId));
-            model.put("total-price", calculateTotalPrice(model));
-            Mail.sendRecieptMail(user.getEmail(), model);
+            model.put("total-price", calculateTotalPrice((Order) model.get("order")));
+            Mail.sendReceiptMail(user.getEmail(), model);
         } catch(SQLException e) {
             return "An error occurred";
         } catch (OutOfStockException e) {
@@ -76,13 +75,12 @@ public class BasketHandler {
         return "";
     }
 
-    public static double calculateTotalPrice(Map<String, Object> model) {
+    public static double calculateTotalPrice(Order order) {
         double price = 0;
-            Order order = (Order) model.get("order");
-            List<OrderItem> orderItems = order.getOrderItems();
-            for (OrderItem orderitem : orderItems){
-             price += orderitem.getPrice();
-            }
+        List<OrderItem> orderItems = order.getOrderItems();
+        for (OrderItem orderitem : orderItems){
+            price += orderitem.getPrice();
+        }
         return price;
     }
 }

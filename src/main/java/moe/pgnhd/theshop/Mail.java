@@ -65,8 +65,8 @@ public class Mail {
         sendMail(to, subject, content);
     }
 
-    public static void sendRecieptMail(String to, Map<String, Object> model) throws MessagingException {
-        String content = Main.render("email/reciept", model);
+    public static void sendReceiptMail(String to, Map<String, Object> model) throws MessagingException {
+        String content = Main.render("email/receipt", model);
 
         String subject = "You have purchased from Th_Eshop";
         sendMail(to, subject, content);
