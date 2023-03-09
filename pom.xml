@@ -66,5 +66,11 @@
             <artifactId>tika-core</artifactId>
             <version>2.7.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.braintreepayments.gateway</groupId>
+            <artifactId>braintree-java</artifactId>
+            <version>3.21.0</version>
+        </dependency>
     </dependencies>
 </project>
