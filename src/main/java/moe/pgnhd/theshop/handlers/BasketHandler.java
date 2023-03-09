@@ -32,7 +32,6 @@ public class BasketHandler {
 
         String client_token = Main.payments.generate_client_token();
         model.put("client_token", client_token);
-        model.put("total-price", total);
 
         return Main.render("my/basket", model);
     }

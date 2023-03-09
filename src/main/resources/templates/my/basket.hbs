@@ -44,7 +44,7 @@
                             </tr>
                         {{/each}}
                         <tr class="basket-row">
-                            <td><b>Total: <span id="total-price">{{total-price}}</span>€</b></td>
+                            <td><b>Total: <span id="total-price"></span>€</b></td>
                         </tr>
 
                         <select id="reference" hidden onchange="change(this);" class="amount" name="amount">
@@ -58,7 +58,7 @@
                             <option value="more" class="more">More</option>
                         </select>
 
-                        <input id="reference2" hidden onchange="change2(this);"
+                        <input id="reference2" hidden oninput="recalc_total()" onchange="change2(this);"
                                class="amount" name="amount" type="number" min="0">
                     {{else}}
                         <p>No products found.</p>
@@ -93,7 +93,6 @@
         })();
 
         function submit(val, elem) {
-            console.log("submit " + val);
             let product_id = elem.parentElement.parentElement.querySelector(".pid").value;
 
             let form_data = new URLSearchParams();
@@ -143,19 +142,17 @@
 
         function recalc_total() {
             let rows = [...document.querySelectorAll(".basket_row")];
-            let elems = rows.map(e => e.querySelectorAll(".display-price, .amount_col option:checked"));
+            let elems = rows.map(e => e.querySelectorAll(".display-price, .amount_col option:checked, .amount_col input"));
             let pr_and_am = elems.map(e => [e[0].innerText.slice(0,-1)-0, e[1].value-0]);
             let total = pr_and_am.reduce((a,v) => a+v[0]*v[1], 0);
-            console.log("asd" + total)
-            document.querySelector("#total-price").innerText = total;
+            document.querySelector("#total-price").innerText = total.toFixed(2);
         }
 
         function change(e) {
             let target = e.options[e.selectedIndex];
             let val = target.value;
-            console.log(val);
             if(val == "more") {
-                target = make_number(e.parentElement.parentElement.parentElement, val);
+                target = make_number(e.parentElement.parentElement.parentElement, 7);
             } else {
                 submit(val, e);
             }
@@ -169,7 +166,6 @@
         function change2(target) {
 
             let val = target.value;
-            console.log(val);
             if(val >= 0 && val <= 6) {
                 target = make_select(target.parentElement.parentElement, val);
             }
@@ -177,8 +173,9 @@
             if(val == 0) {
                 deleteRow(target);
             }
+            recalc_total();
         }
-
+        recalc_total();
     </script>
 
                 <script>
