@@ -1,20 +1,22 @@
 package moe.pgnhd.theshop.handlers;
 
-import moe.pgnhd.theshop.EmptyBasketException;
-import moe.pgnhd.theshop.Main;
-import moe.pgnhd.theshop.OutOfStockException;
-import moe.pgnhd.theshop.Util;
+import moe.pgnhd.theshop.*;
+import moe.pgnhd.theshop.model.*;
 import moe.pgnhd.theshop.model.BasketItem;
 import moe.pgnhd.theshop.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import spark.Request;
 import spark.Response;
 
+import javax.mail.MessagingException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
 public class BasketHandler {
 
+    private static Logger LOG = LoggerFactory.getLogger(BasketHandler.class);
     private static String renderShow(Request req, Response res, Map<String, Object> model) {
         User user = req.attribute("user");
         List<BasketItem> basket = Main.management.getBasketOfUser(user);
@@ -50,7 +52,10 @@ public class BasketHandler {
 
         User user = req.attribute("user");
         try {
-            Main.management.orderBasket(user.getId());
+            int orderId = Main.management.orderBasket(user.getId());
+            model.put("order", Main.management.getOrder(orderId));
+            model.put("total-price", calculateTotalPrice((Order) model.get("order")));
+            Mail.sendReceiptMail(user.getEmail(), model);
         } catch(SQLException e) {
             return "An error occurred";
         } catch (OutOfStockException e) {
@@ -59,9 +64,23 @@ public class BasketHandler {
         } catch (EmptyBasketException e) {
             model.put("submitted_empty_cart", true);
             return renderShow(req, res, model);
+        } catch (MessagingException e) {
+            LOG.info(e.getMessage());
+            model.put("email_send_failure", true);
+            return renderShow(req,res,model);
         }
+
 
         res.redirect("/my/orders");
         return "";
+    }
+
+    public static double calculateTotalPrice(Order order) {
+        double price = 0;
+        List<OrderItem> orderItems = order.getOrderItems();
+        for (OrderItem orderitem : orderItems){
+            price += orderitem.getPrice();
+        }
+        return price;
     }
 }

@@ -356,7 +356,7 @@ public class Management {
         }
     }
 
-    public void orderBasket(int user_id) throws SQLException {
+    public int orderBasket(int user_id) throws SQLException {
         try(Connection con = ds.getConnection()) {
             try {
                 con.setAutoCommit(false); // start transaction
@@ -442,8 +442,14 @@ public class Management {
                 String sql9 = "DELETE FROM BasketItem\n" +
                         "WHERE BasketItem.user = @user_id;";
                 con.prepareStatement(sql9).executeUpdate();
-                
+
+                String sql10 = "SELECT @order_id as order_id;";
+                ResultSet rs10 = con.prepareStatement(sql10).executeQuery();
+                rs10.next();
+                int order_id = rs10.getInt("order_id");
                 con.commit();
+
+                return order_id;
             } catch(OutOfStockException | EmptyBasketException e) {
                 con.rollback();
                 throw e;
@@ -640,5 +646,25 @@ public class Management {
         } catch (SQLException e) {
             LOG.error(e.getMessage());
         }
+    }
+
+    public Order getOrder(int orderId){
+        String sql =
+                "SELECT * \n" +
+                "FROM `Order`\n" +
+                "JOIN `OrderItem` ON OrderItem.`Order` = `Order`.id\n" +
+                "JOIN Product ON OrderItem.product = Product.id\n" +
+                "WHERE `Order`.id = ?;";
+
+        try(Connection con = ds.getConnection(); PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setInt(1, orderId);
+            ResultSet rs = stmt.executeQuery();
+
+            return Models.single_one_to_many(rs, Order.class, OrderItem.class, "orderItems");
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+            return null;
+        }
+
     }
 }
