@@ -1,5 +1,6 @@
 package moe.pgnhd.theshop;
 
+import com.braintreegateway.BraintreeGateway;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import moe.pgnhd.theshop.model.*;
@@ -10,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.sql.*;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -356,8 +358,12 @@ public class Management {
         }
     }
 
-    public int orderBasket(int user_id) throws SQLException {
-        try(Connection con = ds.getConnection()) {
+    // Returns [Connection con, int order_id, double total_amount]
+    // Call order_basket_complete late to commit the transaction
+    public Object[] order_basket_no_commit(int user_id) throws SQLException {
+        // Do not use auto-closeable
+        Connection con = ds.getConnection();
+        try {
             try {
                 con.setAutoCommit(false); // start transaction
 
@@ -421,15 +427,28 @@ public class Management {
                         "\tFROM BasketItem\n" +
                         "\tJOIN Product ON BasketItem.product = Product.id\n" +
                         "\tWHERE Product.seller = s.id \n" +
+                        "AND BasketItem.user = @user_id" +
                         "\t)\n" +
                         "WHERE s.id IN \n" +
                         "\t(\n" +
                         "\tSELECT DISTINCT Product.seller\n" +
                         "\tFROM BasketItem\n" +
                         "\tJOIN Product ON BasketItem.product = Product.id\n" +
-                        "\tWHERE Product.seller = s.id\n" +
+                        "WHERE BasketItem.user = @user_id\n" +
                         "\t);";
                 con.prepareStatement(sql7).executeUpdate();
+
+                // Calculate total price
+                String sql7_1 = """
+                        SELECT SUM(Product.price * BasketItem.amount) as total_price
+                        FROM BasketItem
+                        JOIN Product ON BasketItem.product = Product.id
+                        WHERE BasketItem.user = @user_id
+                        """;
+                PreparedStatement ps7_1 = con.prepareStatement(sql7_1);
+                ResultSet rs7_1 = ps7_1.executeQuery();
+                rs7_1.next();
+                BigDecimal total_price = rs7_1.getBigDecimal("total_price");
 
                 // Reduce available products by bought amount
                 String sql8 = "UPDATE Product\n" +
@@ -447,9 +466,8 @@ public class Management {
                 ResultSet rs10 = con.prepareStatement(sql10).executeQuery();
                 rs10.next();
                 int order_id = rs10.getInt("order_id");
-                con.commit();
 
-                return order_id;
+                return new Object[] {con, order_id, total_price};
             } catch(OutOfStockException | EmptyBasketException e) {
                 con.rollback();
                 throw e;
@@ -460,6 +478,14 @@ public class Management {
             }
         } catch (SQLException e) {
             throw e;
+        }
+    }
+
+    public void order_basket_complete(Connection con) {
+        try {
+            con.commit();
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
         }
     }
     // Returns the id of the product
