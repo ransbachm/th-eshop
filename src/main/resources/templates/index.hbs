@@ -3,27 +3,42 @@
 <head>
     {{>templates/partials/common}}
     <link rel="stylesheet" href="/static/css/index.css">
+    <link rel="stylesheet" href="/static/css/product-recommendation.css">
     <title>Th_Eshop - Everything you didn't know you needed</title>
 </head>
 
 <body>
+
     {{>templates/partials/header}}
     <div class="structure-column">
         <div class="column-color">
             <div class="structure-box-large">
+                {{#if user}} <h2>Welcome {{user}}</h2>
+                    {{else}}<h2>Welcome</h2>
+                    <i><a href="/login">login</a></i> or <i><a href="/register">new user</a></i> ?<br>
+                    Default recommendations
+                {{/if}}
                     {{#unless recommendations_outer}}
                         <!-- <h2>For you:</h2> -->
                         <!-- show alternative recommendations -->
                     {{/unless}}
                     {{#each recommendations_outer}}
-                        <div class="parent">
+                        <div class="recommendation-row">
                             {{#each this}}
-                                <a href="/product/{{id}}">
-                                    <div class="div{{@index}}" >
-                                        {{name}}<br>
-                                        <img class="reco-img" src="/upload/product/{{id}}.png">
+                                <div class="rec-box">
+                                    <div class="padding-box">
+                                        <a href="/product/{{id}}">
+                                            <div class="div{{@index}}" >
+                                                <img class="reco-img" src="/upload/product/{{id}}.png"><br>
+                                                    <div class="padding-box-small">
+                                                        <b>{{name}}</b><br>
+                                                        {{price}}€
+                                                    </div>
+                                            </div>
+                                        </a>
                                     </div>
-                                </a>
+
+                                </div>
                             {{/each}}
                         </div>
                     {{/each}}

@@ -1,0 +1,20 @@
+.recommendation-row {
+    padding : 10px;
+    display : flex;
+    flex-direction : row;
+    justify-content : space-around;
+}
+
+.rec-box {
+    margin : 0;
+    /*border : 3px #242333 solid;*/
+    background : #01B0D3;
+}
+
+.rec-box img{
+    border : 3px #242333 solid;
+}
+
+.rec-box a:hover{
+    color : white;
+}

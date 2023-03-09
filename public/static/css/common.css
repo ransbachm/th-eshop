@@ -66,3 +66,7 @@ input {
 #register label {
     color : black;
 }
+
+body {
+    font-family : "Roboto";
+}
