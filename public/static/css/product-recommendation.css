@@ -3,18 +3,50 @@
     display : flex;
     flex-direction : row;
     justify-content : space-around;
+    width: 100%;
+    overflow : hidden;
+    height : 238px;
 }
 
 .rec-box {
     margin : 0;
     /*border : 3px #242333 solid;*/
-    background : #01B0D3;
+    /**background : #01B0D3;*/
+    background : #242333;
 }
 
 .rec-box img{
     border : 3px #242333 solid;
+    background : white;
 }
 
 .rec-box a:hover{
     color : white;
+}
+
+.rec-div{
+    /*background : #01B0D3;*/
+    border : 2px white solid;
+    background : white;
+    display: flex;
+    flex-direction : column;
+    align-items : center;
+}
+
+
+.rec-div:hover{
+    /*
+    background: #056;
+    */
+    border : 2px #01B0D3 solid;
+    background : #01B0D3;
+}
+
+
+.rec-div b{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow : ellipsis;
+    width : 165px;
+    display : inline-block;
 }

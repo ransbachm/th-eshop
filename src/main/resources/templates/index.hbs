@@ -13,7 +13,7 @@
     <div class="structure-column">
         <div class="column-color">
             <div class="structure-box-large">
-                {{#if user}} <h2>Welcome {{user}}</h2>
+                {{#if user}} <h2>Welcome {{user}}</h2> <h3>Personal recommendations:</h3>
                     {{else}}<h2>Welcome</h2>
                     <i><a href="/login">login</a></i> or <i><a href="/register">new user</a></i> ?<br>
                     Default recommendations
@@ -28,7 +28,7 @@
                                 <div class="rec-box">
                                     <div class="padding-box">
                                         <a href="/product/{{id}}">
-                                            <div class="div{{@index}}" >
+                                            <div class="rec-div" >
                                                 <img class="reco-img" src="/upload/product/{{id}}.png"><br>
                                                     <div class="padding-box-small">
                                                         <b>{{name}}</b><br>
@@ -37,11 +37,112 @@
                                             </div>
                                         </a>
                                     </div>
-
                                 </div>
                             {{/each}}
                         </div>
                     {{/each}}
+                <hr><br>
+                <h3>Fruits:</h3>
+                <div class="recommendation-row">
+                        <div class="rec-box">
+                            <div class="padding-box">
+                                <a href="/product/2">
+                                    <div class="rec-div" >
+                                        <img class="reco-img" src="/upload/product/2.png"><br>
+                                        <div class="padding-box-small">
+                                            <b>Banana</b><br>
+                                            2.0€
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="rec-box">
+                            <div class="padding-box">
+                                <a href="/product/5">
+                                    <div class="rec-div">
+                                        <img class="reco-img" src="/upload/product/5.png"><br>
+                                        <div class="padding-box-small">
+                                            <b>BanaranaB</b><br>
+                                            3.0€
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="rec-box">
+                            <div class="padding-box">
+                                <a href="/product/6">
+                                    <div class="rec-div">
+                                        <img class="reco-img" src="/upload/product/6.png"><br>
+                                        <div class="padding-box-small">
+                                            <b>Bananoboros</b><br>
+                                            100.0€
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                </div>
+                <h3>Tech:</h3>
+                <div class="recommendation-row">
+                    <div class="rec-box">
+                        <div class="padding-box">
+                            <a href="/product/7">
+                                <div class="rec-div" >
+                                    <img class="reco-img" src="/upload/product/7.png"><br>
+                                    <div class="padding-box-small">
+                                        <b>IPhone 7</b><br>
+                                        500.0€
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Literature:</h3>
+                <div class="recommendation-row">
+                    <div class="rec-box">
+                        <div class="padding-box">
+                            <a href="/product/1">
+                                <div class="rec-div" >
+                                    <img class="reco-img" src="/upload/product/1.png"><br>
+                                    <div class="padding-box-small">
+                                        <b>Chainsaw Man, Vol. 1</b><br>
+                                        6.0€
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="rec-box">
+                        <div class="padding-box">
+                            <a href="/product/3">
+                                <div class="rec-div" >
+                                    <img class="reco-img" src="/upload/product/3.png"><br>
+                                    <div class="padding-box-small">
+                                        <b>Chainsaw Man, Vol. 2</b><br>
+                                        6.0€
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="rec-box">
+                        <div class="padding-box">
+                            <a href="/product/4">
+                                <div class="rec-div" >
+                                    <img class="reco-img" src="/upload/product/4.png"><br>
+                                    <div class="padding-box-small">
+                                        <b>Spy x Family, Vol. 3</b><br>
+                                        6.99€
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
