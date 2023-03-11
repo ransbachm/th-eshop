@@ -25,7 +25,7 @@ public class HTMLSanitizer {
         return escape.sanitize(string);
     }
 
-    public  String text_only(String string) {
+    public String text_only(String string) {
         return text_only.sanitize(string);
     }
 }
