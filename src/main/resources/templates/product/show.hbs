@@ -17,7 +17,7 @@
                         <img id="product_img" src="/upload/product/{{product.id}}.png">
                     </div>
                     <div class="box">
-                        <p>{{product.description}}</p>
+                        <p>{{{sanitize product.description}}}</p>
                         <p>{{product.price}}€</p>
                         <p>{{product.available}} Available</p>
 
