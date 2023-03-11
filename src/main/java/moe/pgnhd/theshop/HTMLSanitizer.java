@@ -4,10 +4,10 @@ import org.owasp.html.HtmlPolicyBuilder;
 import org.owasp.html.PolicyFactory;
 import org.owasp.html.Sanitizers;
 
-public class HTMLEscape {
+public class HTMLSanitizer {
     PolicyFactory escape;
     PolicyFactory text_only;
-    public HTMLEscape() {
+    public HTMLSanitizer() {
         PolicyFactory lists = new HtmlPolicyBuilder()
                 .allowElements("ol", "ul", "li")
                 .toFactory();
@@ -21,7 +21,7 @@ public class HTMLEscape {
                 .toFactory();
     }
 
-    public String escape(String string) {
+    public String sanitize(String string) {
         return escape.sanitize(string);
     }
 

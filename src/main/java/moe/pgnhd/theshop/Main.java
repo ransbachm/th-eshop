@@ -25,7 +25,7 @@ public class Main {
     static boolean isDev = Boolean.parseBoolean(dotenv.get("DEV_MODE"));
 
     private static Handlebars hbs;
-    public static HTMLEscape escape;
+    public static HTMLSanitizer escape;
 
     public static String render(String templatePath, Map<String, Object> model) {
         try{
@@ -55,7 +55,7 @@ public class Main {
         }
 
         payments = new Payments();
-        escape = new HTMLEscape();
+        escape = new HTMLSanitizer();
 
         // Because resources are copied to target directory
         // Live refresh cannot work with the class path loader
@@ -72,8 +72,8 @@ public class Main {
             return escape.text_only(s);
         });
 
-        hbs.registerHelper("escape", (String s, Options o) -> {
-            return escape.escape(s);
+        hbs.registerHelper("sanitize", (String s, Options o) -> {
+            return escape.sanitize(s);
         });
 
         port(4567);
