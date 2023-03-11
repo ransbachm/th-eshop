@@ -10,7 +10,7 @@ dotenv.load_dotenv(dotenv_path="../.env")
 
 # Takes a lot of code from https://medium.com/swlh/how-to-build-simple-recommender-systems-in-python-647e5bcd78bd
  
-sql_host = "host.docker.internal" #os.environ['SQL_HOST']
+sql_host = os.environ['SQL_HOST']
 sql_user = os.environ['SQL_DB_USER']
 sql_pwd = quote_plus(os.environ['SQL_DB_PWD']) # Escape special chars
 sql_db = os.environ['SQL_DB']
