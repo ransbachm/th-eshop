@@ -18,7 +18,7 @@
                         <img id="product_img" src="/upload/product/{{product.id}}.png">
                     </div>
                     <div class="box">
-                        <p class="justify">{{product.description}}</p>
+                        <p class="justify description">{{product.description}}</p>
                         <p><b>{{product.price}}€</b></p>
                         <p><b>{{product.available}} Available</b></p>
 
@@ -26,8 +26,12 @@
 
 
                         <form method="POST" action="/product/addToCart">
-                            <label for="amount">Amount</label><br>
-                            <input value="1" name="amount" type="number" min="1" max="{{product.available}}"><br>
+                            <div class="structure-box">
+                                <p>
+                                    <label for="amount" style="color: black">Amount:</label>
+                                    <input value="1" name="amount" class="selector" type="number" min="1" max="{{product.available}}">
+                                </p>
+                            </div>
                             {{#if more_than_zero}}
                                 <input class="black-button" type="submit" value="Add to basket">
                             {{else}}
@@ -40,7 +44,7 @@
                     </div>
                 </div>
 
-                <h2>Other products you might like:</h2>
+                <h2 class="product-h2">Other products you might like:</h2>
                 {{#each recommendations_outer}}
                     <div class="recommendation-row">
                         {{#each this}}

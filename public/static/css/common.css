@@ -12,6 +12,11 @@ h2 {
     font-size : 30px;
     margin-top : 0;
 }
+.product-h2 {
+    margin-top : revert;
+    margin-bottom : 0px;
+}
+
 p, a, label {
     font-family : 'Roboto';
     font-weight : 400;
@@ -70,4 +75,8 @@ input {
 body {
     font-family : "Roboto";
     color : black;
+}
+
+.description {
+    margin-top : 0;
 }

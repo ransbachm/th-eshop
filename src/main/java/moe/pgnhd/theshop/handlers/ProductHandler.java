@@ -36,7 +36,7 @@ public class ProductHandler {
             model.put("more_than_zero", product.getAvailable() > 0);
 
             List<Product> recommendations = Main.management.recommend_for_product
-                (user.getId(), product.getId(), 5*3);
+                (user.getId(), product.getId(), 5);
 
             model.put("recommendations_outer", Util.to_list_of_lists(recommendations, 5));
             model.put("product", product);
