@@ -12,7 +12,10 @@
     margin : 0;
     /*border : 3px #242333 solid;*/
     /**background : #01B0D3;*/
+
+    /* Makes desighn cartoony when active
     background : #242333;
+    */
 }
 
 .rec-box img{

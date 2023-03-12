@@ -34,3 +34,9 @@ img {
     object-fit : cover;
 
 }
+
+.selector {
+    background: #242333;
+    color : white;
+    border : none;
+}
