@@ -57,6 +57,11 @@
     flex-direction : row;
 }
 
+.structure-colum-o{
+    display : flex;
+    flex-direction : row;
+}
+
 .structure-box-small input{
     width : 100%;
 }
@@ -80,4 +85,14 @@ label p {
 
 .padding-box-horizontal {
     padding : 0 10px;
+}
+
+.spacer-bar{
+    margin-top : 3%;
+}
+
+#separator {
+    border: 3px solid #242333;
+    border-radius: 5px;
+    width : 100%;
 }

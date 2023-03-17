@@ -18,32 +18,39 @@
                         <img id="product_img" src="/upload/product/{{product.id}}.png">
                     </div>
                     <div class="box">
-                        <p class="justify description">{{product.description}}</p>
-                        <p><b>{{product.price}}€</b></p>
-                        <p><b>{{product.available}} Available</b></p>
+                        <div class="structure-column-o">
+                            <p class="justify">{{product.description}}</p>
+                            <div class="box" id="separator">
+                                <div class="padding-box-horizontal">
+                                    <p><b>{{product.price}}€</b></p>
+                                    {{#if more_than_zero}}
+                                        <p><b style="color : green;">{{product.available}} Available</b></p>
+                                        {{else}}
+                                        <p><b style="color: red">{{product.available}} Available</b></p>
+                                    {{/if}}
+                                    <a href="/seller/{{product.seller.id}}">{{product.seller}}</a><br>
+                                </div>
+                                <form method="POST" action="/product/addToCart">
+                                    <div class="structure-box padding-box-horizontal">
+                                        <p>
+                                            <label for="amount" style="color: black">Amount:</label>
+                                            <input value="1" name="amount" class="selector" type="number" min="1" max="{{product.available}}">
+                                        </p>
+                                    </div>
 
-                        <a href="/seller/{{product.seller.id}}">{{product.seller}}</a><br>
+                                    {{#if more_than_zero}}
+                                        <input class="black-button" type="submit" value="Add to basket">
+                                    {{else}}
+                                        <input class="black-button" type="submit" value="Add to basket" disabled>
+                                    {{/if}}
 
-
-                        <form method="POST" action="/product/addToCart">
-                            <div class="structure-box">
-                                <p>
-                                    <label for="amount" style="color: black">Amount:</label>
-                                    <input value="1" name="amount" class="selector" type="number" min="1" max="{{product.available}}">
-                                </p>
+                                    <input type="number" name="id" value="{{product.id}}" hidden>
+                                </form>
                             </div>
-                            {{#if more_than_zero}}
-                                <input class="black-button" type="submit" value="Add to basket">
-                            {{else}}
-                                Product not available.<br>
-                                <input class="black-button" type="submit" value="Add to basket" disabled>
-                            {{/if}}
-
-                            <input type="number" name="id" value="{{product.id}}" hidden>
-                        </form>
+                        </div>
                     </div>
                 </div>
-
+                <hr class="spacer-bar">
                 <h2 class="product-h2">Other products you might like:</h2>
                 {{#each recommendations_outer}}
                     <div class="recommendation-row">
