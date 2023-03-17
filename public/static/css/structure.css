@@ -95,4 +95,17 @@ label p {
     border: 3px solid #242333;
     border-radius: 5px;
     width : 100%;
+    box-shadow : 0px 0px 5px;
+}
+
+.img-box {
+    width : 70%;
+    height : 100%;
+    border: 3px solid #242333;
+    border-radius: 5px;
+    object-fit: cover;
+    aspect-ratio : 1/1;
+    margin : 0 auto;
+    overflow : hidden;
+    box-shadow : 0px 0px 5px;
 }

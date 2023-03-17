@@ -22,9 +22,9 @@
 
 .black-button:active {
     animation: scale 2s forwards;
-    transform: scale(0.98);
+    /*transform: scale(0.98);
     -webkit-animation: scale 2s forwards;
-
+    */
     background : green;
     color : black;
     font-weight : 500;

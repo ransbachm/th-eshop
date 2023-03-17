@@ -15,20 +15,21 @@
                 <h2>{{product.name}}</h2>
                 <div class="outerbox">
                     <div class="box">
-                        <img id="product_img" src="/upload/product/{{product.id}}.png">
+                        <div class="img-box">
+                            <img id="product_img" src="/upload/product/{{product.id}}.png">
+                        </div>
                     </div>
                     <div class="box">
                         <div class="structure-column-o">
-                            <p class="justify">{{product.description}}</p>
+
                             <div class="box" id="separator">
                                 <div class="padding-box-horizontal">
-                                    <p><b>{{product.price}}€</b></p>
                                     {{#if more_than_zero}}
                                         <p><b style="color : green;">{{product.available}} Available</b></p>
-                                        {{else}}
+                                    {{else}}
                                         <p><b style="color: red">{{product.available}} Available</b></p>
                                     {{/if}}
-                                    <a href="/seller/{{product.seller.id}}">{{product.seller}}</a><br>
+                                    <p><b>{{product.price}}€</b></p>
                                 </div>
                                 <form method="POST" action="/product/addToCart">
                                     <div class="structure-box padding-box-horizontal">
@@ -47,6 +48,11 @@
                                     <input type="number" name="id" value="{{product.id}}" hidden>
                                 </form>
                             </div>
+
+                            <p class="justify">{{product.description}}</p>
+                            <p>Seller: <i><a href="/seller/{{product.seller.id}}">{{product.seller}}</a></i></p><br>
+
+
                         </div>
                     </div>
                 </div>
