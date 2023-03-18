@@ -22,6 +22,11 @@ p, a, label {
     font-weight : 400;
 }
 
+.light-font {
+    font-family : 'Roboto';
+    font-weight : 300;
+}
+
 .justify {
     text-align : justify;
 }
@@ -92,4 +97,8 @@ body {
 
 .description {
     margin-top : 0;
+}
+
+.search {
+    background-color : #01B0D3;
 }

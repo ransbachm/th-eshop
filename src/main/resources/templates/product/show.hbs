@@ -48,10 +48,11 @@
                                     <input type="number" name="id" value="{{product.id}}" hidden>
                                 </form>
                             </div>
-
+                            <br>
+                            <br>
+                            <p><hr></p>
+                            <p>Seller: <i><a href="/seller/{{product.seller.id}}">{{product.seller}}</a></i></p>
                             <p class="justify">{{product.description}}</p>
-                            <p>Seller: <i><a href="/seller/{{product.seller.id}}">{{product.seller}}</a></i></p><br>
-
 
                         </div>
                     </div>
@@ -67,8 +68,8 @@
                                         <div class="rec-div">
                                             <div class="padding-box-small">
                                                 <img class="reco-img" src="/upload/product/{{id}}.png"><br>
-                                                {{name}}<br>
-                                                {{price}}€
+                                                <b>{{name}}</b><br>
+                                                <div class="light-font">{{price}}€</div>
                                             </div>
                                         </div>
                                     </a>
