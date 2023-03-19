@@ -75,7 +75,7 @@ li:nth-child(n+2) {
     display: block;
 }
 
-.hover-blue:hover{
+.hover-blue:hover a > #dropdown-button{
     color : #01B0D3;
 }
 
@@ -101,7 +101,20 @@ color : white;
     font-weight : 400;
 }
 
+.navbar .search {
+    background : #01B0D3;
+}
+
 #th_eshop-name {
     font-family: 'Bebas Neue';
     font-size : auto;
+}
+
+a > #logo {
+    filter : saturate(0%) contrast(1000%);
+
+}
+
+a:hover > #logo {
+    filter : saturate(100%);
 }
