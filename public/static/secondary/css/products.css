@@ -1,0 +1,61 @@
+.products-table {
+    border-collapse: collapse;
+    margin: 1rem 5%;
+    width: 90%;
+}
+
+.products-table td, .products-table th{
+    border-bottom: solid 1px var(--col-hd-tx);
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+}
+
+.content {
+    text-align: left;
+}
+
+.create-a {
+    margin-left: 5%;
+    text-decoration: none;
+    color: var(--col-hd-tx);
+    background-color: #528ba2;
+    border-radius: 0.4rem;
+    padding: 0.3rem;
+}
+
+
+.descr{
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    width: auto;
+    min-width: 0;
+    margin: 0 1rem;
+}
+
+.name {
+    margin-left: 0.5rem;
+}
+
+.price {
+    text-align: right;
+    margin-right: 0.5rem;
+}
+
+.available-form input {
+    background-color: var(--col-hd);
+    color: var(--col-hd-tx);
+    border: none;
+    border-radius: 0.4rem;
+    text-align: center;
+}
+
+.available-form {
+    width: 8rem;
+}
+
+.available-form input[type=number] {
+    width: 5rem;
+}
+

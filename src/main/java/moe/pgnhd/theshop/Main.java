@@ -29,7 +29,15 @@ public class Main {
 
     public static String render(String templatePath, Map<String, Object> model) {
         try{
-            Template template = hbs.compile("templates/" + templatePath);
+            String design_path = "templates/";
+            String design = (String) model.get("t_design");
+            switch (design) {
+                case "secondary":
+                    design_path += "secondary/"; break;
+                case "primary": default:
+                    design_path += "primary/"; break;
+            }
+            Template template = hbs.compile(design_path + templatePath);
             return template.apply(model);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -67,6 +75,9 @@ public class Main {
         }
         staticFiles.externalLocation("public");
 
+        hbs.registerHelper("md5", (String s, Options o) -> {
+            return Util.md5_hex(s.trim().toLowerCase());
+        });
         // Register handlers
         hbs.registerHelper("text-only", (String s, Options o) -> {
             return escape.text_only(s);
@@ -111,7 +122,6 @@ public class Main {
         post("my/products", ProductHandler::handleAlterMyProduct);
 
         get("search", SearchHandler::handleSearch);
-
         notFound(Util::handle404);
     }
 

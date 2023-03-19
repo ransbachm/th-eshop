@@ -1,0 +1,42 @@
+.reco-box {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    border-radius: 0.3rem;
+}
+
+.reco0 { grid-area: 1 / 1 / 2 / 2; }
+.reco1 { grid-area: 1 / 2 / 2 / 3; }
+.reco2 { grid-area: 1 / 3 / 2 / 4; }
+.reco3 { grid-area: 1 / 4 / 2 / 5; }
+.reco4 { grid-area: 1 / 5 / 2 / 6; }
+
+.reco-img {
+    object-fit: cover;
+    width: 10rem;
+    height: 10rem;
+}
+
+.your-picks {
+    margin-top: 5rem;
+}
+
+.help-me-i-need-content {
+    margin: 3rem;
+}
+
+.help-me-i-need-content img {
+    float: left;
+    width: 30rem;
+}
+
+.help-me-i-need-content p {
+    font-size: 1rem;
+}
+
+.more-nonsense {
+    margin-top: 4rem;
+    margin: 4rem;
+}

@@ -1,0 +1,53 @@
+<html>
+
+<head>
+    {{>templates/primary/partials/common}}
+    <title>Th_Eshop - Log into you account</title>
+</head>
+
+<body>
+    {{>templates/primary/partials/header}}
+
+
+    <div class="structure-column">
+        <div class="column-color">
+            <div class="structure-box-large">
+                <table>
+                    <h2>Login</h2>
+                    <p>Or <a href="/register">Register</a></p>
+
+                    <form method="POST" action="login">
+
+                        <div class="structure-box-out">
+                            <div class="structure-box-small"><label for="email"><p>Email</p></label></div>
+                            <div class="structure-box-small"><input type="text" name="email"></div>
+                        </div>
+
+                        <div class="structure-box-out">
+                            <div class="structure-box-small"><label for="password"><p>Password</p></label></div>
+                            <div class="structure-box-small"><input type="password" name="password"></div>
+                        </div>
+
+                        <div class="structure-box-out">
+                            <div class="structure-box-large">
+                                <input type="submit" value="confirm" class="black-button">
+                            </div>
+                        </div>
+                    </form>
+
+                    {{#if user_wrong_pwd}}
+                        Wrong password.
+                    {{/if}}
+
+                    {{#if user_not_confirmed}}
+                        Please confirm you account.
+                    {{/if}}
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="mainbody">
+        <div class="contentbody">
+    {{>templates/primary/partials/footer}}
+</body>
+</html>

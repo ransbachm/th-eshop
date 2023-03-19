@@ -1,0 +1,48 @@
+.content {
+    color: var(--col-hd-tx);
+}
+
+.prod_img {
+    width: 5rem;
+    height: 5rem;
+}
+
+th {
+    border-left: solid 1px;
+
+}
+
+th:first-child {
+    border-left: none;
+}
+.discr {
+    width: auto;
+    min-width: 0;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.price {
+    min-width: 10rem;
+}
+
+hr {
+    border: solid 1px black;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.empty-th {
+    border: none;
+}
+
+.descr-th {
+    border-left: none;
+    width: 65%;
+}
+
+.order-table {
+    margin: auto 1rem;
+}

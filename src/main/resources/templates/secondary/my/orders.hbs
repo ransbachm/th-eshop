@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {{> templates/secondary/partials/common}}
+    <title>Th_Eshop</title>
+    <link rel="stylesheet" href="/static/secondary/css/my/orders.css">
+</head>
+
+<body>
+{{> templates/secondary/partials/header}}
+
+<div class="back-content">
+    <div class="content">
+        <table>
+            <tr>
+                <th>Orders</th>
+            </tr>
+
+            {{#each orders}}
+                <table class="order-table">
+                    <tr>
+                        <th>Order No.</th>
+                        <th>Product No.</th>
+                        <th class="empty-th"></th>
+                        <th class="descr-th">Description</th>
+                        <th class="amount_col">Amount</th>
+                        <th>Price</th>
+                    </tr>
+                    {{#each orderItems}}
+                        <tr>
+                            <td>
+                                {{id}}
+                            </td>
+
+                            <td>
+                                {{product.id}}
+                            </td>
+
+                            <td class="prod_img">
+                                <img class="prod_img" src="/upload/product/{{product.id}}.png">
+                            </td>
+
+                            <td>
+                               <div class="discr">
+                                   {{text-only product.description}}
+                               </div>
+                            </td>
+
+                            <td>
+                                {{amount}}
+                            </td>
+
+                            <td class="price">
+                                {{product.price}}€
+                            </td>
+                        </tr>
+                    {{/each}}
+                </table>
+                <hr>
+            {{/each}}
+        </table>
+
+    </div>
+</div>
+
+{{> templates/secondary/partials/footer}}
+</body>
+</html>

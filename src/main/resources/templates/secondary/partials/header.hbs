@@ -1,0 +1,71 @@
+<header>
+    <link rel="stylesheet" href="/static/secondary/css/partials/header.css">
+    <ul>
+        <li>
+            <a href="/">Home </a>
+        </li>
+
+        <li>
+            <a href="/">Th_Eshop</a>
+        </li>
+
+        <li class="img_li">
+            <a class="img_a" href="/"><img class="logo" src="/static/secondary/img/logo_bird.svg"></a>
+        </li>
+
+        <li class="empty-li">
+        </li>
+
+        {{#if user}}
+            <li class="user-dropdown">
+                    <a href="/profile" id="user-name">{{user}}</a>
+                    <div class="user-dropdown-content">
+                        <a href="/profile">Profile</a>
+                        <a href="/my/orders">My Orders</a>
+                        <a href="/my/products">My Products</a>
+                        <form class="logout-form" action="/logout" method="POST">
+                            <input type="submit" value="Logout">
+                        </form>
+                    </div>
+            </li>
+            <li class="basket-icon-li">
+                <a class="basket-icon-a" href="/my/basket"><img id="logo" src="/static/secondary/img/shopping-cart.png"></a>
+            </li>
+        {{else}}
+            <li>
+                <a href="/login">Login</a>
+            </li>
+
+            <li>
+                <a href="/register">Register</a>
+            </li>
+        {{/if}}
+
+        <li>
+            <a><input type="checkbox" class="design_switch">Dark</a>
+        </li>
+
+        <li class="seach-form-li">
+            <form class="seach-form" action="/search" method="GET">
+                <input name="query" placeholder="Search Th_Eshop">
+                <input type="submit" value="Search">
+            </form>
+        </li>
+
+    </ul>
+
+    <script>
+        function change_design(dark, a) {
+            if(this.checked) {
+                setCookie("t_design", "secondary", 365);
+            } else {
+                setCookie("t_design", "primary", 365);
+            }
+            window.location = window.location;
+        }
+
+        let checkbox = document.querySelector(".design_switch");
+        checkbox.addEventListener("change",change_design);
+        checkbox.checked = getCookie("t_design") == "secondary";
+    </script>
+</header>

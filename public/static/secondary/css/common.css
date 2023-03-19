@@ -1,0 +1,46 @@
+@import "normalize.css";
+
+@font-face {
+    font-family: "Roboto";
+    src: url(/static/secondary/fonts/Roboto-Regular.ttf)
+    src: url(/static/secondary/fonts/BebasNeue-Regular.ttf)
+}
+
+:root {
+    --col-bg: #1F2227;
+    --col-bg2: #32323A;
+    --col-hd: #1A1D21;
+    --col-tx: #8D8F91;
+    --col-hd-tx: #F3F3F3FF;
+    --col-cnt: #373b42;
+
+    font-family: "Arial";
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    min-width: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    font-family: "Roboto";
+    text-align: center;
+    background: linear-gradient(
+            93deg,
+            var(--col-bg) 0%,
+            var(--col-bg2) 100%
+    );
+}
+
+.back-content {
+    display: grid;
+    padding: 5%;
+}
+
+.content {
+    background: var(--col-cnt);
+    box-shadow: 0px 0px 17px 4px var(--col-hd);
+    color: var(--col-hd-tx);
+}

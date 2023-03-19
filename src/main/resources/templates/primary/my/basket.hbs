@@ -1,0 +1,228 @@
+<html>
+<head>
+
+</head>
+    {{>templates/primary/partials/common}}
+    <title>Th_Eshop - Basket</title>
+    <script src="https://js.braintreegateway.com/web/dropin/1.34.0/js/dropin.min.js"></script>
+<body>
+    {{>templates/primary/partials/header}}
+
+    <div class="structure-column">
+        <div class="column-color">
+            <div class="structure-box-large">
+                <h2>Your basket:</h2>
+                <table class="basket">
+                    {{#if basket}}
+                        <tr>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Amount</th>
+                            <th>Seller</th>
+                        </tr>
+                        {{#each basket}}
+                            <tr class="basket_row">
+                                <td><a href="/product/{{product.id}}">{{product.name}}</a> </td>
+                                <td class="display-price">{{product.price}}€</td>
+                                <td class="amount_col">
+                                    <option hidden class="val" value="{{amount}}"></option>
+                                    <option hidden class="pid" value="{{product.id}}"></option>
+                                    <form onsubmit="return false">
+                                        <select onchange="change(this);" class="selector amount">
+                                            <option value="0">Remove item</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="more" class="more">More</option>
+                                        </select>
+                                    </form>
+                                </td>
+                                <td><a href="/seller/{{product.seller.id}}">{{product.seller}}</a></td>
+                            </tr>
+                        {{/each}}
+                        <tr class="basket-row">
+                            <td><b>Total: <span id="total-price"></span>€</b></td>
+                        </tr>
+
+                        <select id="reference" hidden onchange="change(this);" class="amount selector">
+                            <option value="0">0 (delete)</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="more" class="more">More</option>
+                        </select>
+
+                        <input id="reference2" hidden oninput="recalc_total()" onchange="change2(this);"
+                               class="amount" name="amount" type="number" min="0">
+                    {{else}}
+                        <p>No products found.</p>
+                    {{/if}}
+                </table>
+
+                <!-- Step one: add an empty container to your page -->
+                <div id="dropin-container"></div>
+
+                <form id="checkout-form" class="structure-box-large" action="/my/basket" method="POST">
+                    <input name="nonce" id="nonce" hidden>
+                    <input type="submit" class="black-button" value="Buy">
+                </form>
+
+                <script>
+
+        (function() {
+            let rows = document.querySelectorAll(".basket > tbody > .basket_row");
+
+            for(let row of rows) {
+                let select = row.querySelector(".amount_col > form > select");
+                let val = row.querySelector(".amount_col > .val").value - 0;
+                let make_selected = select.querySelector(`option[value="${val}"]`);
+
+                if(make_selected != null) {
+                    make_selected.selected = true;
+                } else { // out of range
+                    make_number(row, val);
+                }
+
+            }
+        })();
+
+        function submit(val, elem) {
+            let product_id = elem.parentElement.parentElement.querySelector(".pid").value;
+
+            let form_data = new URLSearchParams();
+            form_data.set("product_id", product_id);
+            form_data.set("amount", val);
+
+
+            fetch("/my/basket/change", {
+                method: "post",
+                body: form_data
+            });
+
+
+        }
+
+        function make_number(base, val) {
+            let form = base.querySelector(".amount_col > form");
+            form.querySelector(".amount").remove();
+            let inp = document.querySelector("#reference2").cloneNode(true);
+            inp.hidden = false;
+            inp.id = "";
+            inp.value = val;
+            form.append(inp);
+            return inp;
+        }
+
+
+        function make_select(col, val) {
+            col.querySelector(".amount").remove();
+            let inp = document.querySelector("#reference").cloneNode(true);
+            inp.hidden = false;
+            inp.id = "";
+            col.querySelector("form").append(inp);
+            inp.options[val].selected = true
+            return inp;
+        }
+
+
+        function deleteRow(elem) {
+            let row = elem.parentElement.parentElement.parentElement.parentElement;
+            if(row.parentElement.children.length == 2) {
+                row.parentElement.parentElement.innerHTML = "No products found."
+            } else {
+                row.remove();
+            }
+        }
+
+        function recalc_total() {
+            let rows = [...document.querySelectorAll(".basket_row")];
+            let elems = rows.map(e => e.querySelectorAll(".display-price, .amount_col option:checked, .amount_col input"));
+            let pr_and_am = elems.map(e => [e[0].innerText.slice(0,-1)-0, e[1].value-0]);
+            let total = pr_and_am.reduce((a,v) => a+v[0]*v[1], 0);
+            document.querySelector("#total-price").innerText = total.toFixed(2);
+        }
+
+        function change(e) {
+            let target = e.options[e.selectedIndex];
+            let val = target.value;
+            if(val == "more") {
+                target = make_number(e.parentElement.parentElement.parentElement, 7);
+            } else {
+                submit(val, e);
+            }
+            if(val == 0) {
+                deleteRow(target);
+            }
+            recalc_total();
+        }
+
+
+        function change2(target) {
+
+            let val = target.value;
+            if(val >= 0 && val <= 6) {
+                target = make_select(target.parentElement.parentElement, val);
+            }
+            submit(val, target);
+            if(val == 0) {
+                deleteRow(target);
+            }
+            recalc_total();
+        }
+        recalc_total();
+    </script>
+
+                <script>
+                    if(document.querySelector(".basket_row")) {
+                        braintree.dropin.create({
+                            container: document.getElementById('dropin-container'),
+                            authorization: "{{client_token}}",
+                            paypal: {
+                                flow: "vault"
+                            },
+                        }).then((dropinInstance) => {
+                            let form = document.querySelector("#checkout-form");
+                            form.addEventListener("submit", event => {
+                                event.preventDefault();
+
+                                dropinInstance.requestPaymentMethod((err, payload) => {
+                                    if(err) {
+                                        console.log(err);
+                                        return;
+                                    }
+
+                                    document.querySelector("#nonce").value = payload.nonce;
+                                    form.submit();
+                                });
+                            });
+                        }).catch((error) => {
+                            console.log(error)
+                        });
+                    } else {
+                        document.querySelector("#checkout-form input[type=submit]").disabled = true;
+                    }
+                </script>
+
+
+                {{#if submitted_empty_cart}}
+                    Your cart is empty.
+                {{/if}}
+
+                {{#if out_of_stock_product}}
+                    {{out_of_stock_product}} is out of stock.
+                {{/if}}
+
+            </div>
+        </div>
+    </div>
+
+
+    {{>templates/primary/partials/footer}}
+</body>
+</html>

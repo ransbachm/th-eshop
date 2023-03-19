@@ -1,0 +1,44 @@
+h2 {
+    font-family: Arial;
+}
+
+.results {
+    width: 80%;
+    margin-left: 10%;
+    border-collapse: collapse;
+    text-align: left;
+    margin-bottom: 5rem;
+}
+
+.results tr td {
+    border-bottom: solid 0.1rem black;
+    padding: 0.3rem 0rem;
+}
+
+.results tr td:nth-child(-n+3) {
+    border-top: solid 0.1rem black;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.results_h3 {
+    margin-left: 5%;
+}
+
+.results_h3_hr {
+    margin-top: -1rem;
+    width: 16rem;
+    margin-left: 4%;
+}
+
+
+
+.descr p {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+}

@@ -1,0 +1,48 @@
+<html>
+
+<head>
+    {{>templates/primary/partials/common}}
+    <title>Th_Eshop - Conform your account</title>
+</head>
+
+<body>
+    {{>templates/primary/partials/header}}
+
+    <div class="structure-column">
+        <div class="column-color">
+            <div class="structure-box-large">
+                <h2>Products {{seller}} sells:</h2>
+                <div class="padding-box">
+                    <img class="seller-img" src="https://www.gravatar.com/avatar/{{md5 seller.email}}?s=1024">
+                </div>
+                <style>
+                .seller-img {
+                    width: 10rem;
+                    height: 10rem;
+                }
+                </style>
+                <table>
+                    <th>Product</th>
+                    <th>Price</th>
+                    {{#each products}}
+                        <tr>
+                            <td><a href="/product/{{id}}">{{name}}</a></td>
+                            <td>{{price}}</td>
+                        </tr>
+                    {{/each}}
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="mainbody">
+        <div class="contentbody">
+
+        </div>
+    </div>
+
+
+    {{>templates/primary/partials/footer}}
+</body>
+</html>

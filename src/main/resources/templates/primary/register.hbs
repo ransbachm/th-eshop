@@ -1,0 +1,89 @@
+<html>
+
+<head>
+    {{>templates/primary/partials/common}}
+    <title>Th_Eshop - Register you account</title>
+</head>
+
+<body>
+    {{>templates/primary/partials/header}}
+
+    <div class="structure-column">
+        <div class="column-color">
+            <div class="structure-box-large">
+                <h2>Register</h2>
+                <p>Or <a href="/login">Login</a></p>
+
+                <form method="POST" action="/register">
+                    <div id="register" class="structure-column-out ">
+
+                        <div class="structure-box-out">
+                            <div class="structure-box-small"><label for="firstname">First name</label></div>
+                            <div class="structure-box-small"><input type="text" name="firstname"></div>
+                            <br>
+                        </div>
+
+                        <div class="structure-box-out">
+                            <div class="structure-box-small"><label for="lastname">Last name</label></div>
+                            <div class="structure-box-small"><input type="text" name="lastname"></div>
+                        </div>
+
+                        <div class="structure-box-out">
+                            <div class="structure-box-small"><label for="email">Email</label> </div>
+                            <div class="structure-box-small"><input type="text" name="email"> </div>
+                        </div>
+
+                        <div class="structure-box-out">
+                            <div class="structure-box-small"><label for="password">Password</label> </div>
+                            <div class="structure-box-small"><input type="password" name="password"> </div>
+                        </div>
+
+                        <div class="structure-box-out">
+                            <div class="structure-box-small"><label for="password_confirm">Confirm password</label> </div>
+                            <div class="structure-box-small"><input type="password" name="password_confirm"> </div>
+                        </div>
+
+                        <div class="structure-box-out">
+                            <div class="structure-box-small"><label for="housenumber">House No.</label></div>
+                            <div class="structure-box-small"><input type="text" name="housenumber"></div>
+                        </div>
+
+                        <div class="structure-box-out">
+                            <div class="structure-box-small"><label for="street">Street</label></div>
+                            <div class="structure-box-small"><input type="text" name="street"></div>
+                        </div>
+
+                        <div class="structure-box-out">
+                            <div class="structure-box-small"><label for="zipcode">Zipcode</label></div>
+                            <div class="structure-box-small"><input type="text" name="zipcode"></div>
+                        </div>
+
+                        <div class="structure-box">
+                            <input class="black-button" value="confirm" type="submit">
+                        </div>
+                    </div>
+                </form>
+
+                    {{#if email_not_available}}
+                        This email is not available.
+                    {{/if}}
+
+                    {{#if email_send_failure}}
+                        The confirmation email could not be sent.
+                    {{/if}}
+
+            </div>
+        </div>
+    </div>
+
+    <div class="mainbody">
+        <div class="contentbody">
+
+
+        </div>
+    </div>
+
+
+    {{>templates/primary/partials/footer}}
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {{> templates/secondary/partials/common}}
+    <title>Th_Eshop</title>
+    <link rel="stylesheet" href="/static/secondary/css/product/create.css">
+</head>
+
+<body>
+{{> templates/secondary/partials/header}}
+
+<div class="back-content">
+    <div class="content">
+
+        <div class="parents">
+            <h2>Create a product</h2>
+            <h3>Which you will be selling</h3>
+            <form method="POST" action="/product/create" enctype="multipart/form-data">
+                <div class="parent1">
+                    <div class="div1">
+                        <label for="name">Product name</label><br>
+                        <input name="name" type="text" placeholder="Amazing product name here">
+                        {{#if noname}}<p>Product must have a name</p>{{/if}}
+                    </div>
+
+                    <div class="div2">
+                        <label for="price">Product price (€)</label><br>
+                        <input name="price" type="number" value="200">
+                        {{#if pricetolow}} <p>Product price must be greater than zero.</p>{{/if}}
+                    </div>
+                </div>
+                <div class="parent2">
+                    <div class="div1">
+                        <label for="description">Description</label><br>
+                        <input name="description" type="text">
+                        {{#if nodescription}} <p>Product must have a description</p>{{/if}}
+                    </div>
+
+                    <div class="div2">
+                        <label for="available">Product available</label><br>
+                        <input name="available" type="number" value="1">
+                        {{#if availabletolow}} <p>Available product must be greater than zero.</p>{{/if}}<br>
+                    </div>
+                </div>
+
+                <div class="parent3">
+                    <div class="div1">
+                        <label for="image">Image</label><br>
+                        <input name="image" type="file">
+                        {{#if noimage}} <p>A product requires an image.</p>{{/if}}<br>
+                    </div>
+
+                    <div class="div2">
+                        <br>
+                        <input type="submit" value="create">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        {{#if invalidInput}}
+            <b>Invalid input</b>
+        {{/if}}
+        {{#if invalidImageFormat}}
+            <b>This image format is not supported</b>
+        {{/if}}
+        {{#if notSeller}}
+            <b>Error: You are not a seller</b>
+        {{/if}}
+
+    </div>
+</div>
+
+{{> templates/secondary/partials/footer}}
+</body>
+</html>

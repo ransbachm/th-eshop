@@ -2,6 +2,7 @@ package moe.pgnhd.theshop;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import spark.Request;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -9,7 +10,6 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -56,8 +56,8 @@ public class Mail {
         Transport.send(message);
     }
 
-    public static void sendRegisterConfirmMail(String to, String activation_code) throws MessagingException {
-        Map<String, Object> model = new HashMap<>();
+    public static void sendRegisterConfirmMail(Request req, String to, String activation_code) throws MessagingException {
+        Map<String, Object> model = Util.getModel(req);
         model.put("activation_code", activation_code);
         String content = Main.render("email/register_confirm", model);
 
