@@ -11,7 +11,7 @@
                 <form action="/search" method="GET" id="header-form">
                     <label for="query" hidden>Search</label>
                     <input type="text" name="query" placeholder="Search Th_Eshop">
-                    <input type="submit" value="Search">
+                    <input type="submit" class="search" value="Search">
                 </form>
             </a>
         </li>
@@ -22,11 +22,11 @@
         {{/unless}}
 
         {{#if user}}
-            <li><a href="/my/basket">Basket</a></li>
+            <li ><a href="/my/basket"><img id="logo" src="/static/images/shopping-cart.png" style="width: 20px;"></a></li>
 
             <li>
                 <div id = "dropdown">
-                    <div>
+                    <div class="hover-blue">
                         <a href="/profile"><button id = "dropdown-button">{{user}}</button></a>
                     </div>
                     <div id = "dropdown-content">

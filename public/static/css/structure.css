@@ -4,8 +4,9 @@
     margin-left: auto;
     display : flex;
     align-items: center;
-    min-height : 100%;
+    /*min-height : 100%;*/
     height : auto;
+    margin-bottom : 1%;
 }
 
 .column-color {
@@ -47,12 +48,16 @@
 
 .structure-box-o {
     padding : 10px;
-    padding : 10px;
     margin : 0 auto;
 }
 
 .structure-colum-out {
     padding : 10px;
+    display : flex;
+    flex-direction : row;
+}
+
+.structure-colum-o{
     display : flex;
     flex-direction : row;
 }
@@ -68,4 +73,39 @@
 
 label p {
     margin: 0;
+}
+
+.padding-box {
+    padding : 10px;
+}
+
+.padding-box-small {
+    padding : 5px;
+}
+
+.padding-box-horizontal {
+    padding : 0 10px;
+}
+
+.spacer-bar{
+    margin-top : 3%;
+}
+
+#separator {
+    border: 3px solid #242333;
+    border-radius: 5px;
+    width : 100%;
+    box-shadow : 0px 0px 5px;
+}
+
+.img-box {
+    width : 70%;
+    height : 100%;
+    border: 3px solid #242333;
+    border-radius: 5px;
+    object-fit: cover;
+    aspect-ratio : 1/1;
+    margin : 0 auto;
+    overflow : hidden;
+    box-shadow : 0px 0px 5px;
 }

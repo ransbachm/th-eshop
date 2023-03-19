@@ -55,12 +55,19 @@ li:nth-child(n+2) {
     background-color: inherit;
     font-family: inherit;
     color : white;
+    max-width : 116px;
+    overflow: hidden;
+    height : 20px;
+}
+
+#dropdown-button:hover {
+    color : #01B0D3;
 }
 #dropdown-content{
   display: none;
   position: absolute;
   background-color: #242333;
-  max-width: 94px;
+  max-width: 116px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   color: inherit;
   z-index: 1;
@@ -68,6 +75,10 @@ li:nth-child(n+2) {
 
 #dropdown:hover #dropdown-content{
     display: block;
+}
+
+.hover-blue:hover a > #dropdown-button{
+    color : #01B0D3;
 }
 
 #header-form {
@@ -92,7 +103,20 @@ color : white;
     font-weight : 400;
 }
 
+.navbar .search {
+    background : #01B0D3;
+}
+
 #th_eshop-name {
     font-family: 'Bebas Neue';
     font-size : auto;
+}
+
+a > #logo {
+    filter : saturate(0%) contrast(1000%);
+
+}
+
+a:hover > #logo {
+    filter : saturate(100%);
 }

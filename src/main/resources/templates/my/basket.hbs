@@ -28,8 +28,8 @@
                                     <option hidden class="val" value="{{amount}}"></option>
                                     <option hidden class="pid" value="{{product.id}}"></option>
                                     <form onsubmit="return false">
-                                        <select onchange="change(this);" class="amount" name="amount">
-                                            <option value="0">0 (delete)</option>
+                                        <select onchange="change(this);" class="selector amount">
+                                            <option value="0">Remove item</option>
                                             <option value="1">1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
@@ -47,7 +47,7 @@
                             <td><b>Total: <span id="total-price"></span>€</b></td>
                         </tr>
 
-                        <select id="reference" hidden onchange="change(this);" class="amount" name="amount">
+                        <select id="reference" hidden onchange="change(this);" class="amount selector">
                             <option value="0">0 (delete)</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
