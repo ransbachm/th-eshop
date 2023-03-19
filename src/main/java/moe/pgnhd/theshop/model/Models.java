@@ -89,6 +89,13 @@ public class Models {
         return multiple_one_to_many(rs, one, many, container_name_one, one.getSimpleName(), "id");
     }
 
+    public static <T extends ResultSetConstructable> T single_one_to_many(ResultSet rs, Class one, Class many, String container_name_one) {
+        // checkForInterface(what); will be checked in delegated method
+        return (T) multiple_one_to_many(rs, one, many,
+                container_name_one, one.getSimpleName(), "id")
+                .get(0);
+    }
+
     /**
      * Returns a list of type specified by "what".
      * @param rs Result set that contains the table.

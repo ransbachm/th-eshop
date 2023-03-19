@@ -64,4 +64,11 @@ public class Mail {
         String subject = "Confirm your Th_Eshop account";
         sendMail(to, subject, content);
     }
+
+    public static void sendReceiptMail(String to, Map<String, Object> model) throws MessagingException {
+        String content = Main.render("email/receipt", model);
+
+        String subject = "You have purchased from Th_Eshop";
+        sendMail(to, subject, content);
+    }
 }

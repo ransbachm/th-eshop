@@ -1,12 +1,12 @@
 package moe.pgnhd.theshop;
 
 import com.github.jknack.handlebars.Handlebars;
+import com.github.jknack.handlebars.Options;
 import com.github.jknack.handlebars.Template;
 import com.github.jknack.handlebars.io.FileTemplateLoader;
 import io.github.cdimascio.dotenv.Dotenv;
-import moe.pgnhd.theshop.handlers.BasketHandler;
-import moe.pgnhd.theshop.handlers.Filters.RequireLogin;
 import moe.pgnhd.theshop.handlers.*;
+import moe.pgnhd.theshop.handlers.Filters.RequireLogin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,10 +20,12 @@ public class Main {
 
     private static Logger LOG = LoggerFactory.getLogger(Main.class);
     public static Management management;
+    public static Payments payments;
     public static Dotenv dotenv = Dotenv.load();
     static boolean isDev = Boolean.parseBoolean(dotenv.get("DEV_MODE"));
 
     private static Handlebars hbs;
+    public static HTMLSanitizer escape;
 
     public static String render(String templatePath, Map<String, Object> model) {
         try{
@@ -52,6 +54,9 @@ public class Main {
             return;
         }
 
+        payments = new Payments();
+        escape = new HTMLSanitizer();
+
         // Because resources are copied to target directory
         // Live refresh cannot work with the class path loader
         if (!isDev) {
@@ -61,6 +66,15 @@ public class Main {
                     "src/main/resources/"));
         }
         staticFiles.externalLocation("public");
+
+        // Register handlers
+        hbs.registerHelper("text-only", (String s, Options o) -> {
+            return escape.text_only(s);
+        });
+
+        hbs.registerHelper("sanitize", (String s, Options o) -> {
+            return escape.sanitize(s);
+        });
 
         port(4567);
         // require logged-in user for paths below
