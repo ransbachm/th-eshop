@@ -77,6 +77,7 @@ public class Main {
 
         hbs.registerHelper("md5", (String s, Options o) -> {
             return Util.md5_hex(s.trim().toLowerCase());
+        });
         // Register handlers
         hbs.registerHelper("text-only", (String s, Options o) -> {
             return escape.text_only(s);
