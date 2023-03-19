@@ -1,12 +1,50 @@
 .black-button {
     background : #242333;
-    color : white;
     border : none;
+    color : white;
     font-family : 'Roboto';
     font-size: 15px;
+    transition : background 0.5s;
+    transform-timing-function : ease-in;
+    cursor:pointer;
 }
 
 .structure-box-large input[type=submit]{
     width : 100%;
     height : 30px;
+}
+
+.black-button:hover {
+    background : #01B0D3;
+    color : black;
+    font-weight : 500;
+}
+
+.black-button:active {
+    animation: scale 2s forwards;
+    /*transform: scale(0.98);
+    -webkit-animation: scale 2s forwards;
+    */
+    background : green;
+    color : black;
+    font-weight : 500;
+}
+
+img {
+    object-fit : cover;
+
+}
+
+.selector {
+    background: #242333;
+    color : white;
+    border : none;
+    cursor: pointer;
+}
+
+.structure-box-large input[type=submit]:disabled{
+    width : 100%;
+    height : 30px;
+    background-color: grey;
+    cursor: inherit;
 }

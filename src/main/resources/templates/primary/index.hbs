@@ -3,6 +3,7 @@
 <head>
     {{>templates/primary/partials/common}}
     <link rel="stylesheet" href="/static/primary/css/index.css">
+    <link rel="stylesheet" href="/static/css/product-recommendation.css">
     <title>Th_Eshop - Everything you didn't know you needed</title>
 </head>
 
@@ -11,22 +12,135 @@
     <div class="structure-column">
         <div class="column-color">
             <div class="structure-box-large">
+                {{#if user}} <h2>Welcome {{user}}</h2> <h3>Personal recommendations:</h3>
+                    {{else}}<h2>Welcome</h2>
+                    <i><a href="/login">login</a></i> or <i><a href="/register">register</a></i> ?<br>
+                {{/if}}
                     {{#unless recommendations_outer}}
                         <!-- <h2>For you:</h2> -->
                         <!-- show alternative recommendations -->
                     {{/unless}}
                     {{#each recommendations_outer}}
-                        <div class="parent">
+                        <div class="recommendation-row">
                             {{#each this}}
-                                <a href="/product/{{id}}">
-                                    <div class="div{{@index}}" >
-                                        {{name}}<br>
-                                        <img class="reco-img" src="/upload/product/{{id}}.png">
+                                <div class="rec-box">
+                                    <div class="padding-box">
+                                        <a href="/product/{{id}}">
+                                            <div class="rec-div" >
+                                                <img class="reco-img" src="/upload/product/{{id}}.png">
+                                                    <div class="padding-box-small">
+                                                        <b>{{name}}</b><br>
+                                                        <div class="light-font">{{price}}€</div>
+                                                    </div>
+                                            </div>
+                                        </a>
                                     </div>
-                                </a>
+                                </div>
                             {{/each}}
                         </div>
                     {{/each}}
+                <hr><br>
+                <h3>Fruits:</h3>
+                <div class="recommendation-row">
+                        <div class="rec-box">
+                            <div class="padding-box">
+                                <a href="/product/2">
+                                    <div class="rec-div" >
+                                        <img class="reco-img" src="/upload/product/2.png">
+                                        <div class="padding-box-small">
+                                            <b>Banana</b><br>
+                                            <div class="light-font">2.0€</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="rec-box">
+                            <div class="padding-box">
+                                <a href="/product/5">
+                                    <div class="rec-div">
+                                        <img class="reco-img" src="/upload/product/5.png">
+                                        <div class="padding-box-small">
+                                            <b>Apple</b><br>
+                                            <div class="light-font">3.0€</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="rec-box">
+                            <div class="padding-box">
+                                <a href="/product/6">
+                                    <div class="rec-div">
+                                        <img class="reco-img" src="/upload/product/6.png">
+                                        <div class="padding-box-small">
+                                            <b>Bananoboros</b><br>
+                                            <div class="light-font">100.0€</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                </div>
+                <h3>Tech:</h3>
+                <div class="recommendation-row">
+                    <div class="rec-box">
+                        <div class="padding-box">
+                            <a href="/product/7">
+                                <div class="rec-div" >
+                                    <img class="reco-img" src="/upload/product/7.png">
+                                    <div class="padding-box-small">
+                                        <b>IPhone 7</b><br>
+                                        <div class="light-font">500.0€</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Literature:</h3>
+                <div class="recommendation-row">
+                    <div class="rec-box">
+                        <div class="padding-box">
+                            <a href="/product/1">
+                                <div class="rec-div" >
+                                    <img class="reco-img" src="/upload/product/1.png">
+                                    <div class="padding-box-small">
+                                        <b>Chainsaw Man, Vol. 1</b><br>
+                                        <div class="light-font">6.0€</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="rec-box">
+                        <div class="padding-box">
+                            <a href="/product/3">
+                                <div class="rec-div" >
+                                    <img class="reco-img" src="/upload/product/3.png">
+                                    <div class="padding-box-small">
+                                        <b>Chainsaw Man, Vol. 2</b><br>
+                                        <div class="light-font">6.0€</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="rec-box">
+                        <div class="padding-box">
+                            <a href="/product/4">
+                                <div class="rec-div" >
+                                    <img class="reco-img" src="/upload/product/4.png">
+                                    <div class="padding-box-small">
+                                        <b>Spy x Family, Vol. 3</b><br>
+                                        <div class="light-font">6.99€</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

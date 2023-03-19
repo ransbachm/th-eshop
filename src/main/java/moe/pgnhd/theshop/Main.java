@@ -20,10 +20,12 @@ public class Main {
 
     private static Logger LOG = LoggerFactory.getLogger(Main.class);
     public static Management management;
+    public static Payments payments;
     public static Dotenv dotenv = Dotenv.load();
     static boolean isDev = Boolean.parseBoolean(dotenv.get("DEV_MODE"));
 
     private static Handlebars hbs;
+    public static HTMLSanitizer escape;
 
     public static String render(String templatePath, Map<String, Object> model) {
         try{
@@ -60,6 +62,9 @@ public class Main {
             return;
         }
 
+        payments = new Payments();
+        escape = new HTMLSanitizer();
+
         // Because resources are copied to target directory
         // Live refresh cannot work with the class path loader
         if (!isDev) {
@@ -72,6 +77,13 @@ public class Main {
 
         hbs.registerHelper("md5", (String s, Options o) -> {
             return Util.md5_hex(s.trim().toLowerCase());
+        // Register handlers
+        hbs.registerHelper("text-only", (String s, Options o) -> {
+            return escape.text_only(s);
+        });
+
+        hbs.registerHelper("sanitize", (String s, Options o) -> {
+            return escape.sanitize(s);
         });
 
         port(4567);
