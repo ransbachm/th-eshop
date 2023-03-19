@@ -11,15 +11,16 @@
     <div class="structure-column">
         <div class="column-color">
             <div class="structure-box-large">
-                <h2>Products this seller sells:</h2>
-                <p>{{seller}}</p>
-                <img src="/upload/user/{{seller.id}}.png">
+                <h2>Products {{seller}} sells:</h2>
+                <div class="padding-box">
+                    <img class="seller-img" src="https://www.gravatar.com/avatar/{{md5 seller.email}}?s=1024">
+                </div>
                 <style>
-                img {
+                .seller-img {
                     width: 10rem;
                     height: 10rem;
                 }
-            </style>
+                </style>
                 <table>
                     <th>Product</th>
                     <th>Price</th>
