@@ -16,7 +16,13 @@
 
 .create-a {
     margin-left: 5%;
+    text-decoration: none;
+    color: var(--col-hd-tx);
+    background-color: #528ba2;
+    border-radius: 0.4rem;
+    padding: 0.3rem;
 }
+
 
 .descr{
     display: -webkit-box;

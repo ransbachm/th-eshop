@@ -1,0 +1,29 @@
+<html>
+<body style="border-collapse: collapse;">
+    <div style="border: 1px #eee solid;">
+        <div style="background : #eee; padding: 0 10px;">
+            <p style="margin : 0px;">Order <b>{{order.id}}</b> from th_e <b>{{order.date}}</b></p>
+            <p style="margin : 0px;">{{user.firstname}} {{user.lastname}}, {{user.street}} {{user.housenumber}} {{user.zipcode}}</p>
+        </div>
+
+
+        <table style="margin: 0 auto;">
+            {{#each order.orderItems}}
+                <tr>
+                    <td style="min-width : 20%; border-bottom : 1px #eee solid; padding : 0 10px; vertical-align: text-top;">
+                        <p>{{product.name}} <br>
+                            <i>{{amount}}</i> x <i>{{product.price}}€</i></p>
+                    </td>
+                    <td style="min-width : 20%; border-bottom : 1px #eee solid; padding : 0 10px;">
+                        <p style="padding : 0 5px;">{{text-only product.desciption}}</p>
+                    </td>
+                </tr>
+            {{/each}}
+        </table>
+        <p style="padding : 0 10px;">Price total: <b>{{total-price}}€</b></p>
+    </div>
+
+
+    (This is a student project if you have received this email, we are sorry.)
+</body>
+</html>

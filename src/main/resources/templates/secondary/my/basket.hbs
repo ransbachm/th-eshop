@@ -4,6 +4,7 @@
     {{> templates/secondary/partials/common}}
     <title>Th_Eshop</title>
     <link rel="stylesheet" href="/static/secondary/css/my/basket.css">
+    <script src="https://js.braintreegateway.com/web/dropin/1.34.0/js/dropin.min.js"></script>
 </head>
 
 <body>
@@ -162,11 +163,50 @@
 
         </script>
 
-        <form method="POST" action="/my/basket">
-            <div class="buy-button-div">
+        <div id="dropin-container"></div>
+
+        <div class="buy-button-div">
+            <form method="POST" id="checkout-form" action="/my/basket" method="POST">
+                <input name="nonce" id="nonce" hidden>
                 <input class="buy-button" type="submit" value="Buy">
-            </div>
-        </form>
+            </form>
+        </div>
+
+
+
+        <script>
+            if(document.querySelector(".basket_row")) {
+                braintree.dropin.create({
+                    container: document.getElementById('dropin-container'),
+                    authorization: "{{client_token}}",
+                    paypal: {
+                        flow: "vault"
+                    },
+                }).then((dropinInstance) => {
+                    let form = document.querySelector("#checkout-form");
+                    form.addEventListener("submit", event => {
+                        event.preventDefault();
+
+                        dropinInstance.requestPaymentMethod((err, payload) => {
+                            if(err) {
+                                console.log(err);
+                                return;
+                            }
+
+                            document.querySelector("#nonce").value = payload.nonce;
+                            document.querySelector("#checkout-form input[type=submit]").disabled = true;
+                            form.submit();
+                        });
+                    });
+                }).catch((error) => {
+                    console.log(error)
+                });
+            } else {
+                document.querySelector("#checkout-form input[type=submit]").disabled = true;
+            }
+        </script>
+
+
 
         {{#if submitted_empty_cart}}
             Your cart is empty.
@@ -176,6 +216,7 @@
             {{out_of_stock_product}} is out of stock.
         {{/if}}
     </div>
+
 </div>
 </div>
 

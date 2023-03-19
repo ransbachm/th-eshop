@@ -28,6 +28,7 @@
 }
 
 .descr {
+    scrollbar-width: none;
     overflow-y: auto;
     max-height: 50%;
 }
@@ -90,6 +91,10 @@
 
 #add-form input[type=number] {
     margin-bottom: 0.5rem;
+}
+
+#add-form input[type=submit] {
+    cursor: pointer;
 }
 
 .price-delivery {

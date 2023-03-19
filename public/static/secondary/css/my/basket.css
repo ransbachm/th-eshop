@@ -52,3 +52,18 @@
     padding: 1%;
     border-radius: 1rem;
 }
+
+#dropin-container {
+    width: 80%;
+    margin-left: 10%;
+}
+
+#checkout-form input[type=submit] {
+    background-color: #528ba2;
+    cursor: pointer;
+}
+
+#checkout-form input[type=submit]:disabled {
+    background-color: grey;
+    cursor: inherit;
+}
