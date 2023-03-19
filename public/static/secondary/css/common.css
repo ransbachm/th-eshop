@@ -13,6 +13,8 @@
     --col-tx: #8D8F91;
     --col-hd-tx: #F3F3F3FF;
     --col-cnt: #373b42;
+
+    font-family: "Arial";
 }
 
 html, body {

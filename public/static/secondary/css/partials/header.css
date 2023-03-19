@@ -120,3 +120,22 @@ header ul li .img_a img {
     background-color: var(--col-hd-tx);
     color: var(--col-hd);
 }
+
+.basket-icon-a {
+    width: 2.5rem;
+    padding: 0 1rem;
+}
+
+.basket-icon-a > img {
+    margin-top: 0.4rem;
+    width: 100%;
+
+}
+
+.basket-icon-a img:hover {
+    filter: saturate(0%)  brightness(0%) invert(0.25);
+}
+
+.basket-icon-li {
+    padding: 0;
+}

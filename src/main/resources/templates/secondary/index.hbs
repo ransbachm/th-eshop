@@ -12,8 +12,31 @@
 <div class="back-content">
     <div class="content">
 
+
+        <div class="help-me-i-need-content">
+            <img src="http://localhost:4567/static/secondary/img/logo_bird.svg">
+            <p>
+                Welcome to Th_Eshop, your go-to online store for all your shopping needs! Our website offers a wide range of products, including clothing, accessories, electronics, and much more.<br>
+            </p>
+
+            <p>
+                At Th_Eshop, we pride ourselves on providing a seamless online shopping experience. We understand that time is precious, which is why we have made our website user-friendly and easy to navigate. With just a few clicks, you can browse through our vast collection of products, select your desired items, and place your order from the comfort of your own home. <br>
+            </p>
+        </div><br>
+
+        <div class="more-nonsense">
+            <p>Our team is committed to providing exceptional customer service, and we are always happy to assist you with any queries or concerns you may have. We believe that every customer is important and deserves the best possible shopping experience.</p>
+
+            <p>We source our products from trusted suppliers, ensuring that they are of the highest quality. We also strive to keep our prices competitive so that you can enjoy the best value for your money.</p>
+
+            <p>At Th_Eshop, we understand that shopping online can be a bit daunting, which is why we have taken measures to ensure that your personal information is always safe and secure. We use the latest encryption technologies to protect your data, and we will never share your information with any third parties.</p>
+
+            <p>Thank you for choosing Th_Eshop for all your online shopping needs. We look forward to serving you and providing you with an exceptional shopping experience.</p>
+        </div>
+
+
         {{#if recommendations_outer}}
-            <h2>Your picks:</h2>
+            <h2 class="your-picks">Your picks:</h2>
         {{else}}
             <!-- <h2>For you:</h2> -->
             <!-- show alternative recommendations -->
@@ -23,7 +46,9 @@
                 {{#each this}}
                         <div class="reco{{@index}}" >
                             {{name}}<br>
-                            <img class="reco-img" src="/upload/product/{{id}}.png">
+                            <a href="/product/{{id}}">
+                                <img class="reco-img" src="/upload/product/{{id}}.png">
+                            </a>
                         </div>
                 {{/each}}
             </div>

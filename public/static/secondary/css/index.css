@@ -18,3 +18,25 @@
     width: 10rem;
     height: 10rem;
 }
+
+.your-picks {
+    margin-top: 5rem;
+}
+
+.help-me-i-need-content {
+    margin: 3rem;
+}
+
+.help-me-i-need-content img {
+    float: left;
+    width: 30rem;
+}
+
+.help-me-i-need-content p {
+    font-size: 1rem;
+}
+
+.more-nonsense {
+    margin-top: 4rem;
+    margin: 4rem;
+}
