@@ -13,65 +13,70 @@
     <div class="content">
         <div class="parent">
             <div class="upper-left">
-                <h2>{{product.name}}</h2><br>
-                <img src="/upload/product/{{product.id}}.png">
+                    <h2>{{product.name}}</h2><br>
+                    <h3>Sold by {{product.seller}}</h3>
+                    <img src="/upload/product/{{product.id}}.png">
             </div>
             <div class="upper-right">
-                <div class="descr">
-                    {{{sanitize product.description}}}
-                </div>
-                <div class="basket-options">
-                    {{#if product.available}}
-                        This product is available to order from Th_Eshop<br>
-                        <form id="add-form">
-                            <input type="number" name="amount" value="1"><br>
-                            <input type="submit" name="basket" value="Add to basket"> or
-                            <input type="submit" name="checkout" value="Checkout">
-                        </form>
+                <div class="upper-left-ins">
+                    <div class="descr">
+                        <h3>Description</h3>
+                        {{{sanitize product.description}}}
+                    </div>
+                    <div class="basket-options">
+                        <h3>Options</h3>
+                        {{#if product.available}}
+                            This product is available to order from Th_Eshop<br>
+                            <form id="add-form">
+                                <input type="number" name="amount" value="1"><br>
+                                <input type="submit" name="basket" value="Add to basket"> or
+                                <input type="submit" name="checkout" value="Checkout">
+                            </form>
 
-                        <p class="price-delivery">Available from {{product.price}}€<br>
-                            With standard delivery options<br>
-                            (5.5€ within country)
-                        </p>
+                            <p class="price-delivery">Available from {{product.price}}€<br>
+                                With standard delivery options<br>
+                                (5.5€ within country)
+                            </p>
 
-                        <script>
-                            let form = document.querySelector("#add-form");
-                            let add_to_basket = form.querySelector("input[name=basket]");
-                            let checkout = form.querySelector("input[name=checkout]");
-                            let amount = form.querySelector("input[name=amount]");
+                            <script>
+                                let form = document.querySelector("#add-form");
+                                let add_to_basket = form.querySelector("input[name=basket]");
+                                let checkout = form.querySelector("input[name=checkout]");
+                                let amount = form.querySelector("input[name=amount]");
 
-                            async function submit(e, loc) {
-                                e.preventDefault();
+                                async function submit(e, loc) {
+                                    e.preventDefault();
 
-                                let form_data = new URLSearchParams();
-                                form_data.set("id", {{product.id}});
-                                form_data.set("amount", amount.value);
+                                    let form_data = new URLSearchParams();
+                                    form_data.set("id", {{product.id}});
+                                    form_data.set("amount", amount.value);
 
-                                await fetch("/product/addToCart", {
-                                    method: "post",
-                                    body: form_data
-                                });
+                                    await fetch("/product/addToCart", {
+                                        method: "post",
+                                        body: form_data
+                                    });
 
 
-                                if(loc == "checkout") {
-                                    window.location = "/my/basket";
-                                } else {
-                                    window.location = window.location;
+                                    if(loc == "checkout") {
+                                        window.location = "/my/basket";
+                                    } else {
+                                        window.location = window.location;
+                                    }
+
                                 }
 
-                            }
-
-                            form.addEventListener("submit", e=>e.preventDefault());
-                            add_to_basket.addEventListener("click", e=>submit(e, "basket"));
-                            checkout.addEventListener("click", e=>submit(e, "checkout"));
+                                form.addEventListener("submit", e=>e.preventDefault());
+                                add_to_basket.addEventListener("click", e=>submit(e, "basket"));
+                                checkout.addEventListener("click", e=>submit(e, "checkout"));
 
 
-                        </script>
-                    {{else}}
-                        This product is out of stock..<br>
-                        You can contact the seller
-                        <a href="mailto:{{seller.email}}?subject=Product%20{{product.id}}%20({{product.name}})%20is%20out%20of%20stock&body=I%20want%20this%20to%20be%20back%20in%20stock">here</a>
-                    {{/if}}
+                            </script>
+                        {{else}}
+                            This product is out of stock..<br>
+                            You can contact the seller
+                            <a href="mailto:{{seller.email}}?subject=Product%20{{product.id}}%20({{product.name}})%20is%20out%20of%20stock&body=I%20want%20this%20to%20be%20back%20in%20stock">here</a>
+                        {{/if}}
+                    </div>
                 </div>
             </div>
             <div class="lower">

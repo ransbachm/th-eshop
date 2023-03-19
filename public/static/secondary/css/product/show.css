@@ -57,6 +57,9 @@
     border-bottom: #111111 solid;
     margin: 0 2rem;
 
+    background-color: #1F2227;
+    padding-top: 0.4rem;
+
 }
 .reco-p>div {
     border: #111111 solid;
@@ -64,7 +67,6 @@
 }
 
 .reco-p:last-child{
-    border-bottom:none
 }
 
 .reco-p>div:last-child {
@@ -83,6 +85,9 @@
     grid-template-rows: 1fr;
     grid-column-gap: 0px;
     grid-row-gap: 0px;
+
+    border: dotted #0B325E 0.3rem;
+
 }
 
 #add-form {
@@ -110,4 +115,19 @@
     border-radius: 1rem;
     border:none;
     padding: 0.2rem;
+}
+
+
+
+.upper-right {
+
+}
+
+.upper-left-ins {
+    border: dotted #0B325E 0.3rem;
+    background-color: #1F2227;
+    padding: 1rem;
+
+    -webkit-box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
+    box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
 }
