@@ -5,4 +5,5 @@ footer {
 
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
+    color: var(--col-hd-tx);
 }
