@@ -56,6 +56,8 @@ li:nth-child(n+2) {
     font-family: inherit;
     color : white;
     max-width : 116px;
+    overflow: hidden;
+    height : 20px;
 }
 
 #dropdown-button:hover {

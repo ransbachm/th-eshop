@@ -6,7 +6,7 @@
     font-size: 15px;
     transition : background 0.5s;
     transform-timing-function : ease-in;
-
+    cursor:pointer;
 }
 
 .structure-box-large input[type=submit]{
