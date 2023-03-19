@@ -25,6 +25,11 @@ header ul li:hover {
     color: black;
 }
 
+header ul li:hover[class="empty-li"] {
+    color: inherit;
+    background-color: inherit;
+}
+
 header ul li a {
     text-decoration: none;
     color: inherit;

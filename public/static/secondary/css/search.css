@@ -1,0 +1,25 @@
+h2 {
+    font-family: Arial;
+}
+
+.results {
+    width: 80%;
+    margin-left: 10%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.results tr td {
+    border-bottom: solid 0.1rem black;
+    padding: 0.3rem 0rem;
+}
+
+.results tr td:nth-child(-n+3) {
+    border-top: solid 0.1rem black;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+

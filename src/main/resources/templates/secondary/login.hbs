@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {{> templates/secondary/partials/common}}
+    <title>Th_Eshop</title>
+    <link rel="stylesheet" href="/static/secondary/css/login.css">
+</head>
+
+<body>
+{{> templates/secondary/partials/header}}
+
+<div class="back-content">
+    <div class="content">
+
+        <div class="login-form">
+            <h2>Log into your Th_Eshop account</h2>
+            <form action="/login" method="POST">
+                <label for="email" type="email">
+                    Email
+                </label><br>
+                <input name="email" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                       oninput="login_field_change(this);"><br>
+
+                <label for="password" type="password">
+                    Password </label> <a class="lost-pwd" href="/reset-password">Forgot your password?</a><br>
+                <input name="password" type="password" pattern=".{5,}" oninput="login_field_change(this);"><br>
+
+                <input type="submit" value="Login">
+                <a class="register-a" href="/register">...or register</a>
+            </form>
+        </div>
+        <div class="nonsense-text">
+            <p>
+                By logging into your account you can
+                discover millions of products available
+                on Th_Eshop. If you currently do not have an
+                account you can also <a href="/register">sign up</a>
+                for an account here.
+            </p>
+            <p>
+                By logging in you also accept and agree
+                with the fictional terms and conditions
+                described out in our <a href="/terms-of-service">Terms of Service</a>
+                and our <a href="/privacy">Privacy Policy</a>.
+
+                Th_Eshop collects data for improving service and reliability.
+                You can also <a href="/privacy#opt-out">opt out</a> of our optional data collection.
+            </p>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    let email = document.querySelector(".login-form input[name=email]");
+    let password = document.querySelector(".login-form input[name=password]");
+    let submit = document.querySelector(".login-form input[type=submit]");
+
+    function login_field_change(elem) {
+        let choice;
+        if(email.checkValidity()
+                && password.checkValidity()
+                && password.value != "") {
+            choice = "var(--col-enable)"
+        } else {
+            choice = "var(--col-disable)"
+        }
+        submit.style.backgroundColor = choice;
+    }
+</script>
+
+{{> templates/secondary/partials/footer}}
+</body>
+</html>

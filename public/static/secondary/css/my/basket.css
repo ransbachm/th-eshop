@@ -1,0 +1,54 @@
+.basket {
+    width: 80%;
+    border-collapse: collapse;
+    margin-left: 10%;
+}
+
+.content tr {
+    border-bottom: solid 0.1rem black;
+    border-spacing: 1rem;
+}
+
+.content tr td {
+    padding: 0.3rem 0;
+}
+
+.content a {
+    text-decoration: none;
+    color: var(--col-hd-tx);
+}
+
+.name a {
+    padding-left: 25%;
+}
+
+.name {
+    text-align: left;
+}
+
+.price {
+    text-align: right;
+    margin-right: 10rem;
+}
+
+.amount_col input {
+    width: 20%;
+}
+
+.amount_col select  {
+    width: 21.5%;
+}
+
+.buy-button-div {
+    width: 80%;
+    padding-left: 10%;
+    padding-top: 4%;
+}
+
+.buy-button {
+    width: 100%;
+    background-color: #528ba2;
+    border: none;
+    padding: 1%;
+    border-radius: 1rem;
+}

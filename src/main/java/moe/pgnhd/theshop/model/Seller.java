@@ -27,28 +27,12 @@ public class Seller extends User implements ResultSetConstructable {
         return firstname + " " + lastname;
     }
 
-    public int getId() {
-        return id;
+    public double getBalance() {
+        return balance;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 
     public List<Product> getProducts() {

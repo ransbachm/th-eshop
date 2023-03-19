@@ -1,0 +1,87 @@
+.parent {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    grid-template-rows: repeat(7, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+.content {
+    text-align: left;
+}
+
+.parent {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+.div0 { grid-area: 1 / 1 / 2 / 2; }
+.upper-left { grid-area: 1 / 2 / 2 / 3; }
+
+.profile_title {
+    margin-left: 1rem;
+}
+
+.profile-table {
+    margin-left: 10%;
+    font-size: 1.5rem;
+}
+
+.profile-table tr:not(:last-child) {
+    border-bottom: solid 0.1rem black;
+}
+
+.profile-table tr td {
+    padding: 0.3rem;
+}
+
+.profile-table {
+    border-collapse: collapse;
+}
+
+.profile-table tr td:not(:first-child) {
+    text-align: center;
+}
+
+.profile-table td:not(:last-child) {
+    border-right: solid 0.1rem black;
+    padding-right: 1rem;
+}
+
+.profile-picture {
+    height: 15rem;
+    border: solid 0.3rem black;
+    margin-left: 10%;
+}
+
+.under_title_hr {
+    max-width: 90%;
+    margin-bottom: 5%;
+}
+
+.profile_title {
+    margin-left: 10%;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+.become-seller-form input[type=submit] {
+    --col-enable: #3a84c0;
+
+    border: none;
+    background-color: var(--col-enable);
+
+    height: 2rem;
+
+    margin-top: -0.4rem;
+    border-radius: 0.5rem;
+    cursor:pointer;
+}
+
+.content p {
+    margin-top: 5%;
+   text-align: center;
+}

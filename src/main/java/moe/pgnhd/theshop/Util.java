@@ -11,6 +11,8 @@ import spark.Request;
 import spark.Response;
 
 import java.io.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.*;
 
@@ -86,6 +88,20 @@ public class Util {
         }
         outer_recommendations.add(crr);
         return outer_recommendations;
+    }
+
+    public static String md5_hex(String in) {
+        StringBuilder sb = new StringBuilder();
+        MessageDigest md = null;
+        try {
+            md = MessageDigest.getInstance("md5");md.update(in.getBytes());
+            for(byte b : md.digest()) {
+                sb.append(String.format("%02x", b));
+            }
+            return sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 

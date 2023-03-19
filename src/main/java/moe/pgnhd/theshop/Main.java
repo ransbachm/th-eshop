@@ -1,12 +1,12 @@
 package moe.pgnhd.theshop;
 
 import com.github.jknack.handlebars.Handlebars;
+import com.github.jknack.handlebars.Options;
 import com.github.jknack.handlebars.Template;
 import com.github.jknack.handlebars.io.FileTemplateLoader;
 import io.github.cdimascio.dotenv.Dotenv;
-import moe.pgnhd.theshop.handlers.BasketHandler;
-import moe.pgnhd.theshop.handlers.Filters.RequireLogin;
 import moe.pgnhd.theshop.handlers.*;
+import moe.pgnhd.theshop.handlers.Filters.RequireLogin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,6 +70,10 @@ public class Main {
         }
         staticFiles.externalLocation("public");
 
+        hbs.registerHelper("md5", (String s, Options o) -> {
+            return Util.md5_hex(s.trim().toLowerCase());
+        });
+
         port(4567);
         // require logged-in user for paths below
         before("*", RequireLogin::filterRequireLogin);
@@ -105,7 +109,6 @@ public class Main {
         post("my/products", ProductHandler::handleAlterMyProduct);
 
         get("search", SearchHandler::handleSearch);
-
         notFound(Util::handle404);
     }
 

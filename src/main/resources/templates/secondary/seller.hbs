@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {{> templates/secondary/partials/common}}
+    <title>Th_Eshop</title>
+    <link rel="stylesheet" href="/static/secondary/css/profile.css">
+    <link rel="stylesheet" href="/static/secondary/css/seller.css">
+
+</head>
+
+<body>
+{{> templates/secondary/partials/header}}
+
+<div class="back-content">
+    <div class="content">
+        <h2 class="profile_title">Seller: {{user}} [{{user.id}}]</h2>
+        <hr class="under_title_hr">
+
+        <div class="parent">
+            <div class="div0">
+                <table class="profile-table">
+                    <tr>
+                        <td>Firstname</td>
+                        <td>{{user.firstname}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Lastname</td>
+                        <td>{{user.lastname}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Registered email</td>
+                        <td>{{user.email}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Address</td>
+                        <td>{{user.street}} {{user.housenumber}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Zipcode</td>
+                        <td>{{user.zipcode}}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="upper-left">
+                <img class="profile-picture" src="https://www.gravatar.com/avatar/{{md5 user.email}}?s=1024">
+            </div>
+        </div>
+
+        <h3 class="results_h3">Products this seller sells:</h3>
+        <hr class="results_h3_hr">
+
+        <table class="results">
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Description</th>
+            </tr>
+
+            {{#each products}}
+                <tr>
+                    <td class="p-name"><a href="/products/{{id}}">{{name}}</a></td>
+                    <td><a href="/products/{{id}}">{{price}}€</a></td>
+                    <td class="descr"><a href="/products/{{id}}"><p>{{description}}</p></a></td>
+                </tr>
+            {{/each}}
+        </table>
+
+    </div>
+</div>
+
+{{> templates/secondary/partials/footer}}
+</body>
+</html>

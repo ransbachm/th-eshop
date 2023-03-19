@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {{> templates/secondary/partials/common}}
+    <title>Th_Eshop</title>
+    <link rel="stylesheet" href="/static/secondary/css/product/create.css">
+</head>
+
+<body>
+{{> templates/secondary/partials/header}}
+
+<div class="back-content">
+    <div class="content">
+
+        <div class="parents">
+            <h2>Add a product to sell</h2>
+            <form method="POST" action="/product/create" enctype="multipart/form-data">
+                <div class="parent1">
+                    <div class="div1">
+                        <label for="name">Product name</label><br>
+                        <input name="name" type="text" placeholder="Amazing product name here">
+                    </div>
+
+                    <div class="div2">
+                        <label for="price">Product price (€)</label><br>
+                        <input name="price" type="number" value="200">
+                    </div>
+                </div>
+                <div class="parent2">
+                    <div class="div1">
+                        <label for="description">Description</label><br>
+                        <input name="description" type="text">
+                    </div>
+
+                    <div class="div2">
+                        <label for="available">Product available</label><br>
+                        <input name="available" type="number" value="1">
+                    </div>
+                </div>
+
+                <div class="parent3">
+                    <div class="div1">
+                        <label for="image">Image</label><br>
+                        <input name="image" type="file">
+                    </div>
+
+                    <div class="div2">
+                        <br>
+                        <input type="submit" value="create">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+{{> templates/secondary/partials/footer}}
+</body>
+</html>

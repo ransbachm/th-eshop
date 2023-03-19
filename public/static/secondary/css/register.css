@@ -1,0 +1,68 @@
+.login-form {
+    text-align: center;
+    max-width: 40%;
+    display: inline-grid;
+    place-self: center;
+}
+
+.lost-pwd {
+    text-decoration: none;
+    color: #528ba2;
+}
+
+.login-form input[type=submit] {
+    --col-disable: #4a4c50;
+    --col-enable: #3a84c0;
+
+    border: none;
+    background-color: var(--col-disable);
+
+    width: 7rem;
+    height: 2rem;
+
+    margin-top: -0.4rem;
+    border-radius: 0.5rem;
+}
+
+.login-form input {
+    outline: none;
+    border-radius: 2rem;
+    width: 100%;
+    background-color: white;
+    margin-bottom: 1rem;
+    margin-top: 0.3rem;
+}
+
+.login-form input:not([type=submit]){
+    padding: 0.2rem 0.7rem;
+}
+
+.content {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    display: grid;
+}
+
+.nonsense-text {
+    max-width: 60%;
+    display: block;
+    hyphens: auto;
+    text-align: justify;
+    place-self: center;
+    font-family: Arial,sans-serif;
+    font-size: 11pt;
+    margin-top: -30rem;
+}
+
+.nonsense-text a {
+    text-decoration: none;
+    color: #528ba2;
+}
+
+.register-a {
+    text-decoration: none;
+    color: #528ba2;
+    margin-left: 1rem;
+}

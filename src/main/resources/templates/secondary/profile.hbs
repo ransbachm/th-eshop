@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {{> templates/secondary/partials/common}}
+    <title>Th_Eshop</title>
+    <link rel="stylesheet" href="/static/secondary/css/profile.css">
+</head>
+
+<body>
+{{> templates/secondary/partials/header}}
+
+<div class="back-content">
+    <div class="content">
+        <h2 class="profile_title">{{user.firstname}}'s profile</h2>
+        <hr class="under_title_hr">
+
+        <div class="parent">
+            <div class="div0">
+                <table class="profile-table">
+                    <tr>
+                        <td>Firstname</td>
+                        <td>{{user.firstname}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Lastname</td>
+                        <td>{{user.lastname}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Registered email</td>
+                        <td>{{user.email}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Address</td>
+                        <td>{{user.street}} {{user.housenumber}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Zipcode</td>
+                        <td>{{user.zipcode}}</td>
+                    </tr>
+
+                    <tr>
+                        {{#if seller}}
+                            <td>Seller?</td>
+                            <td>Yes</td>
+                        {{else}}
+                            <td>Seller?</td>
+                            <td>
+                                <form class="become-seller-form" action="/profile" method="POST">
+                                    <input type="submit" value="Become seller">
+                                </form>
+                            </td>
+                        {{/if}}
+                    </tr>
+                </table>
+            </div>
+
+            <div class="upper-left">
+                <img class="profile-picture" src="https://www.gravatar.com/avatar/{{md5 user.email}}?s=1024">
+            </div>
+        </div>
+
+        <p>
+            To request a deletion of your data im compliance
+            with GDPR laws you can email us.
+            For contact details please look into our
+            <a href="/privacy">privacy policy</a>.
+            Here at TH_Eshop we are always committed to
+            resolving the problems our customers face and
+            are committed to helping you in resolving
+            your issues in the fastest manner possible.
+        </p>
+
+
+    </div>
+</div>
+
+{{> templates/secondary/partials/footer}}
+</body>
+</html>

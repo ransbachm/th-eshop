@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {{> templates/secondary/partials/common}}
+    <title>Th_Eshop</title>
+    <link rel="stylesheet" href="/static/secondary/css/products.css">
+</head>
+
+<body>
+{{> templates/secondary/partials/header}}
+
+<div class="back-content">
+    <div class="content">
+        <h2>Your products</h2>
+
+        <table class="products-table">
+            <tr>
+                <th>id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Available</th>
+            </tr>
+
+            {{#each products}}
+                <tr>
+                    <td>{{id}}</td>
+                    <td>
+                        <div class="name">
+                            {{name}}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="descr">
+                            {{description}}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="price">
+                            {{price}}€
+                        </div>
+                    </td>
+                    <td>
+                        <form class="available-form">
+                            <input value="{{id}}" hidden>
+                            <input type="number" value="{{available}}">
+                            <input type="submit" value="Set">
+                        </form>
+                    </td>
+                </tr>
+            {{/each}}
+        </table>
+        <a href="/product/create" class="create-a">Create product</a>
+    </div>
+</div>
+
+{{> templates/secondary/partials/footer}}
+</body>
+</html>

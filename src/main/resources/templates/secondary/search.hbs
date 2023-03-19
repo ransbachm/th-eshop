@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {{> templates/secondary/partials/common}}
+    <title>Th_Eshop</title>
+    <link rel="stylesheet" href="/static/secondary/css/search.css">
+</head>
+
+<body>
+{{> templates/secondary/partials/header}}
+
+<div class="back-content">
+    <div class="content">
+        <h2>{{result_count}} results for "{{search_query}}"</h2>
+
+        <table class="results">
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Seller</th>
+            </tr>
+
+           {{#each products}}
+               <tr>
+                   <td><a href="/product/{{id}}">{{name}}</a></td>
+                   <td>{{price}}€</td>
+                   <td><a href="/seller/{{seller.id}}">{{seller}}</a></td>
+               </tr>
+           {{/each}}
+        </table>
+    </div>
+</div>
+
+{{> templates/secondary/partials/footer}}
+</body>
+</html>
