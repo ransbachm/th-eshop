@@ -23,6 +23,7 @@
                         <th>Product No.</th>
                         <th class="empty-th"></th>
                         <th class="descr-th">Description</th>
+                        <th class="amount_col">Amount</th>
                         <th>Price</th>
                     </tr>
                     {{#each orderItems}}
@@ -41,8 +42,12 @@
 
                             <td>
                                <div class="discr">
-                                   {{product.description}}
+                                   {{text-only product.description}}
                                </div>
+                            </td>
+
+                            <td>
+                                {{amount}}
                             </td>
 
                             <td class="price">

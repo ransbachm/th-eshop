@@ -12,9 +12,14 @@ public class HTMLSanitizer {
                 .allowElements("ol", "ul", "li")
                 .toFactory();
 
+        PolicyFactory headers = new HtmlPolicyBuilder()
+                .allowElements("h2", "h3")
+                .toFactory();
+
         escape = Sanitizers.
                 FORMATTING
-                .and(lists);
+                .and(lists)
+                .and(headers);
 
         text_only = new HtmlPolicyBuilder()
                 .disallowElements()
