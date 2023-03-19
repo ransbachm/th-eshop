@@ -13,7 +13,7 @@
 
 <div class="back-content">
     <div class="content">
-        <h2 class="profile_title">Seller: {{user}} [{{user.id}}]</h2>
+        <h2 class="profile_title">Seller: {{seller}} [{{seller.id}}]</h2>
         <hr class="under_title_hr">
 
         <div class="parent">
@@ -21,33 +21,33 @@
                 <table class="profile-table">
                     <tr>
                         <td>Firstname</td>
-                        <td>{{user.firstname}}</td>
+                        <td>{{seller.firstname}}</td>
                     </tr>
 
                     <tr>
                         <td>Lastname</td>
-                        <td>{{user.lastname}}</td>
+                        <td>{{seller.lastname}}</td>
                     </tr>
 
                     <tr>
                         <td>Registered email</td>
-                        <td>{{user.email}}</td>
+                        <td>{{seller.email}}</td>
                     </tr>
 
                     <tr>
                         <td>Address</td>
-                        <td>{{user.street}} {{user.housenumber}}</td>
+                        <td>{{seller.street}} {{user.housenumber}}</td>
                     </tr>
 
                     <tr>
                         <td>Zipcode</td>
-                        <td>{{user.zipcode}}</td>
+                        <td>{{seller.zipcode}}</td>
                     </tr>
                 </table>
             </div>
 
             <div class="upper-left">
-                <img class="profile-picture" src="https://www.gravatar.com/avatar/{{md5 user.email}}?s=1024">
+                <img class="profile-picture" src="https://www.gravatar.com/avatar/{{md5 seller.email}}?s=1024">
             </div>
         </div>
 
