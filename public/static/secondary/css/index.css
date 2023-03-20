@@ -5,6 +5,8 @@
     grid-column-gap: 0px;
     grid-row-gap: 0px;
     border-radius: 0.3rem;
+    padding-bottom: 2rem;
+
 }
 
 .reco0 { grid-area: 1 / 1 / 2 / 2; }
