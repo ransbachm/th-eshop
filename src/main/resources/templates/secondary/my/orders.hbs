@@ -28,8 +28,8 @@
                     </tr>
                     {{#each orderItems}}
                         <tr>
-                            <td>
-                                {{id}}
+                            <td class="order-id-name">
+                                <a href="/product/{{product.id}}">{{product.name}} [{{id}}]</a>
                             </td>
 
                             <td>
@@ -37,12 +37,16 @@
                             </td>
 
                             <td class="prod_img">
-                                <img class="prod_img" src="/upload/product/{{product.id}}.png">
+                                <a href="/product/{{id}}">
+                                    <img class="prod_img" src="/upload/product/{{product.id}}.png">
+                                </a>
                             </td>
 
                             <td>
                                <div class="discr">
-                                   {{text-only product.description}}
+                                   <a href="/product/{{id}}">
+                                        {{text-only product.description}}
+                                   </a>
                                </div>
                             </td>
 
