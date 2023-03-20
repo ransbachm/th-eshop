@@ -53,6 +53,16 @@
                 {{/each}}
             </div>
         {{/each}}
+
+        {{#unless user}}
+            <p>Please login to see personal recommendations</p>
+        {{/unless}}
+
+        {{#if user}}
+            {{#unless recommendations_outer}}
+                <p>You need to buy products other users have bought to get personal recommendations.</p>
+            {{/unless}}
+        {{/if}}
     </div>
 </div>
 

@@ -142,6 +142,10 @@ public class ProductHandler {
         String extension = split[split.length-1];
         File new_file = uploadDir.resolve(productID + "." + extension).toFile();
 
+        if(new_file.exists()) {
+            new_file.delete();
+        }
+
         tmp.renameTo(new_file);
     }
 
@@ -177,8 +181,11 @@ public class ProductHandler {
 
         int new_amount = Integer.parseInt(req.queryParams("new_amount"));
         int productId = Integer.parseInt(req.queryParams("productid"));
+
+        Seller seller = req.attribute("seller");
+
         if(new_amount > 0) {
-            Main.management.setProductAvailablity(productId, new_amount);
+            Main.management.setProductAvailablityIfCorrectSeller(productId, new_amount, seller.getId());
         }
 
         res.redirect("/my/products");

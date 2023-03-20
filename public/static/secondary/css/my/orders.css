@@ -46,3 +46,12 @@ hr {
 .order-table {
     margin: auto 1rem;
 }
+
+.content a {
+    text-decoration: none;
+    color: var(--col-hd-tx);
+}
+
+.order-id-name a {
+    color: #3a84c0;
+}

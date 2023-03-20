@@ -550,14 +550,16 @@ public class Management {
         return false;
     }
 
-    public void setProductAvailablity(int productID, int increase){
+    public void setProductAvailablityIfCorrectSeller(int productID, int increase, int sellerID){
         String sql ="UPDATE Product\n" +
                 "SET Product.available = ?\n" +
-                "WHERE Product.id = ?";
+                "WHERE Product.id = ?\n" +
+                "AND Product.seller = ?";
         try(Connection con = ds.getConnection();
             PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, increase);
             stmt.setInt(2, productID);
+            stmt.setInt(3, sellerID);
             stmt.executeUpdate();
         } catch (SQLException e) {
             LOG.error(e.getMessage());
