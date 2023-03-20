@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  app:
+    # image: pgnhd/th-eshop
+    build: .
+    env_file:
+      - .env
+    volumes:
+      - uploads:/app/public/upload
+    environment:
+      - DEV_MODE=false # needed for docker deployment
+    ports:
+      - 4567:4567
+
+    
+
+volumes:
+   uploads:
