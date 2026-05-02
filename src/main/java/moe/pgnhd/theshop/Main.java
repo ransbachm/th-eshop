@@ -21,7 +21,7 @@ public class Main {
     private static Logger LOG = LoggerFactory.getLogger(Main.class);
     public static Management management;
     public static Payments payments;
-    public static Dotenv dotenv = Dotenv.load();
+    public static Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
     static boolean isDev = Boolean.parseBoolean(dotenv.get("DEV_MODE"));
 
     private static Handlebars hbs;
@@ -87,7 +87,7 @@ public class Main {
             return escape.sanitize(s);
         });
 
-        port(4567);
+        port(Integer.parseInt(dotenv.get("APP_PORT")));
         // require logged-in user for paths below
         before("*", RequireLogin::filterRequireLogin);
 
